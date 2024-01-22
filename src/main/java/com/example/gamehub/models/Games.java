@@ -1,9 +1,6 @@
 package com.example.gamehub.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 @Entity
@@ -17,11 +14,16 @@ public class Games {
     private double price;
     private LocalDate date;
     private float discount;
+    @ElementCollection
+    private String genre;
+
+    @ElementCollection
+    private String platform;
 
     public Games() {
     }
 
-    public Games(Long id, String title, String description, Long sales, double price, LocalDate date, float discount) {
+    public Games(Long id, String title, String description, Long sales, double price, LocalDate date, float discount, String genre, String platform) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -29,6 +31,8 @@ public class Games {
         this.price = price;
         this.date = date;
         this.discount = discount;
+        this.genre = genre;
+        this.platform = platform;
     }
 
     public Long getId() {
@@ -87,6 +91,22 @@ public class Games {
         this.discount = discount;
     }
 
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
     @Override
     public String toString() {
         return "Games{" +
@@ -97,6 +117,8 @@ public class Games {
                 ", price=" + price +
                 ", date=" + date +
                 ", discount=" + discount +
+                ", genre='" + genre + '\'' +
+                ", platform='" + platform + '\'' +
                 '}';
     }
 }
