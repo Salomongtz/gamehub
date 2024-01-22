@@ -2,6 +2,8 @@ package com.example.gamehub.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Customer {
     @Id
@@ -10,19 +12,18 @@ public class Customer {
     private String name, lastName, email, password;
     private RoleType role=RoleType.CUSTOMER;
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    private Purchase purchase;
+    private List<Purchase> purchases;
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    private Customer_Game customer_game;
+    private List<Customer_Game> customer_games;
 
     public Customer() {
     }
 
-    public Customer(String name, String lastName, String email, String password, RoleType role) {
+    public Customer(String name, String lastName, String email, String password) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.role = role;
     }
 
     public Long getId() {
