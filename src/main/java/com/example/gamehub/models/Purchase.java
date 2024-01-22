@@ -3,6 +3,7 @@ package com.example.gamehub.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Purchase {
@@ -13,4 +14,6 @@ public class Purchase {
     private Double totalAmount;
     @ManyToOne
     private Customer customer;
+    @OneToMany(mappedBy = "purchase")
+    private List<Purchase_Game> purchaseGames;
 }

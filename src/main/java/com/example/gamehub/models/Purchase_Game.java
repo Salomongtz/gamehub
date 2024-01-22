@@ -1,9 +1,6 @@
 package com.example.gamehub.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Purchase_Game {
@@ -14,6 +11,10 @@ public class Purchase_Game {
     private Long productId;
     private Long gameId;
     private int quantity;
+    @ManyToOne
+    private Purchase purchase;
+    @ManyToOne
+    private Games game;
 
     public Purchase_Game() {
     }
