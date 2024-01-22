@@ -3,6 +3,9 @@ package com.example.gamehub.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Games {
     @Id
@@ -16,9 +19,10 @@ public class Games {
     private float discount;
     @ElementCollection
     private String genre;
-
     @ElementCollection
     private String platform;
+    @OneToMany
+    private List<Customer_Game> customerGames = new ArrayList<>();
 
     public Games() {
     }
@@ -107,6 +111,14 @@ public class Games {
         this.platform = platform;
     }
 
+    public List<Customer_Game> getCustomerGames() {
+        return customerGames;
+    }
+
+    public void setCustomerGames(List<Customer_Game> customerGames) {
+        this.customerGames = customerGames;
+    }
+
     @Override
     public String toString() {
         return "Games{" +
@@ -119,6 +131,7 @@ public class Games {
                 ", discount=" + discount +
                 ", genre='" + genre + '\'' +
                 ", platform='" + platform + '\'' +
+                ", customerGames=" + customerGames +
                 '}';
     }
 }
