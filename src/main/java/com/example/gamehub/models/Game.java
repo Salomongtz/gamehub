@@ -7,27 +7,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Games {
+public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String description;
+    private String title, description, developer, publisher, imageURL;
     private Long sales;
     private double price;
     private LocalDate date;
     private float discount;
+    private Rating rating;
     @ElementCollection
-    private String genre;
+    private List<GameGenre> genre;
     @ElementCollection
-    private String platform;
-    @OneToMany
+    private List<GamePlatform> platforms;
+    @OneToMany(mappedBy = "games")
     private List<Customer_Game> customerGames = new ArrayList<>();
+    @OneToMany(mappedBy = "games")
+    private List<Purchase_Game> purchaseGames = new ArrayList<>();
 
-    public Games() {
+    public Game() {
     }
 
-    public Games(Long id, String title, String description, Long sales, double price, LocalDate date, float discount, String genre, String platform) {
+    public Game(Long id, String title, String description, Long sales, double price, LocalDate date, float discount,
+                List<GameGenre> genre, List<GamePlatform> platforms) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -36,7 +39,7 @@ public class Games {
         this.date = date;
         this.discount = discount;
         this.genre = genre;
-        this.platform = platform;
+        this.platforms = platforms;
     }
 
     public Long getId() {
@@ -95,20 +98,20 @@ public class Games {
         this.discount = discount;
     }
 
-    public String getGenre() {
+    public List<GameGenre> getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(List<GameGenre> genre) {
         this.genre = genre;
     }
 
-    public String getPlatform() {
-        return platform;
+    public List<GamePlatform> getPlatforms() {
+        return platforms;
     }
 
-    public void setPlatform(String platform) {
-        this.platform = platform;
+    public void setPlatforms(List<GamePlatform> platforms) {
+        this.platforms = platforms;
     }
 
     public List<Customer_Game> getCustomerGames() {
@@ -119,9 +122,49 @@ public class Games {
         this.customerGames = customerGames;
     }
 
+    public List<Purchase_Game> getPurchaseGames() {
+        return purchaseGames;
+    }
+
+    public void setPurchaseGames(List<Purchase_Game> purchaseGames) {
+        this.purchaseGames = purchaseGames;
+    }
+
+    public String getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(String developer) {
+        this.developer = developer;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
-        return "Games{" +
+        return "Game{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
@@ -130,7 +173,7 @@ public class Games {
                 ", date=" + date +
                 ", discount=" + discount +
                 ", genre='" + genre + '\'' +
-                ", platform='" + platform + '\'' +
+                ", platform='" + platforms + '\'' +
                 ", customerGames=" + customerGames +
                 '}';
     }
