@@ -3,7 +3,6 @@ package com.example.gamehub.dtos;
 import com.example.gamehub.models.Customer;
 import com.example.gamehub.models.Customer_Game;
 import com.example.gamehub.models.Purchase;
-import com.example.gamehub.models.RoleType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 
