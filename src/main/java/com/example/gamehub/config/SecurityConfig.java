@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,7 +21,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth.requestMatchers("/web/*", "/web/assets" +
-                        "/images/**", "/web/assets/styles/**").permitAll().anyRequest().denyAll());
+                        "/images/**", "/web/assets/styles/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/customers").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/customers").hasAuthority("CUSTOMER")
+                .requestMatchers("/h2-console/**").permitAll().anyRequest().denyAll());
 
         http.csrf(AbstractHttpConfigurer::disable);
 
@@ -34,7 +38,7 @@ public class SecurityConfig {
                 .passwordParameter("password")
                 .successHandler((request, response, authentication) -> {
                     clearAuthenticationAttributes(request);
-                    System.out.println("Hola" + authentication.getName());
+                    System.out.println("Welcome, " + authentication.getName() + "!");
                 })
                 .failureHandler((request, response, exception) -> response.sendError(401))
                 .permitAll());

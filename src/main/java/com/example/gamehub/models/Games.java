@@ -21,8 +21,10 @@ public class Games {
     private List<GameGenre> genre;
     @ElementCollection
     private List<GamePlatform> platforms;
-    @OneToMany
+    @OneToMany(mappedBy = "games")
     private List<Customer_Game> customerGames = new ArrayList<>();
+    @OneToMany(mappedBy = "games")
+    private List<Purchase_Game> purchaseGames = new ArrayList<>();
 
     public Games() {
     }
@@ -118,6 +120,14 @@ public class Games {
 
     public void setCustomerGames(List<Customer_Game> customerGames) {
         this.customerGames = customerGames;
+    }
+
+    public List<Purchase_Game> getPurchaseGames() {
+        return purchaseGames;
+    }
+
+    public void setPurchaseGames(List<Purchase_Game> purchaseGames) {
+        this.purchaseGames = purchaseGames;
     }
 
     @Override

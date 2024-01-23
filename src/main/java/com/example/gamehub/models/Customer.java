@@ -86,4 +86,18 @@ public class Customer {
     public void setCustomer_games(List<Customer_Game> customer_games) {
         this.customer_games = customer_games;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", purchases=" + purchases +
+                ", customer_games=" + customer_games +
+                '}';
+    }
 }

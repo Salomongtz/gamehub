@@ -5,10 +5,12 @@ import com.example.gamehub.models.Purchase_Game;
 import com.example.gamehub.repositories.Purchase_GameRepository;
 import com.example.gamehub.services.Purchase_GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class Purchase_GameServiceImplement implements Purchase_GameService {
 
     @Autowired
