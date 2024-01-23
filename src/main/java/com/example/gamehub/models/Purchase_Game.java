@@ -58,6 +58,22 @@ public class Purchase_Game {
         this.quantity = quantity;
     }
 
+    public Purchase getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
+    }
+
+    public Games getGame() {
+        return game;
+    }
+
+    public void setGame(Games game) {
+        this.game = game;
+    }
+
     @Override
     public String toString() {
         return "Purchase_Game{" +

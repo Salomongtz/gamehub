@@ -21,6 +21,8 @@ public class Purchase_GameDTO {
         productId = purchaseGame.getProductId();
         gameId = purchaseGame.getGameId();
         quantity = purchaseGame.getQuantity();
+        purchase = purchaseGame.getPurchase();
+        game = purchaseGame.getGame();
     }
 
     public Long getId() {

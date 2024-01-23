@@ -1,6 +1,8 @@
 package com.example.gamehub.dtos;
 
 import com.example.gamehub.models.Customer_Game;
+import com.example.gamehub.models.GameGenre;
+import com.example.gamehub.models.GamePlatform;
 import com.example.gamehub.models.Games;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.OneToMany;
@@ -19,9 +21,9 @@ public class GamesDTO {
     private LocalDate date;
     private float discount;
     @ElementCollection
-    private String genre;
+    private List<GameGenre> genre;
     @ElementCollection
-    private String platform;
+    private List<GamePlatform> platforms;
     @OneToMany
     private List<Customer_Game> customerGames = new ArrayList<>();
 
@@ -33,6 +35,9 @@ public class GamesDTO {
         price = games.getPrice();
         date = games.getDate();
         discount = games.getDiscount();
+        genre = games.getGenre();
+        platforms = games.getPlatforms();
+        customerGames = games.getCustomerGames();
     }
 
     public Long getId() {
@@ -61,5 +66,17 @@ public class GamesDTO {
 
     public float getDiscount() {
         return discount;
+    }
+
+    public List<GameGenre> getGenre() {
+        return genre;
+    }
+
+    public List<GamePlatform> getPlatforms() {
+        return platforms;
+    }
+
+    public List<Customer_Game> getCustomerGames() {
+        return customerGames;
     }
 }
