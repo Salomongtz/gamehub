@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Game Hub</title>
+</head>
+<body >
+    <div id="app">
+        <header class="gradient bg-gris h-[6rem] gap-4 relative flex items-center">
+            <div class="w-20 m-6">
+                <img src="assets/images/SXESlogo.png" alt="">
+            </div >
+
+
+            <div class=" flex justify-right w-8 absolute right-6 top-8" v-if="navMenu == false" @click.prevent="showMenu()">
+                <img class="" src="assets/images/menuHamb.png" alt="">
+            </div>
+
+            <div v-if="navMenu == true">
+                <nav class="pl-4 gradient text-white w-[13rem] h-[20rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center " >
+                    <img src="assets/images/closeMenu.png" alt="" class="w-6 absolute right-4 top-4" @click.prevent="showMenu()">
+                    <a href="#">Store</a>                    
+                    <a href="#">My profile</a>
+                    <a href="#">Cart</a>
+                    <a href="#" class="">About Us</a>
+                    <a href="#" class=" border-t-[0.1px] border-white/50 pt-4"> Log In</a>
+                </nav>
+            </div>          
+
+        </header>
+
+
+        <main class="flex flex-col items-center h-full mb-16 gap-12">
+
+            <img src="https://assets.xboxservices.com/assets/58/81/58819069-871d-4aea-baee-52bfd15d1977.jpg?n=Fortnite_Sneaky-Slider-1084_876951_1600x675.jpg" alt="" class="h-[10rem] w-full object-cover">
+
+            <a href="">
+                <img src="assets/images/StoreIndex.png" alt="">
+            </a>
+            
+            <section id="nuevos" class=" flex flex-col font-semibold text-amarillo w-full items-center gap-4 ">
+                <h1 class="gamer text-xl ">NEW</h1>
+                <div class="cardContainer items-center">
+                    
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+
+                    
+                </div>           
+            </section>
+
+            <section id="ofertas" class="cardContainer flex flex-col font-semibold text-amarillo w-full items-center gap-4 ">
+                <h1 class="gamer text-xl ">OFFERS</h1>
+                <div class="cardContainer gap-2">
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    
+                </div>           
+            </section>
+
+
+
+
+
+        </main>
+
+
+    <footer class="bg-gris h-[5rem]">
+
+    </footer>
+
+    </div>    
+</body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="index.js"></script>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="taildwind.config.js"></script>
+</html>
