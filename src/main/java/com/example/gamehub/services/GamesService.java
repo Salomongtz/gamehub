@@ -11,6 +11,7 @@ public interface GamesService {
 
     List<Games> getAllGames();
     List<GamesDTO> getAllGamesDTO();
-
     ResponseEntity<String> createGame(GameRecord gameRecord);
+    Games findById(Long id);
+    Games findByTitle(String title);
 }

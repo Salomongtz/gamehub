@@ -40,4 +40,14 @@ public class GamesServiceImplement implements GamesService {
         gamesRepository.save(game);
         return new ResponseEntity<>("Created successfully!", HttpStatus.CREATED);
     }
+
+    @Override
+    public Games findById(Long id) {
+        return gamesRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Games findByTitle(String title) {
+        return gamesRepository.findByTitle(title);
+    }
 }
