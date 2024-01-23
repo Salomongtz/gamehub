@@ -10,7 +10,7 @@ public class Customer_Game {
     @ManyToOne
     private Customer customer;
     @ManyToOne
-    private Games games;
+    private Game game;
 
     public Customer_Game() {
     }
@@ -27,11 +27,11 @@ public class Customer_Game {
         this.customer = customer;
     }
 
-    public Games getGames() {
-        return games;
+    public Game getGames() {
+        return game;
     }
 
-    public void setGames(Games games) {
-        this.games = games;
+    public void setGames(Game game) {
+        this.game = game;
     }
 }
