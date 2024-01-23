@@ -1,12 +1,9 @@
 package com.example.gamehub.controllers;
 
 import com.example.gamehub.dtos.CustomerDTO;
-import com.example.gamehub.models.Customer;
-import com.example.gamehub.repositories.CustomerRepository;
 import com.example.gamehub.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +16,6 @@ public class CustomerController {
 
     @GetMapping()
     public CustomerDTO getCustomer(Authentication authentication) {
-        return customerService.getOneCustomerDTO(authentication.getName());
+        return customerService.getCustomerDTOByEmail(authentication.getName());
     }
 }

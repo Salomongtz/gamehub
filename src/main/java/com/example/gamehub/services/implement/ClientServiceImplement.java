@@ -22,4 +22,14 @@ public class ClientServiceImplement implements CustomerService {
     public List<CustomerDTO> getAllCustomersDTOs() {
         return customerRepository.findAll().stream().map(CustomerDTO::new).toList();
     }
+
+    @Override
+    public Customer getCustomerByEmail(String email) {
+        return customerRepository.findByEmail(email);
+    }
+
+    @Override
+    public CustomerDTO getCustomerDTOByEmail(String email) {
+        return new CustomerDTO(getCustomerByEmail(email));
+    }
 }
