@@ -18,16 +18,17 @@ public class Games {
     private LocalDate date;
     private float discount;
     @ElementCollection
-    private String genre;
+    private List<GameGenre> genre;
     @ElementCollection
-    private String platform;
+    private List<GamePlatform> platforms;
     @OneToMany
     private List<Customer_Game> customerGames = new ArrayList<>();
 
     public Games() {
     }
 
-    public Games(Long id, String title, String description, Long sales, double price, LocalDate date, float discount, String genre, String platform) {
+    public Games(Long id, String title, String description, Long sales, double price, LocalDate date, float discount,
+                 List<GameGenre> genre, List<GamePlatform> platforms) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -36,7 +37,7 @@ public class Games {
         this.date = date;
         this.discount = discount;
         this.genre = genre;
-        this.platform = platform;
+        this.platforms = platforms;
     }
 
     public Long getId() {
@@ -95,20 +96,20 @@ public class Games {
         this.discount = discount;
     }
 
-    public String getGenre() {
+    public List<GameGenre> getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(List<GameGenre> genre) {
         this.genre = genre;
     }
 
-    public String getPlatform() {
-        return platform;
+    public List<GamePlatform> getPlatforms() {
+        return platforms;
     }
 
-    public void setPlatform(String platform) {
-        this.platform = platform;
+    public void setPlatforms(List<GamePlatform> platforms) {
+        this.platforms = platforms;
     }
 
     public List<Customer_Game> getCustomerGames() {
@@ -130,7 +131,7 @@ public class Games {
                 ", date=" + date +
                 ", discount=" + discount +
                 ", genre='" + genre + '\'' +
-                ", platform='" + platform + '\'' +
+                ", platform='" + platforms + '\'' +
                 ", customerGames=" + customerGames +
                 '}';
     }
