@@ -7,18 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Game {
+public class Games {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title, description, developer, publisher, imageURL;
     private Long sales;
     private double price;
-    private LocalDate date;
+    private LocalDate releaseDate;
     private float discount;
     private Rating rating;
     @ElementCollection
-    private List<GameGenre> genre;
+    private List<GameGenre> genres;
     @ElementCollection
     private List<GamePlatform> platforms;
     @OneToMany(mappedBy = "games")
@@ -26,19 +26,23 @@ public class Game {
     @OneToMany(mappedBy = "games")
     private List<Purchase_Game> purchaseGames = new ArrayList<>();
 
-    public Game() {
+    public Games() {
     }
 
-    public Game(Long id, String title, String description, Long sales, double price, LocalDate date, float discount,
-                List<GameGenre> genre, List<GamePlatform> platforms) {
-        this.id = id;
+    public Games(String title, String description, String developer, String publisher, String imageURL, Long sales,
+                 double price, LocalDate releaseDate, float discount, Rating rating, List<GameGenre> genres,
+                 List<GamePlatform> platforms) {
         this.title = title;
         this.description = description;
+        this.developer = developer;
+        this.publisher = publisher;
+        this.imageURL = imageURL;
         this.sales = sales;
         this.price = price;
-        this.date = date;
+        this.releaseDate = releaseDate;
         this.discount = discount;
-        this.genre = genre;
+        this.rating = rating;
+        this.genres = genres;
         this.platforms = platforms;
     }
 
@@ -82,12 +86,12 @@ public class Game {
         this.price = price;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public float getDiscount() {
@@ -98,12 +102,12 @@ public class Game {
         this.discount = discount;
     }
 
-    public List<GameGenre> getGenre() {
-        return genre;
+    public List<GameGenre> getGenres() {
+        return genres;
     }
 
-    public void setGenre(List<GameGenre> genre) {
-        this.genre = genre;
+    public void setGenres(List<GameGenre> genres) {
+        this.genres = genres;
     }
 
     public List<GamePlatform> getPlatforms() {
@@ -164,15 +168,15 @@ public class Game {
 
     @Override
     public String toString() {
-        return "Game{" +
+        return "Games{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", sales=" + sales +
                 ", price=" + price +
-                ", date=" + date +
+                ", date=" + releaseDate +
                 ", discount=" + discount +
-                ", genre='" + genre + '\'' +
+                ", genre='" + genres + '\'' +
                 ", platform='" + platforms + '\'' +
                 ", customerGames=" + customerGames +
                 '}';

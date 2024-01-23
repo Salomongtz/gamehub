@@ -10,8 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
+
+import static com.example.gamehub.utils.Utils.passwordValidator;
 
 @Service
 public class CustomerServiceImplement implements CustomerService {
@@ -60,6 +61,13 @@ public class CustomerServiceImplement implements CustomerService {
             return new ResponseEntity<>("Missing EMAIL data", HttpStatus.BAD_REQUEST);
         } else if (password.isBlank()) {
             return new ResponseEntity<>("Missing PASSWORD data", HttpStatus.BAD_REQUEST);
+        }
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8,20}$";
+
+        if (!password.matches(regex)) {
+            return new ResponseEntity<>("Password should have at least one uppercase letter, one lowercase " +
+                    "letter, one number and one special character (!@#$%&) and should be at least 8 characters long",
+                    HttpStatus.BAD_REQUEST);
         }
         if (getCustomerByEmail(email) != null) {
             return new ResponseEntity<>(email + " already in use", HttpStatus.FORBIDDEN);

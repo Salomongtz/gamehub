@@ -23,6 +23,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth.requestMatchers("/web/*", "/web/assets" +
                         "/images/**", "/web/assets/styles/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/customers").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/games").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/customers").hasAuthority("CUSTOMER")
                 .requestMatchers("/h2-console/**").permitAll().anyRequest().denyAll());
 

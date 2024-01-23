@@ -1,12 +1,16 @@
 package com.example.gamehub.services;
 
 import com.example.gamehub.dtos.GamesDTO;
-import com.example.gamehub.models.Game;
+import com.example.gamehub.models.Games;
+import com.example.gamehub.records.GameRecord;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface GamesService {
 
-    List<Game> getAllGames();
+    List<Games> getAllGames();
     List<GamesDTO> getAllGamesDTO();
+
+    ResponseEntity<String> createGame(GameRecord gameRecord);
 }
