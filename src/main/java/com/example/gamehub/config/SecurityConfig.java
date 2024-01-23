@@ -28,6 +28,8 @@ public class SecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable);
 
+
+
         http.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.frameOptions(
                 HeadersConfigurer.FrameOptionsConfig::disable));
 
