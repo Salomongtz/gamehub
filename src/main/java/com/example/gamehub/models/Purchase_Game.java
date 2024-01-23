@@ -14,7 +14,7 @@ public class Purchase_Game {
     @ManyToOne
     private Purchase purchase;
     @ManyToOne
-    private Games game;
+    private Games games;
 
     public Purchase_Game() {
     }
@@ -56,6 +56,22 @@ public class Purchase_Game {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Purchase getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
+    }
+
+    public Games getGame() {
+        return games;
+    }
+
+    public void setGame(Games games) {
+        this.games = games;
     }
 
     @Override

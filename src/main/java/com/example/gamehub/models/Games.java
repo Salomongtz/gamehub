@@ -11,40 +11,43 @@ public class Games {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String description;
+    private String title, description, developer, publisher, imageURL;
     private Long sales;
     private double price;
-    private LocalDate date;
+    private LocalDate releaseDate;
     private float discount;
+    private Rating rating;
     @ElementCollection
-    private String genre;
+    private List<GameGenre> genres;
     @ElementCollection
-    private String platform;
-    @OneToMany
+    private List<GamePlatform> platforms;
+    @OneToMany(mappedBy = "games")
     private List<Customer_Game> customerGames = new ArrayList<>();
+    @OneToMany(mappedBy = "games")
+    private List<Purchase_Game> purchaseGames = new ArrayList<>();
 
     public Games() {
     }
 
-    public Games(Long id, String title, String description, Long sales, double price, LocalDate date, float discount, String genre, String platform) {
-        this.id = id;
+    public Games(String title, String description, String developer, String publisher, String imageURL, Long sales,
+                 double price, LocalDate releaseDate, float discount, Rating rating, List<GameGenre> genres,
+                 List<GamePlatform> platforms) {
         this.title = title;
         this.description = description;
+        this.developer = developer;
+        this.publisher = publisher;
+        this.imageURL = imageURL;
         this.sales = sales;
         this.price = price;
-        this.date = date;
+        this.releaseDate = releaseDate;
         this.discount = discount;
-        this.genre = genre;
-        this.platform = platform;
+        this.rating = rating;
+        this.genres = genres;
+        this.platforms = platforms;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -79,12 +82,12 @@ public class Games {
         this.price = price;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public float getDiscount() {
@@ -95,20 +98,20 @@ public class Games {
         this.discount = discount;
     }
 
-    public String getGenre() {
-        return genre;
+    public List<GameGenre> getGenres() {
+        return genres;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setGenres(List<GameGenre> genres) {
+        this.genres = genres;
     }
 
-    public String getPlatform() {
-        return platform;
+    public List<GamePlatform> getPlatforms() {
+        return platforms;
     }
 
-    public void setPlatform(String platform) {
-        this.platform = platform;
+    public void setPlatforms(List<GamePlatform> platforms) {
+        this.platforms = platforms;
     }
 
     public List<Customer_Game> getCustomerGames() {
@@ -119,6 +122,46 @@ public class Games {
         this.customerGames = customerGames;
     }
 
+    public List<Purchase_Game> getPurchaseGames() {
+        return purchaseGames;
+    }
+
+    public void setPurchaseGames(List<Purchase_Game> purchaseGames) {
+        this.purchaseGames = purchaseGames;
+    }
+
+    public String getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(String developer) {
+        this.developer = developer;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
         return "Games{" +
@@ -127,10 +170,10 @@ public class Games {
                 ", description='" + description + '\'' +
                 ", sales=" + sales +
                 ", price=" + price +
-                ", date=" + date +
+                ", date=" + releaseDate +
                 ", discount=" + discount +
-                ", genre='" + genre + '\'' +
-                ", platform='" + platform + '\'' +
+                ", genre='" + genres + '\'' +
+                ", platform='" + platforms + '\'' +
                 ", customerGames=" + customerGames +
                 '}';
     }

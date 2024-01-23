@@ -10,6 +10,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name, lastName, email, password;
+    @Enumerated(EnumType.STRING)
     private RoleType role=RoleType.CUSTOMER;
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Purchase> purchases;
@@ -84,5 +85,19 @@ public class Customer {
 
     public void setCustomer_games(List<Customer_Game> customer_games) {
         this.customer_games = customer_games;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", purchases=" + purchases +
+                ", customer_games=" + customer_games +
+                '}';
     }
 }
