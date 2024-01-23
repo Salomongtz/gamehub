@@ -69,4 +69,20 @@ public class Customer {
     public void setRole(RoleType role) {
         this.role = role;
     }
+
+    public List<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(List<Purchase> purchases) {
+        this.purchases = purchases;
+    }
+
+    public List<Customer_Game> getCustomer_games() {
+        return customer_games;
+    }
+
+    public void setCustomer_games(List<Customer_Game> customer_games) {
+        this.customer_games = customer_games;
+    }
 }
