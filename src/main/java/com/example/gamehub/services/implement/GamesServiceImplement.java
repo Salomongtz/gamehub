@@ -1,7 +1,7 @@
 package com.example.gamehub.services.implement;
 
 import com.example.gamehub.dtos.GamesDTO;
-import com.example.gamehub.models.Games;
+import com.example.gamehub.models.Game;
 import com.example.gamehub.repositories.GamesRepository;
 import com.example.gamehub.services.GamesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class GamesServiceImplement implements GamesService {
     GamesRepository gamesRepository;
 
     @Override
-    public List<Games> getAllGames() {
+    public List<Game> getAllGames() {
         return gamesRepository.findAll();
     }
 

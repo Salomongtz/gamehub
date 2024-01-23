@@ -1,6 +1,6 @@
 package com.example.gamehub.dtos;
 
-import com.example.gamehub.models.Games;
+import com.example.gamehub.models.Game;
 import com.example.gamehub.models.Purchase;
 import com.example.gamehub.models.Purchase_Game;
 import jakarta.persistence.ManyToOne;
@@ -14,7 +14,7 @@ public class Purchase_GameDTO {
     @ManyToOne
     private Purchase purchase;
     @ManyToOne
-    private Games game;
+    private Game game;
 
     public Purchase_GameDTO(Purchase_Game purchaseGame) {
         id = purchaseGame.getGameId();
@@ -45,7 +45,7 @@ public class Purchase_GameDTO {
         return purchase;
     }
 
-    public Games getGame() {
+    public Game getGame() {
         return game;
     }
 }

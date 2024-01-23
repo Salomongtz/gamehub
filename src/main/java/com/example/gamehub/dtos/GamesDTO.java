@@ -1,9 +1,9 @@
 package com.example.gamehub.dtos;
 
 import com.example.gamehub.models.Customer_Game;
+import com.example.gamehub.models.Game;
 import com.example.gamehub.models.GameGenre;
 import com.example.gamehub.models.GamePlatform;
-import com.example.gamehub.models.Games;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.OneToMany;
 
@@ -27,17 +27,17 @@ public class GamesDTO {
     @OneToMany
     private List<Customer_Game> customerGames = new ArrayList<>();
 
-    public GamesDTO(Games games) {
-        id = games.getId();
-        title = games.getTitle();
-        description = games.getDescription();
-        sales = games.getSales();
-        price = games.getPrice();
-        date = games.getDate();
-        discount = games.getDiscount();
-        genre = games.getGenre();
-        platforms = games.getPlatforms();
-        customerGames = games.getCustomerGames();
+    public GamesDTO(Game game) {
+        id = game.getId();
+        title = game.getTitle();
+        description = game.getDescription();
+        sales = game.getSales();
+        price = game.getPrice();
+        date = game.getDate();
+        discount = game.getDiscount();
+        genre = game.getGenre();
+        platforms = game.getPlatforms();
+        customerGames = game.getCustomerGames();
     }
 
     public Long getId() {

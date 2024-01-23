@@ -7,16 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Games {
+public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String description;
+    private String title, description, developer, publisher, imageURL;
     private Long sales;
     private double price;
     private LocalDate date;
     private float discount;
+    private Rating rating;
     @ElementCollection
     private List<GameGenre> genre;
     @ElementCollection
@@ -26,11 +26,11 @@ public class Games {
     @OneToMany(mappedBy = "games")
     private List<Purchase_Game> purchaseGames = new ArrayList<>();
 
-    public Games() {
+    public Game() {
     }
 
-    public Games(Long id, String title, String description, Long sales, double price, LocalDate date, float discount,
-                 List<GameGenre> genre, List<GamePlatform> platforms) {
+    public Game(Long id, String title, String description, Long sales, double price, LocalDate date, float discount,
+                List<GameGenre> genre, List<GamePlatform> platforms) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -130,9 +130,41 @@ public class Games {
         this.purchaseGames = purchaseGames;
     }
 
+    public String getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(String developer) {
+        this.developer = developer;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
-        return "Games{" +
+        return "Game{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
