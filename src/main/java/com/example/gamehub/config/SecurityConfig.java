@@ -24,7 +24,7 @@ public class SecurityConfig {
                         "/images/**", "/web/assets/styles/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/customers").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/games").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/games").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/games","/api/games/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/customers").hasAuthority("CUSTOMER")
                 .requestMatchers("/h2-console/**").permitAll().anyRequest().denyAll());
 

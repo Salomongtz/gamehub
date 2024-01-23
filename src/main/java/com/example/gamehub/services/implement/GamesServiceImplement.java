@@ -50,4 +50,14 @@ public class GamesServiceImplement implements GamesService {
     public Games findByTitle(String title) {
         return gamesRepository.findByTitle(title);
     }
+
+    @Override
+    public Games getGameById(Long id) {
+        return gamesRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public GamesDTO getGameDTOById(Long id) {
+        return new GamesDTO(getGameById(id));
+    }
 }
