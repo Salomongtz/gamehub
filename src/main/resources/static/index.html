@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Game Hub</title>
+</head>
+<body >
+    <div id="app">
+        <header class="gradient bg-gris h-[6rem] w-full gap-4 relative flex items-center">
+            <div class="w-24 ml-4">
+                <img src="assets/images/SXESlogo.png" alt="">
+            </div >
+
+
+            <div class="hamburg flex justify-right w-8 absolute right-10 top-8 md:hidden lg:hidden" v-if="navMenu == false" @click.prevent="showMenu()">
+                <img class="" src="assets/images/menuHamb.png" alt="">
+            </div>
+
+            <div class="login text-white text-sm absolute top-[0.56em] right-8  gap-2 items-center">
+                <a href="#"class="bg-gris py-[0.2rem] px-2 rounded-md">Log In</a>
+                <a href="#">Sign Up</a>
+              
+            </div>
+
+            <div class="navBar  ">
+                <nav class="flex justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0  " >                   
+                    <a href="#">Store</a>                    
+                    <a href="#">My account</a>
+                    <a href="#">Cart</a>
+                    <a href="#" class="">About Us</a>                   
+                                    </nav>
+            </div>
+
+            <div v-if="navMenu == true">
+                <nav class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[24rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center " >                    
+                    <a href="#"class="pl-6">Store</a>                    
+                    <a href="#"class="pl-6">My account</a>
+                    <a href="#"class="pl-6">Cart</a>
+                    <a href="#" class="pl-6">About Us</a>
+                    
+                    <div class="flex flex-col border-t-[0.1px] border-white/50 pt-4  gap-4">
+                        <a href="#" class="pl-6">Log In</a>
+                        <a href="#" class="pl-6">Sign up</a>
+                        
+                    </div>
+
+                    <img src="assets/images/closeMenu.png" alt="" class="w-6 absolute right-6 top-6" @click.prevent="showMenu()">
+                </nav>
+                
+
+            </div>          
+
+        </header>
+
+
+        <main class="flex flex-col items-center h-full mb-16 gap-12">
+
+            <img src="https://assets.xboxservices.com/assets/58/81/58819069-871d-4aea-baee-52bfd15d1977.jpg?n=Fortnite_Sneaky-Slider-1084_876951_1600x675.jpg" alt="" class="
+            h-64 w-full object-cover object-top">
+
+            <a href="">
+                <img src="assets/images/StoreIndex.png" alt="" class="object-cover">
+            </a>
+            
+            <section id="nuevos" class="cardContainer flex flex-col font-semibold text-amarillo  items-center gap-4 ">
+                <h1 class="gamer text-xl ">NEW</h1>
+                <div class="cardContainer  pr-4">
+                    
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+
+                    
+                </div>           
+            </section>
+
+            <section id="ofertas" class="cardContainer flex flex-col font-semibold text-amarillo  items-center gap-4 ">
+                <h1 class="gamer text-xl ">OFFERS</h1>
+                <div class="cardContainer  gap-4">
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"> </div>
+                    
+                </div>           
+            </section>
+
+
+
+
+
+        </main>
+
+
+    <footer class="bg-gris h-[5rem]">
+
+    </footer>
+
+    </div>    
+</body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="index.js"></script>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="taildwind.config.js"></script>
+</html>
