@@ -20,11 +20,11 @@ public class GamesDTO {
     private double price;
     private LocalDate date;
     private float discount;
-    @ElementCollection
+
     private List<GameGenre> genre;
-    @ElementCollection
+
     private List<GamePlatform> platforms;
-    @OneToMany
+
     private List<Customer_Game> customerGames = new ArrayList<>();
 
     public GamesDTO(Games games) {

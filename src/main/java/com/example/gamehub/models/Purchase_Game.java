@@ -8,8 +8,6 @@ public class Purchase_Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long purchaseId;
-    private Long gameId;
     private int quantity;
     @ManyToOne
     private Purchase purchase;
@@ -19,10 +17,7 @@ public class Purchase_Game {
     public Purchase_Game() {
     }
 
-    public Purchase_Game(Long id, Long purchaseId, Long gameId, int quantity) {
-        this.id = id;
-        this.purchaseId = purchaseId;
-        this.gameId = gameId;
+    public Purchase_Game(int quantity) {
         this.quantity = quantity;
     }
 
@@ -32,22 +27,6 @@ public class Purchase_Game {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getPurchaseId() {
-        return purchaseId;
-    }
-
-    public void setPurchaseId(Long purchaseId) {
-        this.purchaseId = purchaseId;
-    }
-
-    public Long getGameId() {
-        return gameId;
-    }
-
-    public void setGameId(Long gameId) {
-        this.gameId = gameId;
     }
 
     public int getQuantity() {
@@ -78,8 +57,6 @@ public class Purchase_Game {
     public String toString() {
         return "Purchase_Game{" +
                 "id=" + id +
-                ", productId=" + purchaseId +
-                ", gameId=" + gameId +
                 ", quantity=" + quantity +
                 '}';
     }
