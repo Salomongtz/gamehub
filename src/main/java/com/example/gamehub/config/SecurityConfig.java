@@ -20,8 +20,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.requestMatchers("/web/*", "/web/assets" +
-                        "/images/**", "/web/assets/styles/**").permitAll()
+        http.authorizeHttpRequests(auth -> auth.requestMatchers("/index.html", "/index.js","/pages/store.html" , "/javaScript/store.js",
+                        "/pages/cart.html" , "/javaScript/cart.js","/assets/images/**", "/assets/tipografias/**" , "/taildwind.config.js", "/style.css").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/customers").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/games").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/games").permitAll()
