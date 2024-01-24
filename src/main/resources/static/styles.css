@@ -33,6 +33,19 @@ background: linear-gradient(0deg, rgb(26, 26, 26) 0%, rgba(21,21,21,1) 100%);
     display: inline-block;
 
   }
+
+  .form{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+   
+
+  }
+
+  .form button{
+    margin:auto;
+  }
   
 
 
@@ -41,8 +54,17 @@ background: linear-gradient(0deg, rgb(26, 26, 26) 0%, rgba(21,21,21,1) 100%);
         display: none;
     }
     .login{
-        display: none;    
-}
+        display: none;   
+    } 
+
+    #desktopSections{
+        display: none;
+    } 
+    
+    #mobileSections{
+       width: 80%;
+    }
+
 }
 
   @media screen and (min-width: 768px)  {
@@ -60,9 +82,25 @@ background: linear-gradient(0deg, rgb(26, 26, 26) 0%, rgba(21,21,21,1) 100%);
         display: flex;
         
        
-        text-align: end;
-    
+        text-align: end;    
        
     }
+
+    #storeButton{
+        width: 30rem;
+        
+    }
+
+    #banner{
+        height: 25rem;
+    }
+
+    #mobileSections{
+        display: none;
+    }
+
+    #desktopSections{
+        width: 70vw;
+    } 
     
   }
