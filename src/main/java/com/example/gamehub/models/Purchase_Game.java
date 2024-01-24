@@ -21,6 +21,7 @@ public class Purchase_Game {
         this.quantity = quantity;
     }
 
+
     public Long getId() {
         return id;
     }

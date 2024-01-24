@@ -27,6 +27,11 @@ public class Purchase {
         this.purchaseGames = purchaseGames;
     }
 
+    public void addPurchaseGame(Purchase_Game purchaseGame) {
+        purchaseGame.setPurchase(this);
+        purchaseGames.add(purchaseGame);
+    }
+
     public Long getId() {
         return id;
     }

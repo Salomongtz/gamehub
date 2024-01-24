@@ -46,6 +46,16 @@ public class Games {
         this.platforms = platforms;
     }
 
+    public void addCustomerGame(Customer_Game customerGame) {
+        customerGame.setGames(this);
+        customerGames.add(customerGame);
+    }
+
+    public void addPurchaseGame(Purchase_Game purchaseGame) {
+        purchaseGame.setGame(this);
+        purchaseGames.add(purchaseGame);
+    }
+
     public Long getId() {
         return id;
     }

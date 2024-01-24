@@ -13,6 +13,7 @@ public class Purchase_GameDTO {
     private Games games;
 
     public Purchase_GameDTO(Purchase_Game purchaseGame) {
+        id = purchaseGame.getId();
         quantity = purchaseGame.getQuantity();
         purchase = purchaseGame.getPurchase();
         games = purchaseGame.getGame();
