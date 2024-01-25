@@ -11,7 +11,9 @@ public class Games {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title, description, developer, publisher, imageURL;
+    private String title, description, developer, publisher, imageURL, coverURL;
+    @Column(columnDefinition = "TEXT")
+    private String longDescription;
     private Long sales,stock;
     private double price;
     private LocalDate releaseDate;
