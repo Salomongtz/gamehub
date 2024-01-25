@@ -23,4 +23,9 @@ public class CustomerController {
     public ResponseEntity<?> register(@RequestBody CustomerRecord customerRecord) {
         return customerService.register(customerRecord);
     }
+
+    @PatchMapping
+    public ResponseEntity<String> updateCustomer(@RequestBody CustomerRecord customerRecord, Authentication authentication) {
+        return customerService.updateCustomer(customerRecord, authentication.getName());
+    }
 }

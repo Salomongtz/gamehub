@@ -9,7 +9,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name, lastName, email, password;
+    private String firstName, lastName, email, password;
     @Enumerated(EnumType.STRING)
     private RoleType role=RoleType.CUSTOMER;
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
@@ -20,8 +20,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String name, String lastName, String email, String password) {
-        this.name = name;
+    public Customer(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
@@ -40,12 +40,12 @@ public class Customer {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -100,7 +100,7 @@ public class Customer {
     public String toString() {
         return "Customer{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
