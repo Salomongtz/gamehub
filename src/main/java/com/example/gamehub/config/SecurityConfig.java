@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PATCH, "/api/games").permitAll()
                 .requestMatchers(HttpMethod.PATCH, "/api/customers").hasAuthority("CUSTOMER")
                 .requestMatchers(HttpMethod.DELETE, "/api/games/*").permitAll()
+
                 .requestMatchers("/h2-console/**").permitAll().anyRequest().denyAll());
 
         http.csrf(AbstractHttpConfigurer::disable);

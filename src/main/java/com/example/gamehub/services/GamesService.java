@@ -18,4 +18,6 @@ public interface GamesService {
     GamesDTO findGameDTOById(Long id);
 
     ResponseEntity<String> updateGame(Long id, GameRecord gameRecord);
+    ResponseEntity<String> deleteById(Long id);
+
 }

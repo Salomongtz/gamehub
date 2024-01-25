@@ -19,6 +19,34 @@ public class GamesServiceImplement implements GamesService {
     @Autowired
     GamesRepository gamesRepository;
 
+    private static ResponseEntity<String> verifyNonBlankFields(GameRecord gameRecord) {
+        if (gameRecord.title().isBlank()) {
+            return new ResponseEntity<>("Name cannot be blank", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.description().isBlank()) {
+            return new ResponseEntity<>("Description cannot be blank", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.genres().isEmpty()) {
+            return new ResponseEntity<>("Game must have at least one genre", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.platforms().isEmpty()) {
+            return new ResponseEntity<>("Game must be available on at least one platform", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.price() < 0) {
+            return new ResponseEntity<>("Price cannot be negative", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.rating() == null) {
+            return new ResponseEntity<>("Rating cannot be null", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.releaseDate() == null) {
+            return new ResponseEntity<>("Release date cannot be null", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.discount() < 0) {
+            return new ResponseEntity<>("Discount cannot be negative", HttpStatus.FORBIDDEN);
+        }
+        return null;
+    }
+
     @Override
     public List<Games> getAllGames() {
         return gamesRepository.findAll();
@@ -53,13 +81,19 @@ public class GamesServiceImplement implements GamesService {
         return gamesRepository.findByTitle(title);
     }
 
-
     @Override
     public GamesDTO findGameDTOById(Long id) {
         return new GamesDTO(findById(id));
     }
 
+    public ResponseEntity<String> deleteById(Long id) {
+        gamesRepository.findById(id);
+        gamesRepository.deleteById(id);
+        return new ResponseEntity<>("Game Delete", HttpStatus.OK);
+    }
+
     @Override
+
     public ResponseEntity<String> updateGame(Long id, GameRecord gameRecord) {
         Games games = findById(id);
         if (games == null) {
@@ -83,33 +117,5 @@ public class GamesServiceImplement implements GamesService {
         gamesRepository.save(games);
 
         return ResponseEntity.ok("Game updated successfully");
-    }
-
-    private static ResponseEntity<String> verifyNonBlankFields(GameRecord gameRecord) {
-        if (gameRecord.title().isBlank()) {
-            return new ResponseEntity<>("Name cannot be blank", HttpStatus.FORBIDDEN);
-        }
-        if (gameRecord.description().isBlank()) {
-            return new ResponseEntity<>("Description cannot be blank", HttpStatus.FORBIDDEN);
-        }
-        if (gameRecord.genres().isEmpty()) {
-            return new ResponseEntity<>("Game must have at least one genre", HttpStatus.FORBIDDEN);
-        }
-        if (gameRecord.platforms().isEmpty()) {
-            return new ResponseEntity<>("Game must be available on at least one platform", HttpStatus.FORBIDDEN);
-        }
-        if (gameRecord.price() < 0) {
-            return new ResponseEntity<>("Price cannot be negative", HttpStatus.FORBIDDEN);
-        }
-        if (gameRecord.rating() == null) {
-            return new ResponseEntity<>("Rating cannot be null", HttpStatus.FORBIDDEN);
-        }
-        if (gameRecord.releaseDate() == null) {
-            return new ResponseEntity<>("Release date cannot be null", HttpStatus.FORBIDDEN);
-        }
-        if (gameRecord.discount() < 0) {
-            return new ResponseEntity<>("Discount cannot be negative", HttpStatus.FORBIDDEN);
-        }
-        return null;
     }
 }
