@@ -33,11 +33,26 @@ public class PurchaseServiceImplement implements PurchaseService {
         Customer customer = customerRepository.findByEmail(authentication.getName());
         List<Purchase_Game> purchaseGames = new ArrayList<>();
         double totalAmount = 0d;
+
+        if(customer == null){
+            return ResponseEntity.badRequest().body(customer+"Customer not found");
+        }
+
         for (PurchaseRecord purchaseRecord : purchaseRecords) {
             Games game = gamesRepository.findByTitle(purchaseRecord.title());
+
             if (game == null) {
                 return ResponseEntity.badRequest().body(game+"Game not found");
             }
+
+            if(game.getPrice() < 0){
+                return ResponseEntity.badRequest().body(game+"Price not negative");
+            }
+
+            if(game.getStock() <= 0){
+                return ResponseEntity.badRequest().body(game+"Stock not equals 0");
+            }
+
             totalAmount += game.getPrice() - (game.getPrice() * game.getDiscount());
             Purchase_Game purchaseGame = new Purchase_Game(purchaseRecord.amount());
             game.setSales(game.getSales() + purchaseRecord.amount());
