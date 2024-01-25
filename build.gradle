@@ -32,3 +32,5 @@ bootRun {
 	sourceResources sourceSets.main
 
 }
+
+}
