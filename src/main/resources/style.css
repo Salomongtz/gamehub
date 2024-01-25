@@ -1,0 +1,26 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
+
+body {
+	background-image: url(./images/bg-acounts.jpg);
+	background-position: center center;
+	background-size: cover;
+}
+
+header {
+	min-height: 10%;
+}
+
+main {
+	min-height: 80%;
+}
+
+
+
+footer {
+	min-height: 10%;
+}
