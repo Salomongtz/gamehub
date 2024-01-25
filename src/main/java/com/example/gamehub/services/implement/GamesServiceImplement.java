@@ -112,8 +112,8 @@ public class GamesServiceImplement implements GamesService {
         games.setRating(gameRecord.rating());
         games.setGenres(gameRecord.genres());
         games.setPlatforms(gameRecord.platforms());
-        games.setCoverURL(gameRecord.coverURL());
-        games.setLongDescription(gameRecord.longDescription());
+//        games.setCoverURL(gameRecord.coverURL());
+//        games.setLongDescription(gameRecord.longDescription());
         gamesRepository.save(games);
 
         return ResponseEntity.ok("Game updated successfully");

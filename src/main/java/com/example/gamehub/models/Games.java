@@ -11,9 +11,9 @@ public class Games {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title, description, developer, publisher, imageURL, coverURL;
-    @Column(columnDefinition = "TEXT")
-    private String longDescription;
+    private String title, description, developer, publisher, imageURL;
+//    @Column(columnDefinition = "TEXT")
+//    private String longDescription;
     private Long sales,stock;
     private double price;
     private LocalDate releaseDate;
@@ -182,21 +182,21 @@ public class Games {
         this.rating = rating;
     }
 
-    public String getCoverURL() {
-        return coverURL;
-    }
-
-    public void setCoverURL(String coverURL) {
-        this.coverURL = coverURL;
-    }
-
-    public String getLongDescription() {
-        return longDescription;
-    }
-
-    public void setLongDescription(String longDescription) {
-        this.longDescription = longDescription;
-    }
+//    public String getCoverURL() {
+//        return coverURL;
+//    }
+//
+//    public void setCoverURL(String coverURL) {
+//        this.coverURL = coverURL;
+//    }
+//
+//    public String getLongDescription() {
+//        return longDescription;
+//    }
+//
+//    public void setLongDescription(String longDescription) {
+//        this.longDescription = longDescription;
+//    }
 
     @Override
     public String toString() {
