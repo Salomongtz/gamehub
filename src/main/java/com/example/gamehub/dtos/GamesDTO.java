@@ -15,21 +15,25 @@ public class GamesDTO {
 
     private Long id;
     private String title;
+    private String image;
+    private Long stock;
     private String description;
     private Long sales;
     private double price;
     private LocalDate date;
     private float discount;
-    @ElementCollection
+
     private List<GameGenre> genre;
-    @ElementCollection
+
     private List<GamePlatform> platforms;
-    @OneToMany
+
     private List<Customer_Game> customerGames = new ArrayList<>();
 
     public GamesDTO(Games games) {
         id = games.getId();
         title = games.getTitle();
+        image = games.getImageURL();
+        stock = games.getStock();
         description = games.getDescription();
         sales = games.getSales();
         price = games.getPrice();
@@ -46,6 +50,14 @@ public class GamesDTO {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public Long getStock() {
+        return stock;
     }
 
     public String getDescription() {

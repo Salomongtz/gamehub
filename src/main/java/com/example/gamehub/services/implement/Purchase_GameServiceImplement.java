@@ -5,6 +5,7 @@ import com.example.gamehub.models.Purchase_Game;
 import com.example.gamehub.repositories.Purchase_GameRepository;
 import com.example.gamehub.services.Purchase_GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,4 +26,5 @@ public class Purchase_GameServiceImplement implements Purchase_GameService {
     public List<Purchase_GameDTO> getAllPurchaseGameDTO() {
         return getAllPurchaseGame().stream().map(Purchase_GameDTO::new).collect(Collectors.toList());
     }
+
 }

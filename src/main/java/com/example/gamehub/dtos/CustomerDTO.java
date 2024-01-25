@@ -12,9 +12,9 @@ public class CustomerDTO {
 
     private Long id;
     private String name, lastName, email;
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+
     private List<Purchase> purchases;
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+
     private List<Customer_Game> customer_games;
 
     public CustomerDTO() {

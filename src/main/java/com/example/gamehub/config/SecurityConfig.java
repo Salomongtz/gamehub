@@ -24,13 +24,12 @@ public class SecurityConfig {
                         "/pages/cart.html" , "/javaScript/cart.js","/assets/images/**", "/assets/tipografias/**" , "/taildwind.config.js", "/style.css").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/customers").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/games").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/games").permitAll()
+                .requestMatchers(HttpMethod.POST,"/api/purchase").hasAuthority("CUSTOMER")
+                .requestMatchers(HttpMethod.GET, "/api/games","/api/games/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/customers").hasAuthority("CUSTOMER")
                 .requestMatchers("/h2-console/**").permitAll().anyRequest().denyAll());
 
         http.csrf(AbstractHttpConfigurer::disable);
-
-
 
         http.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.frameOptions(
                 HeadersConfigurer.FrameOptionsConfig::disable));
