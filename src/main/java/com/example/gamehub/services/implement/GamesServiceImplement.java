@@ -48,8 +48,20 @@ public class GamesServiceImplement implements GamesService {
         if(gameRecord.genres().isEmpty()){
             return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
         }
-        if(gameRecord.price() == 0){
+        if(gameRecord.platforms().isEmpty()){
+            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
+        }
+
+        if(gameRecord.price() < 0){
             return new ResponseEntity<>("No puede estar vacio ni ser cero", HttpStatus.FORBIDDEN);
+        }
+
+        if(gameRecord.rating() == null){
+            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
+        }
+
+        if(gameRecord.releaseDate() == null){
+            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
         }
 
         gamesRepository.save(game);
