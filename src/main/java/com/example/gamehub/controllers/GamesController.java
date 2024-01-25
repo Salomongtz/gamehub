@@ -32,4 +32,8 @@ public class GamesController {
         return gamesService.getGameDTOById(id);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String>deleteGameById(@PathVariable Long id){
+        return gamesService.deleteById(id);
+    }
 }

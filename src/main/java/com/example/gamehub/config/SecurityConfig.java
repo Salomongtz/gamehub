@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST,"/api/purchase").hasAuthority("CUSTOMER")
                 .requestMatchers(HttpMethod.GET, "/api/games","/api/games/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/customers").hasAuthority("CUSTOMER")
+                .requestMatchers(HttpMethod.DELETE,"/api/games/*").permitAll()
                 .requestMatchers("/h2-console/**").permitAll().anyRequest().denyAll());
 
         http.csrf(AbstractHttpConfigurer::disable);

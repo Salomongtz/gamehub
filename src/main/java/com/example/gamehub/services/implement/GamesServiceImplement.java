@@ -79,12 +79,15 @@ public class GamesServiceImplement implements GamesService {
     }
 
     @Override
-    public Games getGameById(Long id) {
-        return gamesRepository.findById(id).orElse(null);
+    public ResponseEntity<String> deleteById(Long id) {
+        gamesRepository.findById(id);
+        gamesRepository.deleteById(id);
+        return new ResponseEntity<>("Game Delete", HttpStatus.OK);
     }
+
 
     @Override
     public GamesDTO getGameDTOById(Long id) {
-        return new GamesDTO(getGameById(id));
+        return new GamesDTO(findById(id));
     }
 }
