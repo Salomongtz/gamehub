@@ -26,4 +26,10 @@ public class GamesController {
     public List<GamesDTO> getAllGames() {
         return gamesService.getAllGamesDTO();
     }
+
+    @GetMapping("/{id}")
+    public GamesDTO getGameById(@PathVariable Long id) {
+        return gamesService.getGameDTOById(id);
+    }
+
 }

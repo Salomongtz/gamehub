@@ -33,3 +33,36 @@ background: linear-gradient(0deg, rgb(26, 26, 26) 0%, rgba(21,21,21,1) 100%);
     display: inline-block;
 
   }
+  
+
+
+@media screen and (max-width: 768px) {
+    .navBar{
+        display: none;
+    }
+    .login{
+        display: none;    
+}
+}
+
+  @media screen and (min-width: 768px)  {
+    .login{
+        display: flex;
+    }
+
+    .hamburg{
+        display: none;
+        
+    }
+    
+    
+    .navBar{
+        display: flex;
+        
+       
+        text-align: end;
+    
+       
+    }
+    
+  }
