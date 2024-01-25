@@ -37,6 +37,33 @@ public class GamesServiceImplement implements GamesService {
                 gameRecord.description(), gameRecord.imageURL(), gameRecord.sales(), gameRecord.price(),
                 gameRecord.releaseDate(), gameRecord.discount(), gameRecord.rating(), gameRecord.genres(),
                 gameRecord.platforms());
+
+        if(gameRecord.title().isBlank()){
+            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
+        }
+        if(gameRecord.description().isBlank()){
+            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
+        }
+
+        if(gameRecord.genres().isEmpty()){
+            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
+        }
+        if(gameRecord.platforms().isEmpty()){
+            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
+        }
+
+        if(gameRecord.price() < 0){
+            return new ResponseEntity<>("No puede estar vacio ni ser cero", HttpStatus.FORBIDDEN);
+        }
+
+        if(gameRecord.rating() == null){
+            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
+        }
+
+        if(gameRecord.releaseDate() == null){
+            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
+        }
+
         gamesRepository.save(game);
         return new ResponseEntity<>("Created successfully!", HttpStatus.CREATED);
     }

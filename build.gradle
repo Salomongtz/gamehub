@@ -27,3 +27,9 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+bootRun {
+
+	sourceResources sourceSets.main
+
+}
+

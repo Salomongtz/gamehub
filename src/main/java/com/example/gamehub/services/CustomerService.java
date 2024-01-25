@@ -2,6 +2,7 @@ package com.example.gamehub.services;
 
 import com.example.gamehub.dtos.CustomerDTO;
 import com.example.gamehub.models.Customer;
+import com.example.gamehub.records.CustomerRecord;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface CustomerService {
 
     CustomerDTO getCustomerDTOByEmail(String email);
 
-    ResponseEntity<?> register(String name, String lastName, String email, String password);
+    ResponseEntity<?> register(CustomerRecord customerRecord);
 }

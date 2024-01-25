@@ -27,6 +27,15 @@ public class Customer {
         this.password = password;
     }
 
+    public void addPurchase(Purchase purchase){
+        purchase.setCustomer(this);
+        purchases.add(purchase);
+    }
+
+    public void addCustomer_game(Customer_Game customer_game){
+        customer_game.setCustomer(this);
+        customer_games.add(customer_game);
+    }
     public Long getId() {
         return id;
     }

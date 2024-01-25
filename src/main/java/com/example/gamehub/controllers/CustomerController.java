@@ -1,6 +1,7 @@
 package com.example.gamehub.controllers;
 
 import com.example.gamehub.dtos.CustomerDTO;
+import com.example.gamehub.records.CustomerRecord;
 import com.example.gamehub.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,7 @@ public class CustomerController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> register(@RequestParam String name, @RequestParam String lastName, @RequestParam String email,
-                                   @RequestParam String password) {
-        return customerService.register(name, lastName, email, password);
+    public ResponseEntity<?> register(@RequestBody CustomerRecord customerRecord) {
+        return customerService.register(customerRecord);
     }
 }
