@@ -12,7 +12,7 @@ public class Games {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title, description, developer, publisher, imageURL;
-    private Long sales;
+    private Long sales,stock;
     private double price;
     private LocalDate releaseDate;
     private float discount;
@@ -82,6 +82,14 @@ public class Games {
 
     public void setSales(Long sales) {
         this.sales = sales;
+    }
+
+    public Long getStock() {
+        return stock;
+    }
+
+    public void setStock(Long stock) {
+        this.stock = stock;
     }
 
     public double getPrice() {

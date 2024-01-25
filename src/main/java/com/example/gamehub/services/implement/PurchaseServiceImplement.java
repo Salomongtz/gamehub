@@ -12,11 +12,13 @@ import com.example.gamehub.services.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class PurchaseServiceImplement implements PurchaseService {
     @Autowired
     CustomerRepository customerRepository;
@@ -31,19 +33,20 @@ public class PurchaseServiceImplement implements PurchaseService {
         Customer customer = customerRepository.findByEmail(authentication.getName());
         List<Purchase_Game> purchaseGames = new ArrayList<>();
         double totalAmount = 0d;
-
         for (PurchaseRecord purchaseRecord : purchaseRecords) {
-            Games games = gamesRepository.findByTitle(purchaseRecord.title());
-            totalAmount += games.getPrice() - (games.getPrice() * games.getDiscount());
+            Games game = gamesRepository.findByTitle(purchaseRecord.title());
+            if (game == null) {
+                return ResponseEntity.badRequest().body(game+"Game not found");
+            }
+            totalAmount += game.getPrice() - (game.getPrice() * game.getDiscount());
             Purchase_Game purchaseGame = new Purchase_Game(purchaseRecord.amount());
-
-            games.addPurchaseGame(purchaseGame);
+            game.setSales(game.getSales() + purchaseRecord.amount());
+            game.setStock(game.getStock() - purchaseRecord.amount());
+            game.addPurchaseGame(purchaseGame);
             purchaseGames.add(purchaseGame);
         }
-
         Purchase purchase = new Purchase(LocalDate.now(), totalAmount, customer, purchaseGames);
-
         purchaseRepository.save(purchase);
-        return null;
+        return ResponseEntity.ok( "Purchase successful" );
     }
 }
