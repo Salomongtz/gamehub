@@ -1,7 +1,6 @@
 package com.example.gamehub.services.implement;
 
 import com.example.gamehub.dtos.GamesDTO;
-import com.example.gamehub.models.GameGenre;
 import com.example.gamehub.models.Games;
 import com.example.gamehub.records.GameRecord;
 import com.example.gamehub.repositories.GamesRepository;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

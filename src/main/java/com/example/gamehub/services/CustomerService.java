@@ -15,4 +15,6 @@ public interface CustomerService {
     CustomerDTO getCustomerDTOByEmail(String email);
 
     ResponseEntity<?> register(CustomerRecord customerRecord);
+
+    ResponseEntity<String> updateCustomer(CustomerRecord customerRecord, String email);
 }

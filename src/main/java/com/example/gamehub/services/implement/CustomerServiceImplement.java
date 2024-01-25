@@ -44,7 +44,7 @@ public class CustomerServiceImplement implements CustomerService {
 
     @Override
     public ResponseEntity<?> register(CustomerRecord customerRecord) {
-        ResponseEntity<Object> BAD_REQUEST = runVerifications(customerRecord.firstName(), customerRecord.lastName(), customerRecord.email(), customerRecord.password());
+        ResponseEntity<String> BAD_REQUEST = runVerifications(customerRecord.firstName(), customerRecord.lastName(), customerRecord.email(), customerRecord.password());
         if (BAD_REQUEST != null) {
             return BAD_REQUEST;
         }
@@ -53,7 +53,25 @@ public class CustomerServiceImplement implements CustomerService {
         return new ResponseEntity<>(customer + "\nCreated successfully!", HttpStatus.CREATED);
     }
 
-    private ResponseEntity<Object> runVerifications(String firstName, String lastName, String email, String password) {
+    @Override
+    public ResponseEntity<String> updateCustomer(CustomerRecord customerRecord, String email) {
+        Customer customer = getCustomerByEmail(email);
+        if (customer == null) {
+            return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+        }
+        ResponseEntity<String> BAD_REQUEST = runVerifications(customerRecord.firstName(), customerRecord.lastName(), customerRecord.email(), customerRecord.password());
+        if (BAD_REQUEST != null) {
+            return BAD_REQUEST;
+        }
+        customer.setFirstName(customerRecord.firstName());
+        customer.setLastName(customerRecord.lastName());
+        customer.setEmail(customerRecord.email());
+        customer.setPassword(passwordEncoder.encode(customerRecord.password()));
+        customerRepository.save(customer);
+        return new ResponseEntity<>(customer + "\nUpdated successfully!", HttpStatus.OK);
+    }
+
+    private ResponseEntity<String> runVerifications(String firstName, String lastName, String email, String password) {
         if (firstName.isBlank()) {
             return new ResponseEntity<>("Missing NAME data", HttpStatus.BAD_REQUEST);
         } else if (lastName.isBlank()) {
