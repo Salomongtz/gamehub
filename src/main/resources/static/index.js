@@ -7,6 +7,13 @@ let app = createApp({
 
         logIn: false,
         signUp: false,
+
+        name:"sofi",
+        lastName:"",
+        email:"",
+        password:"",
+
+        error:"",
     
     };
   },
@@ -15,6 +22,35 @@ let app = createApp({
       showMenu(){
         this.navMenu = !this.navMenu      
       },
+
+
+      login(){
+        axios.post("/api/login?email="+this.email+"&password="+this.password)
+          .then(response => {          
+              console.log(response)           
+           
+          })
+          .catch(error => {
+            this.error = "Incorrect username or password"
+          console.log("Error", error)       
+  
+          })
+      },
+  
+      register(){
+        axios.post("/api/customers?name="+this.name+"&lastName="+this.lastName+"&email="+this.email+"&password="+this.password)
+          .then(response => {
+            console.log(response)
+            console.log(this.name)
+            this.login()
+          })
+          .catch(error => {
+           
+          console.log("Error", error)       
+  
+          })
+      },
+  
 
 
       
