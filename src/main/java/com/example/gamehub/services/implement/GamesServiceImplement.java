@@ -78,13 +78,17 @@ public class GamesServiceImplement implements GamesService {
         return gamesRepository.findByTitle(title);
     }
 
+
     @Override
-    public Games getGameById(Long id) {
-        return gamesRepository.findById(id).orElse(null);
+    public GamesDTO findGameDTOById(Long id) {
+        return new GamesDTO(findById(id));
     }
 
     @Override
-    public GamesDTO getGameDTOById(Long id) {
-        return new GamesDTO(getGameById(id));
+    public ResponseEntity<String> updateGame(Long id, GameRecord gameRecord) {
+        if (findById(id) == null) {
+            return new ResponseEntity<>("Game not found", HttpStatus.NOT_FOUND);
+        }
+        return createGame(gameRecord);
     }
 }
