@@ -38,31 +38,8 @@ public class GamesServiceImplement implements GamesService {
                 gameRecord.releaseDate(), gameRecord.discount(), gameRecord.rating(), gameRecord.genres(),
                 gameRecord.platforms());
 
-        if(gameRecord.title().isBlank()){
-            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
-        }
-        if(gameRecord.description().isBlank()){
-            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
-        }
-
-        if(gameRecord.genres().isEmpty()){
-            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
-        }
-        if(gameRecord.platforms().isEmpty()){
-            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
-        }
-
-        if(gameRecord.price() < 0){
-            return new ResponseEntity<>("No puede estar vacio ni ser cero", HttpStatus.FORBIDDEN);
-        }
-
-        if(gameRecord.rating() == null){
-            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
-        }
-
-        if(gameRecord.releaseDate() == null){
-            return new ResponseEntity<>("este campo no puede estar vacio", HttpStatus.FORBIDDEN);
-        }
+        ResponseEntity<String> FORBIDDEN = verifyNonBlankFields(gameRecord);
+        if (FORBIDDEN != null) return FORBIDDEN;
 
         gamesRepository.save(game);
         return new ResponseEntity<>("Created successfully!", HttpStatus.CREATED);
@@ -86,9 +63,55 @@ public class GamesServiceImplement implements GamesService {
 
     @Override
     public ResponseEntity<String> updateGame(Long id, GameRecord gameRecord) {
-        if (findById(id) == null) {
+        Games games = findById(id);
+        if (games == null) {
             return new ResponseEntity<>("Game not found", HttpStatus.NOT_FOUND);
         }
-        return createGame(gameRecord);
+        ResponseEntity<String> FORBIDDEN = verifyNonBlankFields(gameRecord);
+        if (FORBIDDEN != null) return FORBIDDEN;
+        games.setTitle(gameRecord.title());
+        games.setDescription(gameRecord.description());
+        games.setDeveloper(gameRecord.developer());
+        games.setImageURL(gameRecord.imageURL());
+        games.setSales(gameRecord.sales());
+        games.setPrice(gameRecord.price());
+        games.setReleaseDate(gameRecord.releaseDate());
+        games.setDiscount(gameRecord.discount());
+        games.setRating(gameRecord.rating());
+        games.setGenres(gameRecord.genres());
+        games.setPlatforms(gameRecord.platforms());
+        games.setCoverURL(gameRecord.coverURL());
+        games.setLongDescription(gameRecord.longDescription());
+        gamesRepository.save(games);
+
+        return ResponseEntity.ok("Game updated successfully");
+    }
+
+    private static ResponseEntity<String> verifyNonBlankFields(GameRecord gameRecord) {
+        if (gameRecord.title().isBlank()) {
+            return new ResponseEntity<>("Name cannot be blank", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.description().isBlank()) {
+            return new ResponseEntity<>("Description cannot be blank", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.genres().isEmpty()) {
+            return new ResponseEntity<>("Game must have at least one genre", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.platforms().isEmpty()) {
+            return new ResponseEntity<>("Game must be available on at least one platform", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.price() < 0) {
+            return new ResponseEntity<>("Price cannot be negative", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.rating() == null) {
+            return new ResponseEntity<>("Rating cannot be null", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.releaseDate() == null) {
+            return new ResponseEntity<>("Release date cannot be null", HttpStatus.FORBIDDEN);
+        }
+        if (gameRecord.discount() < 0) {
+            return new ResponseEntity<>("Discount cannot be negative", HttpStatus.FORBIDDEN);
+        }
+        return null;
     }
 }
