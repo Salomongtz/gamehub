@@ -2,6 +2,7 @@ package com.example.gamehub.services.implement;
 
 import com.example.gamehub.dtos.CustomerDTO;
 import com.example.gamehub.models.Customer;
+import com.example.gamehub.records.CustomerRecord;
 import com.example.gamehub.repositories.CustomerRepository;
 import com.example.gamehub.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +43,12 @@ public class CustomerServiceImplement implements CustomerService {
     }
 
     @Override
-    public ResponseEntity<?> register(String name, String lastName, String email, String password) {
-        ResponseEntity<Object> BAD_REQUEST = runVerifications(name, lastName, email, password);
+    public ResponseEntity<?> register(CustomerRecord customerRecord) {
+        ResponseEntity<Object> BAD_REQUEST = runVerifications(customerRecord.firstName(), customerRecord.lastName(), customerRecord.email(), customerRecord.password());
         if (BAD_REQUEST != null) {
             return BAD_REQUEST;
         }
-        Customer customer = new Customer(name, lastName, email, passwordEncoder.encode(password));
+        Customer customer = new Customer(customerRecord.firstName(), customerRecord.lastName(), customerRecord.email(), passwordEncoder.encode(customerRecord.password()));
         customerRepository.save(customer);
         return new ResponseEntity<>(customer + "\nCreated successfully!", HttpStatus.CREATED);
     }
@@ -62,11 +63,11 @@ public class CustomerServiceImplement implements CustomerService {
         } else if (password.isBlank()) {
             return new ResponseEntity<>("Missing PASSWORD data", HttpStatus.BAD_REQUEST);
         }
-        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8,20}$";
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@$%^&-+=()])(?=\\S+$).{8,20}$";
 
         if (!password.matches(regex)) {
             return new ResponseEntity<>("Password should have at least one uppercase letter, one lowercase " +
-                    "letter, one number and one special character (!@#$%&) and should be at least 8 characters long",
+                    "letter, one number and one special character (!@$%^&-+=()) and should be at least 8 characters long",
                     HttpStatus.BAD_REQUEST);
         }
         if (getCustomerByEmail(email) != null) {
