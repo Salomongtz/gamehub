@@ -7,6 +7,8 @@ import java.util.List;
 
 public record GameRecord(
         String title,
+        String image,
+        Long stock,
         String description,
         String developer,
         String publisher,
