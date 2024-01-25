@@ -15,6 +15,8 @@ public class GamesDTO {
 
     private Long id;
     private String title;
+    private String image;
+    private Long stock;
     private String description;
     private Long sales;
     private double price;
@@ -30,6 +32,8 @@ public class GamesDTO {
     public GamesDTO(Games games) {
         id = games.getId();
         title = games.getTitle();
+        image = games.getImageURL();
+        stock = games.getStock();
         description = games.getDescription();
         sales = games.getSales();
         price = games.getPrice();
@@ -46,6 +50,14 @@ public class GamesDTO {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public Long getStock() {
+        return stock;
     }
 
     public String getDescription() {
