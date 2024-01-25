@@ -4,6 +4,7 @@ let app = createApp({
     data() {
         return {
             navMenu: false,
+            games: [],
 
         };
     },

@@ -4,31 +4,34 @@ let app = createApp({
     data() {
         return {
             navMenu: false,
-            games:[],
+            games: [],
 
         };
     },
+    created() {
+        this.loadData()
+    },
 
     methods: {
-        loadData(){
+        loadData() {
             axios.get("/api/games")
-            .then(response => {
-                this.games = response.data
-                console.log("Games", this.games)
-            })
-            .catch(error => {
-                if (error.response) {
-                    Swal.fire({
-                        background: "linear-gradient(to right, #191970, #00BFFF) no-repeat 0 0 / cover",
-                        color: "white",
-                        icon: 'error',
-                        title: 'Dear customer, we must inform you:',
-                        text: `${JSON.stringify(error.response.data, null, 2)}`,
-                        footer:  `Error de respuesta: ${error.response.status}`
-                    });
-                }
-            });
-            
+                .then(response => {
+                    this.games = response.data
+                    console.log("Games", this.games)
+                })
+                .catch(error => {
+                    if (error.response) {
+                        Swal.fire({
+                            background: "linear-gradient(to right, #191970, #00BFFF) no-repeat 0 0 / cover",
+                            color: "white",
+                            icon: 'error',
+                            title: 'Dear customer, we must inform you:',
+                            text: `${JSON.stringify(error.response.data, null, 2)}`,
+                            footer: `Error de respuesta: ${error.response.status}`
+                        });
+                    }
+                });
+
         },
 
         // filtrarjuegos(){

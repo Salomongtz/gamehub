@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
     <link rel="shortcut icon" href="../assets/images/SXESlogo.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Store</title>
 </head>
 
@@ -31,8 +33,10 @@
             <div class="navBar  ">
                 <nav
                     class="flex items-center text-center  justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0  ">
-                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="../index.html">Home</a>
-                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"  href="./store.html">Store</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+                        href="../index.html">Home</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+                        href="./store.html">Store</a>
                     <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="#">My account</a>
                     <a class="bg-amarillo text-negro  w-[10rem] h-[2rem] rounded-md" href="./cart.html">Cart</a>
                     <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="#" class="">About
@@ -74,70 +78,67 @@
                 <img src="../assets/images/StoreIndex.png" alt="" class="object-cover">
             </a>
 
-            <section 
-                class=" flex flex-wrap  justify-center  font-semibold text-amarillo  items-center gap-4 ">
+            <section class=" flex flex-wrap  justify-center  font-semibold text-amarillo  items-center gap-4 ">
                 <h1 class="gamer text-xl "></h1>
                 <div class="flex flex-wrap  justify-center items-center pr-4">
 
-                    <!-- flip-card-container -->
-                    <div class="flip-card-container" style="--hue: 220">
-                        <div class="flip-card">
+                    <template v-if="games.length > 0 " v-for="game of games">
+                        <!-- flip-card-container -->
+                        <div class="flip-card-container">
+                            <div class="flip-card">
 
-                            <div class="card-front">
-                                <figure>
-                                    <div class="img-bg"></div>
-                                    <img src="https://images.unsplash.com/photo-1486162928267-e6274cb3106f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                                        alt="Brohm Lake">
-                                    <figcaption>Brohm Lake</figcaption>
-                                </figure>
+                                <div class="card-front">
+                                    <figure>
+                                        <div class="img-bg"></div>
+                                        <img src="https://images.unsplash.com/photo-1545436864-cd9bdd1ddebc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                                            alt="Image 2">
+                                        <figcaption>{{game.title}}</figcaption>
+                                    </figure>
 
-                                <ul>
-                                    <li>Name</li>
-                                    <li>Suport</li>
-                                    <li>Plataform</li>
-                                    <li>Detail 4</li>
-                                    <li>Detail 5</li>
-                                </ul>
+                                    <ul>
+                                        <li>{{game.description}}</li>
+                                        <li>>{{game.date}}</li>
+                                        <li>>{{game.plataforms}}</li>
+                                        <li>Detail 4</li>
+                                        <li>Detail 5</li>
+                                    </ul>
+                                </div>
+
+                                <div class="card-back flex flex-col items-center gap-12">
+                                    <figure>
+                                        <div class="img-bg"></div>
+                                        <img src="https://images.unsplash.com/photo-1545436864-cd9bdd1ddebc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                                            alt="image-2">
+                                    </figure>
+
+                                    <div class="flex  items-center gap-2">
+                                        <img class="h-[4rem] w-[4rem] bg-amarillo" src="../assets/images/AddBuy.png"
+                                            alt="AddPurchase">
+                                        <button class="p-2">Add to Purchase</button>
+                                    </div>
+
+                                    <div class="flex items-center gap-2">
+                                        <img class="h-[4rem] w-[4rem] bg-amarillo" src="../assets/images/Purchase.png"
+                                            alt="Purchase">
+                                        <button class="p-2">Purchase</button>
+                                    </div>
+
+                                    <div class="design-container">
+                                        <span class="design design--1">hola</span>
+                                        <span class="design design--2"></span>
+                                        <span class="design design--3"></span>
+                                        <span class="design design--4"></span>
+                                        <span class="design design--5"></span>
+                                        <span class="design design--6"></span>
+                                        <span class="design design--7"></span>
+                                        <span class="design design--8"></span>
+                                    </div>
+                                </div>
+
                             </div>
-
-                            <div class="card-back flex flex-col items-center gap-12">
-                                <figure>
-                                    <div class="img-bg"></div>
-                                    <img src="https://images.unsplash.com/photo-1486162928267-e6274cb3106f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                                        alt="Brohm Lake">
-                                </figure>
-
-                                
-                                <div class="flex  items-center gap-2">
-                                    <img class="h-[4rem] w-[4rem] bg-amarillo" src="../assets/images/AddBuy.png" alt="AddPurchase">
-                                    <button class="p-2" >Add to Purchase</button>
-                                </div>
-
-                                <div class="flex items-center gap-2" >
-                                    <img  class="h-[4rem] w-[4rem] bg-amarillo" src="../assets/images/Purchase.png" alt="Purchase">
-                                    <button class="p-2" >Purchase</button>
-                                </div>
-
-                                <div class="design-container">
-                                    <span class="design design--1"></span>
-                                    <span class="design design--2"></span>
-                                    <span class="design design--3"></span>
-                                    <span class="design design--4"></span>
-                                    <span class="design design--5"></span>
-                                    <span class="design design--6"></span>
-                                    <span class="design design--7"></span>
-                                    <span class="design design--8"></span>
-                                </div>
-                            </div>
-
                         </div>
-                    </div>
-                    <!-- /flip-card-container -->
-
-
-                </div>
-
-            </section>
+                        <!-- /flip-card-container -->
+                    </template>
 
         </main>
 
@@ -149,8 +150,8 @@
     </div>
 </body>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="../javaScript/store.js"></script>
-<script src="https://cdn.tailwindcss.com"></script>
 <script src="../taildwind.config.js"></script>
 
 </html>
