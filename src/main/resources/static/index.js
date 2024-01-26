@@ -56,8 +56,6 @@ let app = createApp({
             return 0
         }
         )
-    
-
         this.newGames = juegosPorFecha.slice(1,6)
         this.newest= juegosPorFecha.slice(0,1)
         console.log(juegosPorFecha)
@@ -75,6 +73,10 @@ let app = createApp({
         this.offerGames = juegosPorOferta.slice(0,6)
         console.log(this.offerGames)
     },
+
+    // genreSlice(){
+    //   let genres = this.games
+    // }
 
 
 
