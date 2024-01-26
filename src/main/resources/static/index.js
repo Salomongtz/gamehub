@@ -8,6 +8,11 @@ let app = createApp({
       logIn: false,
       signUp: false,
 
+      games:[],
+      newGames:"",
+      newest:{},
+      offerGames:[],
+
       name: "",
       lastName: "",
       email: "",
@@ -17,15 +22,73 @@ let app = createApp({
 
     };
   },
-  created() {
-    let str = `asd#asd`
-    console.log(str);
-  },
+
+  
+    beforeCreate(){
+        axios.get("/api/games")
+        .then(response => {
+            this.games = response.data
+            this.gamesDate = this.games.date
+            console.log(response)
+            
+            this.newGamesFunction()
+            this.offerGamesFunction()
+            
+  
+          })
+          .catch(error => {
+            
+            console.log("Error", error)
+  
+          })
+      },
+    
+
+  
+  
 
   methods: {
+
+    newGamesFunction(){
+        let juegosPorFecha = this.games.toSorted( (a, b) => {
+            if (a.date < b.date) return 1
+            if (a.date > b.date) return -1
+            return 0
+        }
+        )
+    
+
+        this.newGames = juegosPorFecha.slice(1,6)
+        this.newest= juegosPorFecha.slice(0,1)
+        console.log(juegosPorFecha)
+        console.log(this.newest)
+        return juegosPorFecha
+       
+          },
+    offerGamesFunction(){
+        let juegosPorOferta = this.games.toSorted( (a, b) => {
+            if (a.discount < b.discount) return 1
+            if (a.discount > b.discount) return -1
+            return 0
+        }
+        )
+        this.offerGames = juegosPorOferta.slice(0,6)
+        console.log(this.offerGames)
+    },
+
+
+
+
+    
+    
+
+
+
+
+    // ---------FUNCIONES DE MODAL PARA LOGIN Y HAMB MENU---------------------
     showMenu() {
       this.navMenu = !this.navMenu
-    },
+    },    
 
 
     login() {
