@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="shortcut icon" href="../assets/images/SXESlogo.png" type="image/x-icon">
+    <title>Store</title>
+</head>
+
+<body>
+    <div id="app">
+        <header class="gradient bg-gris h-[6rem] w-full gap-4 relative flex items-center">
+            <div class="w-24 ml-4">
+                <img src="../assets/images/SXESlogo.png" alt="">
+            </div>
+
+
+            <div class="navBar">
+                <nav
+                    class="flex items-center text-center  justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0">
+                    <a class="bg-amarillo text-negro  w-[10rem] h-[2rem] rounded-md" href="./admin.html">Admin</a>
+                </nav>
+            </div>
+
+        </header>
+
+
+        <main class="flex flex-col items-center h-full mb-16 gap-12">
+
+            <section class="flex flex-col items-center">
+
+                <h2 class="gamer text-3xl font-semibold text-amarillo mt-6">Admin area</h2>
+
+                <div class="flex gap-10">
+                    <form
+                        class="h-full max-w-md mx-auto bg-gris p-6 rounded-md shadow-lg sm:w-[600px] block text-sm font-medium text-gray-600 mt-6">
+                        <h2 class="text-2xl font-bold mb-4 text-center text-amarillo">Delete Games:</h2>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-amarillo">Select Title:</label>
+                            <select class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div>
+                            <button type="button"
+                                class="w-full p-2 bg-amarillo hover:text-amarillo text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                                Delete Game
+                            </button>
+                        </div>
+                    </form>
+
+                    <form id="createGameForm"
+                        class="max-w-md mx-auto bg-gris p-6 rounded-md shadow-lg sm:w-[600px] block text-sm font-medium text-gray-600 mt-6">
+                        <h2 class="text-2xl font-bold mb-4 text-center text-amarillo">Create Game:</h2>
+                        <div class="mb-4">
+                            <label for="title" class="block text-sm font-medium text-amarillo">Title:</label>
+                            <input type="text" id="title"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="description"
+                                class="block text-sm font-medium text-amarillo">Description:</label>
+                            <textarea id="description" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                                required></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label for="developer" class="block text-sm font-medium text-amarillo">Developer:</label>
+                            <input type="text" id="developer"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="imageURL" class="block text-sm font-medium text-amarillo">Image URL:</label>
+                            <input type="text" id="imageURL"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="sales" class="block text-sm font-medium text-amarillo">Sales:</label>
+                            <input type="number" id="sales"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="price" class="block text-sm font-medium text-amarillo">Price:</label>
+                            <input type="number" id="price"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="releaseDate" class="block text-sm font-medium text-amarillo">Release
+                                Date:</label>
+                            <input type="date" id="releaseDate"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="discount" class="block text-sm font-medium text-amarillo">Discount:</label>
+                            <input type="number" id="discount"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="rating" class="block text-sm font-medium text-amarillo">Rating:</label>
+                            <input type="number" id="rating"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        </div>
+
+                        <div>
+                            <button type="button" onclick="createGame()"
+                                class="w-full p-2 bg-amarillo hover:text-amarillo text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                                Create Game
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <footer class="bg-gris h-[5rem]">
+
+        </footer>
+
+    </div>
+</body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="../javaScript/store.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../taildwind.config.js"></script>
+
+</html>
