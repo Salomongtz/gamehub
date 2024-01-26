@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="shortcut icon" href="assets/images/SXESlogo.png" type="image/x-icon">
   <title>Game Hub</title>
 </head>
 
@@ -71,61 +72,159 @@
 
       <!--SECCION ESCRITORIO -->
 
-      <p class="text-white">Welcome, {{name}} </p>
-      {{logName}}
-      <div id="desktopSections" class="flex flex-col gap-24">
-        <section id="" class="cardContainer flex flex-col items-center gap-10">
-          <h1 class="gamer text-3xl font-semibold text-amarillo">NEW</h1>
+     
+      <div id="desktopSections" class=" flex flex-col gap-24 items-center">
 
-          <div class="bg-gris rounded-md h-[30rem] w-[100%]"></div>
-          <div class="cardContainer pr-4">
-            <div class="card bg-gris rounded-md h-[15rem] w-[20rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[20rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[20rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[20rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[20rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[20rem]"></div>
+
+       <!-- --------------------- NEW GAMES SECTION----------------------- -->
+        
+        <section id="" class="cardContainer flex flex-col items-center gap-10  w-[70vw]">
+          <h1 class="gamer text-5xl font-semibold text-amarillo">NEW</h1>
+
+          <div class="bg-gris rounded-md h-[20rem] w-[100%] relative  " v-for="newes of newest" >
+            <img v-bind:src="newes.image" alt=""class="w-full h-full object-cover">
+            <div class="flex bg-black/80 w-full h-24 absolute bottom-0 items-center">
+                <p class="gamer text-[5rem] text-white ">{{newes.title}}</p>
+                <p class="text-white ">{{newes.description}} </p>
+            </div>
+            
+          </div>
+
+          <div class="cardContainer pb-10" >
+            <div class="card h-[20rem] w-[20rem] gradient text-white bg-gris rounded-md inline-block " v-for="games of newGames">
+                <a href="">
+                    <img v-bind:src="games.image" alt="" >
+                    <div class=" p-2 text-wrap">
+                        <div class="flex justify-between items-center">
+                            <h1 class="text-lg font-semibold">{{games.title}}   </h1>
+                            <!-- <h1>{{(games.price - 2)}}</h1> -->
+                            <h1 class="bg-morado p-2 font-semibold">{{Intl.NumberFormat('en-US',
+                                {style: 'currency',
+                                currency: 'USD'}).
+                                format(games.price)}}   </h1>
+                        </div>
+                        
+                        <h1 class="text-sm line-clamp-3 pt-2">{{games.description}}...   </h1>
+                        
+                        <div v-for="genre of games.genre" class="inline-block my-2 wrap-none">
+                            <p class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm " >{{genre }} </p>
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+           
+            
           </div>
         </section>
+         <!-- --------------------- SPECIAL OFFERS SECTION----------------------- -->
+        <section id="ofers" class="  flex flex-col items-center w-[70vw] gap-10">
+          <h1 class="gamer text-5xl text-amarillo">SPECIAL OFFERS</h1>
 
-        <section id="" class="cardContainer flex flex-col font-semibold text-amarillo items-center gap-4">
-          <h1 class="gamer text-3xl">SPECIAL OFFERS</h1>
+          <div class="cardContainer pb-10">
+            <div class= " card  inline-block"  v-for="games of offerGames">
+                <div class=" gradient rounded-md h-[20rem] w-[30rem] text-white ">
+    
+                    <a href="">
+                        <img v-bind:src="games.image" alt="" class="w-full">
+                        <div class=" p-2 text-wrap relative">
+                            <div class="flex justify-between ">
+                                <h1 class="text-lg font-semibold">{{games.title}}   </h1>
 
+                                <div class="flex  gap-6 pt-2">
+                                    <div class="flex flex-col items-center gap-2">
+                                        <p class ="text-sm">BEFORE</p> 
+                                        <p class="py-2 b-[0.2rem] font-semibold line-through">{{Intl.NumberFormat('en-US',
+                                        {style: 'currency',
+                                        currency: 'USD'}).
+                                        format((games.price *1.1))}}</p>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-2"> 
+                                        <p class ="text-sm"> NOW</p>  
+                                        <h1 class="bg-morado p-2 font-semibold">{{Intl.NumberFormat('en-US',
+                                        {style: 'currency',
+                                        currency: 'USD'}).
+                                        format(games.price)}}   </h1>
+                                    </div>
+                                </div>
+                                <!-- <h1></h1> -->
+                               
+                            </div>
+                            
+                          
+                            <div class="absolute bottom-2 left-2">
+                                <div v-for="genre of games.genre"  class="inline-block  wrap-none ">
+                                    <p class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm " >{{genre }} </p>
+        
+                                </div>
+
+                            </div>
+                            
+                        </div>
+                    </a>
+    
+    
+                </div>
+                
+              </div>
+
+          </div>
+
+          
+        </section>
+
+        <section id="categoryBrowse" class=" flex flex-col font-semibold  items-center gap-4 bg-gris  py-10">
+            <div class="">
+                <h1 class="gamer text-amarillo text-5xl text-center mb-10">BROWSE BY CATEGORY</h1>
           <div class="cardContainer pr-4 w-[60rem]">
-            <div class="card bg-gris rounded-md h-[20rem] w-[30rem]"></div>
-            <div class="card bg-gris rounded-md h-[20rem] w-[30rem]"></div>
-            <div class="card bg-gris rounded-md h-[20rem] w-[30rem]"></div>
-            <div class="card bg-gris rounded-md h-[20rem] w-[30rem]"></div>
-            <div class="card bg-gris rounded-md h-[20rem] w-[30rem]"></div>
-            <div class="card bg-gris rounded-md h-[20rem] w-[30rem]"></div>
+            <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
+            <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
+            <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
+            <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
+            <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
+            <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
           </div>
+
+            </div>
+          
         </section>
 
-        <section id="nuevos" class="cardContainer flex flex-col font-semibold text-amarillo items-center gap-4">
-          <h1 class="gamer text-3xl">BROWSE BY CATEGORY</h1>
-          <div class="cardContainer pr-4 w-[60rem]">
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-          </div>
-        </section>
+        
       </div>
 
       <!--SECCION MOBILE -->
 
       <div id="mobileSections">
-        <section id="nuevos" class="cardContainer flex flex-col font-semibold text-amarillo items-center gap-4">
+        <section id="nuevos" class="  flex flex-col font-semibold text-white items-center gap-4">
           <h1 class="gamer text-xl">NEW</h1>
-          <div class="cardContainer pr-4">
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
+          <div class="cardContainer">
+            <div class=" inline-block pr-4" v-for="games of newGames">
+                <div class="card gradient rounded-md h-[15rem] w-[15rem]">
+                    <a href="">
+                        <img v-bind:src="games.image" alt="" class="h-[60%]">
+                        <div class=" p-2 text-wrap">
+                            <div class="flex justify-between items-center">
+                                <h1 class="text-lg font-semibold">{{games.title}}   </h1>
+                                <!-- <h1>{{(games.price - 2)}}</h1> -->
+                                <h1 class="bg-morado p-2 font-semibold">{{Intl.NumberFormat('en-US',
+                                    {style: 'currency',
+                                    currency: 'USD'}).
+                                    format(games.price)}}   </h1>
+                            </div>
+                            
+                            
+                            
+                            <div v-for="genre of games.genre" class="inline-block my-2 wrap-none">
+                                <p class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm " >{{genre }} </p>
+    
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+          </div>
+          
+            
           </div>
         </section>
 
