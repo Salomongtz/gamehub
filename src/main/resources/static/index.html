@@ -32,7 +32,7 @@
         </div>
 
         <!--OPCION LOGIN -->
-        <div
+        <div  v-if="customer == null"
           class="login text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center"
         >
           <p
@@ -42,7 +42,16 @@
             Log In
           </p>
           <p class="cursor-pointer" @click.prevent="formSignUp()">Sign Up</p>
+
+         
         </div>
+
+        <div v-if="customer != null">
+          <p class="text-white">{{customer.name}}</p>
+          <p class="text-white">Log out</p>
+        </div>
+
+        
 
         <!--NAVBAR ESCRITORIO -->
         <div class="navBar">
@@ -104,11 +113,7 @@
 
         <div id="desktopSections" class="flex flex-col gap-24 items-center">
           <!-- --------------------- NEW GAMES SECTION----------------------- -->
-            <div v-if="customer != null">
-              <p class="text-white">{{Customer.name}} </p>
-
-
-            </div>
+            <h1 class="text-white text-2xl" @click.prevent="logout()"> LOG OUT</h1>
           
           <section
             id=""
@@ -415,7 +420,7 @@
 
           <button
             class="bg-amarillo p-2 text-negro w-[90%] mt-2 font-semibold"
-            @click.prevent="login()"
+            @click.prevent="login()"  
           >
             LOG IN
           </button>
@@ -490,7 +495,7 @@
 
           <button
             class="bg-amarillo p-2 text-negro w-[90%] mt-2 font-semibold"
-            @click.prevent="register()"
+            @click.prevent="register()" 
           >
             SIGN UP
           </button>

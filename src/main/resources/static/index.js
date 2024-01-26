@@ -13,6 +13,8 @@ let app = createApp({
       newest:{},
       offerGames:[],
 
+      customer:null,
+
       name: "",
       lastName: "",
       email: "",
@@ -25,22 +27,18 @@ let app = createApp({
 
   
     beforeCreate(){
-        axios.get("/api/games")
+        axios.get("/api/games",  )
         .then(response => {
             this.games = response.data
             this.gamesDate = this.games.date
             console.log(response)
-            
             this.newGamesFunction()
-            this.offerGamesFunction()
-            
-  
+            this.offerGamesFunction()     
           })
-          .catch(error => {
-            
-            console.log("Error", error)
-  
-          })
+          .catch(error => {            
+            console.log("Error", error)  
+          })      
+
       },
     
 
@@ -74,18 +72,6 @@ let app = createApp({
         console.log(this.offerGames)
     },
 
-    // genreSlice(){
-    //   let genres = this.games
-    // }
-
-
-
-
-    
-    
-
-
-
 
     // ---------FUNCIONES DE MODAL PARA LOGIN Y HAMB MENU---------------------
     showMenu() {
@@ -97,6 +83,8 @@ let app = createApp({
       axios.post("/api/login?email=" + this.email + "&password=" + this.password)
         .then(response => {
           console.log(response)
+          this.logIn=false
+          window.location.href="index.html"
 
         })
         .catch(error => {
@@ -104,6 +92,16 @@ let app = createApp({
           console.log("Error", error)
 
         })
+        axios.get("/api/customers")
+        .then(response => {
+            this.customer = response.data            
+            console.log(response)
+            
+          })
+          .catch(error => {            
+            console.log("Error", error)  
+          })
+
     },
 
     register() {
@@ -114,6 +112,7 @@ let app = createApp({
           console.log(response)
           console.log(this.name)
           this.login()
+          this.signUp=false
         })
         .catch(error => {
 
@@ -122,6 +121,16 @@ let app = createApp({
           // console.log("Error", error)
 
         })
+    },
+    logout(){
+
+      axios.post("/api/logout")
+        .then(response => {
+          console.log(response)
+          this.customer = null
+          
+        })
+        .catch(error => console.log("Error", error))
     },
 
 
