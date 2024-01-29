@@ -1,3 +1,4 @@
+
 const { createApp } = Vue;
 
 let app = createApp({
@@ -37,7 +38,20 @@ let app = createApp({
           })
           .catch(error => {            
             console.log("Error", error)  
-          })      
+          }),
+
+          axios.get("/api/customers")
+          .then(response => {
+              this.customer = response.data            
+              console.log(response)
+            
+              
+            })
+            .catch(error => {     
+              this.customer = null,       
+              console.log("Error", error)  
+            })
+        
 
       },
     
@@ -82,9 +96,26 @@ let app = createApp({
     login() {
       axios.post("/api/login?email=" + this.email + "&password=" + this.password)
         .then(response => {
+          
           console.log(response)
           this.logIn=false
-          window.location.href="index.html"
+
+          axios.get("/api/customers")
+          .then(response => {
+              this.customer = response.data            
+              console.log(response)
+              this.modalLogeado()
+              
+            })
+            .catch(error => {            
+              console.log("Error", error)  
+            })
+  
+
+          // window.location.href="index.html"
+          
+
+
 
         })
         .catch(error => {
@@ -92,16 +123,7 @@ let app = createApp({
           console.log("Error", error)
 
         })
-        axios.get("/api/customers")
-        .then(response => {
-            this.customer = response.data            
-            console.log(response)
-            
-          })
-          .catch(error => {            
-            console.log("Error", error)  
-          })
-
+        
     },
 
     register() {
@@ -128,6 +150,7 @@ let app = createApp({
         .then(response => {
           console.log(response)
           this.customer = null
+          window.location.href="index.html"
           
         })
         .catch(error => console.log("Error", error))
@@ -144,13 +167,50 @@ let app = createApp({
     formSignUp() {
       this.signUp = !this.signUp
       this.logIn = false
+    },
+
+ // ------------------LOGIN ALERT----------------------
+
+
+ modalLogeado(){
+  let timerInterval;
+  Swal.fire({
+    title: "Welcome back," + this.customer.name,
+    background: '#151515',
+    color : 'white',
+    // html: "Welcome back, " ,
+    timer: 1700,
+    timerProgressBar: false,
+    didOpen: () => {
+      Swal.showLoading();
+      const timer = Swal.getPopup().querySelector("b");     timerInterval = setInterval(() => {
+        timer.textContent = `${Swal.getTimerLeft()}`;
+      }, 100);
+    },
+    willClose: () => {
+      clearInterval(timerInterval);
     }
+  }).then((result) => {
+    /* Read more about handling dismissals below */
+    if (result.dismiss === Swal.DismissReason.timer) {
+      console.log("I was closed by the timer");
+    }
+  })
+ },
+ 
   },
+
+
+
   computed: {
     logName() {
       console.log(this.password)
     }
   }
+
+
+  
+  
 
 
 
