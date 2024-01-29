@@ -35,27 +35,27 @@
 
                 <div class="flex gap-10">
                     <form id="deleteGame"
-                    class="h-full max-w-md mx-auto bg-gris p-6 rounded-md shadow-lg sm:w-[600px] block text-sm font-medium text-gray-600 mt-6">
-              
-                  <h2 class="text-2xl font-bold mb-4 text-center text-amarillo">Delete Games:</h2>
-              
-                  <div class="mb-4">
-                      <label class="block text-sm font-medium text-amarillo">Select Title:</label>
-                      <select v-model="selectedGame"
-                              class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                          <option value="" disabled>Select a game</option>
-                          <option v-for="game in games" :key="game.id" :value="game.id">{{ game.title }}</option>
-                      </select>
-                  </div>
-              
-                  <div>
-                      <button @click="deleteGame(selectedGame)"
-                              class="w-full p-2 bg-amarillo hover:text-amarillo text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
-                          Delete Game
-                      </button>
-                  </div>
-              
-              </form>
+                        class="h-full max-w-md mx-auto bg-gris p-6 rounded-md shadow-lg sm:w-[600px] block text-sm font-medium text-gray-600 mt-6">
+
+                        <h2 class="text-2xl font-bold mb-4 text-center text-amarillo">Delete Games:</h2>
+
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-amarillo">Select Title:</label>
+                            <select v-model="selectedGame"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                                <option value="" disabled>Select a game</option>
+                                <option v-for="game in games" :key="game.id" :value="game.id">{{ game.title }}</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <button @click="deleteGame(selectedGame)"
+                                class="w-full p-2 bg-amarillo hover:text-amarillo text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                                Delete Game
+                            </button>
+                        </div>
+
+                    </form>
 
 
                     <form id="createGameForm"
@@ -79,7 +79,7 @@
                         </div>
                         <div class="mb-4">
                             <label for="imageURL" class="block text-sm font-medium text-amarillo">Image URL:</label>
-                            <input type="text" id="imageURL"
+                            <input type="file" id="imageURL" @change="loadFiles"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
                         <div class="mb-4">
@@ -129,10 +129,11 @@
 
     </div>
 </body>
+
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="../javaScript/admin.js"></script>
+<script src="https://unpkg.com/imagekit-javascript/dist/imagekit.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../taildwind.config.js"></script>
-
+<script src="../javaScript/admin.js"></script>
 </html>

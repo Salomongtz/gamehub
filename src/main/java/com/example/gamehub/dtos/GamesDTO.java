@@ -3,6 +3,7 @@ package com.example.gamehub.dtos;
 import com.example.gamehub.models.GameGenre;
 import com.example.gamehub.models.GamePlatform;
 import com.example.gamehub.models.Games;
+import com.example.gamehub.models.Rating;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,6 +18,7 @@ public class GamesDTO {
     private final float discount;
     private final List<GameGenre> genre;
     private final List<GamePlatform> platforms;
+    private final Rating rating;
 
 
     public GamesDTO(Games games) {
@@ -32,6 +34,7 @@ public class GamesDTO {
         genre = games.getGenres();
         platforms = games.getPlatforms();
         this.owned = games.getOwned() == null ? 0L : games.getOwned();
+        this.rating = games.getRating() == null ? Rating.NOTRATED : games.getRating();
     }
 
     public Long getId() {
@@ -80,5 +83,9 @@ public class GamesDTO {
 
     public Long getOwned() {
         return owned;
+    }
+
+    public Rating getRating() {
+        return rating;
     }
 }
