@@ -5,6 +5,7 @@ import com.example.gamehub.services.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class PurchaseController {
     private PurchaseService purchaseService;
 
     @PostMapping()
+    @Transactional
     public ResponseEntity<?> purchase(Authentication authentication, @RequestBody List<PurchaseRecord> purchaseRecords) {
         return purchaseService.purchase(authentication,purchaseRecords);
     }

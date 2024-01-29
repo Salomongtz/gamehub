@@ -7,16 +7,16 @@ import jakarta.persistence.ManyToOne;
 
 public class Purchase_GameDTO {
 
-    private Long id;
-    private int quantity;
-    private Purchase purchase;
-    private Games games;
+    private final Long id;
+    private final int quantity;
+//    private final PurchaseDTO purchase;
+    private final GamesDTO games;
 
     public Purchase_GameDTO(Purchase_Game purchaseGame) {
         id = purchaseGame.getId();
         quantity = purchaseGame.getQuantity();
-        purchase = purchaseGame.getPurchase();
-        games = purchaseGame.getGame();
+//        purchase = new PurchaseDTO(purchaseGame.getPurchase());
+        games = new GamesDTO(purchaseGame.getGame());
     }
 
     public Long getId() {
@@ -27,11 +27,11 @@ public class Purchase_GameDTO {
         return quantity;
     }
 
-    public Purchase getPurchase() {
-        return purchase;
-    }
+//    public PurchaseDTO getPurchase() {
+//        return purchase;
+//    }
 
-    public Games getGame() {
+    public GamesDTO getGame() {
         return games;
     }
 }
