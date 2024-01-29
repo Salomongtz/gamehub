@@ -1,35 +1,37 @@
 const { createApp } = Vue;
 
 let app = createApp({
-    data() {
-        return {
-            games:[],
+  data() {
+    return {
+      games: [],
+      selectedGame: null,
+    };
+  },
 
-        };
+  created() {
+    this.loadData();
+  },
+
+  methods: {
+    loadData() {
+      axios.get("/api/games")
+        .then((response) => {
+          this.games = response.data;
+          console.log(this.games);
+        })
+        .catch((error) => console.error(error));
     },
 
-    methods: {
-        loadData(){
-            axios.get("/api/games")
-            .then(response => {
-                this.games = response.data
-                console.log("Games", this.games)
-            })
-            .catch(error => {
-                if (error.response) {
-                    Swal.fire({
-                        background: "linear-gradient(to right, #191970, #00BFFF) no-repeat 0 0 / cover",
-                        color: "white",
-                        icon: 'error',
-                        title: 'Dear customer, we must inform you:',
-                        text: `${JSON.stringify(error.response.data, null, 2)}`,
-                        footer:  `Error de respuesta: ${error.response.status}`
-                    });
-                }
-            });
-            
-        }
-    }
+    deleteGame(id) {
+        axios.delete(`/api/games/${id}`)
+          .then((response) => {
+            console.log(response.data);
+            this.loadData();
+          })
+          .catch((error) => console.error(error));
+      },
 
+  }
+});
 
-}).mount("#app");
+app.mount("#app");
