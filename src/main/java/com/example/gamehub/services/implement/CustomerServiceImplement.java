@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.example.gamehub.utils.Utils.passwordValidator;
-
 @Service
 public class CustomerServiceImplement implements CustomerService {
     @Autowired
@@ -44,11 +42,16 @@ public class CustomerServiceImplement implements CustomerService {
 
     @Override
     public ResponseEntity<?> register(CustomerRecord customerRecord) {
-        ResponseEntity<String> BAD_REQUEST = runVerifications(customerRecord.firstName(), customerRecord.lastName(), customerRecord.email(), customerRecord.password());
+        ResponseEntity<String> BAD_REQUEST = runVerifications(customerRecord.firstName(), customerRecord.lastName(),
+                customerRecord.email(), customerRecord.password());
         if (BAD_REQUEST != null) {
             return BAD_REQUEST;
         }
-        Customer customer = new Customer(customerRecord.firstName(), customerRecord.lastName(), customerRecord.email(), passwordEncoder.encode(customerRecord.password()));
+        if (getCustomerByEmail(customerRecord.email()) != null) {
+            return new ResponseEntity<>(customerRecord.email() + " is already in use", HttpStatus.FORBIDDEN);
+        }
+        Customer customer = new Customer(customerRecord.firstName(), customerRecord.lastName(),
+                customerRecord.email(), passwordEncoder.encode(customerRecord.password()));
         customerRepository.save(customer);
         return new ResponseEntity<>(customer + "\nCreated successfully!", HttpStatus.CREATED);
     }
@@ -59,16 +62,34 @@ public class CustomerServiceImplement implements CustomerService {
         if (customer == null) {
             return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
         }
-        ResponseEntity<String> BAD_REQUEST = runVerifications(customerRecord.firstName(), customerRecord.lastName(), customerRecord.email(), customerRecord.password());
+        ResponseEntity<String> BAD_REQUEST = runVerifications(customerRecord.firstName(), customerRecord.lastName(),
+                customerRecord.email(), customerRecord.password());
         if (BAD_REQUEST != null) {
             return BAD_REQUEST;
         }
-        customer.setFirstName(customerRecord.firstName());
-        customer.setLastName(customerRecord.lastName());
-        customer.setEmail(customerRecord.email());
-        customer.setPassword(passwordEncoder.encode(customerRecord.password()));
+        String currentFirstName = customer.getFirstName();
+        String currentLastName = customer.getLastName();
+        String currentPassword = customer.getPassword();
+        String currentEmail = customer.getEmail();
+        StringBuilder message = new StringBuilder();
+        if (!currentFirstName.equals(customerRecord.firstName())) {
+            customer.setFirstName(customerRecord.firstName());
+            message.append("First name changed from ").append(currentFirstName).append(" to ").append(customerRecord.firstName()).append("\n");
+        }
+        if (!currentLastName.equals(customerRecord.lastName())) {
+            customer.setLastName(customerRecord.lastName());
+            message.append("Last name changed from ").append(currentLastName).append(" to ").append(customerRecord.lastName()).append("\n");
+        }
+        if (!currentEmail.equals(customerRecord.email())) {
+            customer.setEmail(customerRecord.email());
+            message.append("Email changed from ").append(currentEmail).append(" to ").append(customerRecord.email()).append("\n");
+        }
+        if (!currentPassword.equals(passwordEncoder.encode(customerRecord.password()))) {
+            customer.setPassword(passwordEncoder.encode(customerRecord.password()));
+            message.append("Password changed from ").append(currentPassword).append(" to ").append(customerRecord.password()).append("\n");
+        }
         customerRepository.save(customer);
-        return new ResponseEntity<>(customer + "\nUpdated successfully!", HttpStatus.OK);
+        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 
     private ResponseEntity<String> runVerifications(String firstName, String lastName, String email, String password) {
@@ -85,12 +106,11 @@ public class CustomerServiceImplement implements CustomerService {
 
         if (!password.matches(regex)) {
             return new ResponseEntity<>("Password should have at least one uppercase letter, one lowercase " +
-                    "letter, one number and one special character (!@$%^&-+=()) and should be at least 8 characters long",
+                    "letter, one number and one special character (!@$%^&-+=()) and should be at least 8 characters " +
+                    "long",
                     HttpStatus.BAD_REQUEST);
         }
-        if (getCustomerByEmail(email) != null) {
-            return new ResponseEntity<>(email + " already in use", HttpStatus.FORBIDDEN);
-        }
+
         return null;
     }
 }

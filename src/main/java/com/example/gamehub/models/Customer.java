@@ -14,8 +14,8 @@ public class Customer {
     private RoleType role=RoleType.CUSTOMER;
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Purchase> purchases;
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    private List<Customer_Game> customer_games;
+    @ElementCollection
+    private List<Games> games;
 
     public Customer() {
     }
@@ -32,10 +32,10 @@ public class Customer {
         purchases.add(purchase);
     }
 
-    public void addCustomer_game(Customer_Game customer_game){
-        customer_game.setCustomer(this);
-        customer_games.add(customer_game);
+    public void addGame(Games game){
+        games.add(game);
     }
+
     public Long getId() {
         return id;
     }
@@ -88,12 +88,12 @@ public class Customer {
         this.purchases = purchases;
     }
 
-    public List<Customer_Game> getCustomer_games() {
-        return customer_games;
+    public List<Games> getGames() {
+        return games;
     }
 
-    public void setCustomer_games(List<Customer_Game> customer_games) {
-        this.customer_games = customer_games;
+    public void setGames(List<Games> games) {
+        this.games = games;
     }
 
     @Override
@@ -106,7 +106,6 @@ public class Customer {
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 ", purchases=" + purchases +
-                ", customer_games=" + customer_games +
                 '}';
     }
 }

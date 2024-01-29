@@ -24,14 +24,15 @@ public class SecurityConfig {
                         "/javaScript/store.js",
                         "/pages/cart.html", "/javaScript/cart.js", "/assets/images/**", "/assets/tipografias/**",
                         "/taildwind.config.js", "/style.css", "/styles.css").permitAll()
+                .requestMatchers("/pages/profile.html", "/javaScript/profile.js").hasAuthority("CUSTOMER")
                 .requestMatchers(HttpMethod.POST, "/api/customers").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/games").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/games").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/purchase").hasAuthority("CUSTOMER")
                 .requestMatchers(HttpMethod.GET, "/api/games", "/api/games/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/customers").hasAuthority("CUSTOMER")
-                .requestMatchers(HttpMethod.PATCH, "/api/games").permitAll()
+                .requestMatchers(HttpMethod.PATCH, "/api/games").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PATCH, "/api/customers").hasAuthority("CUSTOMER")
-                .requestMatchers(HttpMethod.DELETE, "/api/games/*").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/api/games/*").hasAuthority("ADMIN")
 
                 .requestMatchers("/h2-console/**").permitAll().anyRequest().denyAll());
 

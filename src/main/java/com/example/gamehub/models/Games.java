@@ -14,7 +14,7 @@ public class Games {
     private String title, description, developer, publisher, imageURL;
 //    @Column(columnDefinition = "TEXT")
 //    private String longDescription;
-    private Long sales,stock;
+    private Long sales,stock, owned=0L;
     private double price;
     private LocalDate releaseDate;
     private float discount;
@@ -24,15 +24,13 @@ public class Games {
     @ElementCollection
     private List<GamePlatform> platforms;
     @OneToMany(mappedBy = "games")
-    private List<Customer_Game> customerGames = new ArrayList<>();
-    @OneToMany(mappedBy = "games")
     private List<Purchase_Game> purchaseGames = new ArrayList<>();
 
     public Games() {
     }
 
     public Games(String title, String description, String developer, String publisher, String imageURL, Long sales,
-                 double price, LocalDate releaseDate, float discount, Rating rating, List<GameGenre> genres,
+                 double price, Long stock, LocalDate releaseDate, float discount, Rating rating, List<GameGenre> genres,
                  List<GamePlatform> platforms) {
         this.title = title;
         this.description = description;
@@ -41,6 +39,7 @@ public class Games {
         this.imageURL = imageURL;
         this.sales = sales;
         this.price = price;
+        this.stock = stock;
         this.releaseDate = releaseDate;
         this.discount = discount;
         this.rating = rating;
@@ -48,10 +47,6 @@ public class Games {
         this.platforms = platforms;
     }
 
-    public void addCustomerGame(Customer_Game customerGame) {
-        customerGame.setGames(this);
-        customerGames.add(customerGame);
-    }
 
     public void addPurchaseGame(Purchase_Game purchaseGame) {
         purchaseGame.setGame(this);
@@ -134,14 +129,6 @@ public class Games {
         this.platforms = platforms;
     }
 
-    public List<Customer_Game> getCustomerGames() {
-        return customerGames;
-    }
-
-    public void setCustomerGames(List<Customer_Game> customerGames) {
-        this.customerGames = customerGames;
-    }
-
     public List<Purchase_Game> getPurchaseGames() {
         return purchaseGames;
     }
@@ -182,7 +169,14 @@ public class Games {
         this.rating = rating;
     }
 
-//    public String getCoverURL() {
+    public Long getOwned() {
+        return owned;
+    }
+
+    public void setOwned(Long owned) {
+        this.owned = owned;
+    }
+    //    public String getCoverURL() {
 //        return coverURL;
 //    }
 //
@@ -210,7 +204,6 @@ public class Games {
                 ", discount=" + discount +
                 ", genre='" + genres + '\'' +
                 ", platform='" + platforms + '\'' +
-                ", customerGames=" + customerGames +
                 '}';
     }
 }

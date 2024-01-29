@@ -11,9 +11,9 @@ public class CustomerDTO {
     private Long id;
     private String name, lastName, email;
 
-    private List<Purchase> purchases;
+    private List<PurchaseDTO> purchases;
 
-    private List<Customer_Game> customer_games;
+    private List<GamesDTO> games;
 
     public CustomerDTO() {
     }
@@ -23,8 +23,8 @@ public class CustomerDTO {
         this.name = customer.getFirstName();
         this.lastName = customer.getLastName();
         this.email = customer.getEmail();
-        this.purchases = customer.getPurchases();
-        this.customer_games = customer.getCustomer_games();
+        this.purchases = customer.getPurchases().stream().map(PurchaseDTO::new).toList();
+        this.games = customer.getGames().stream().map(GamesDTO::new).toList();
     }
 
     public Long getId() {
@@ -43,11 +43,11 @@ public class CustomerDTO {
         return email;
     }
 
-    public List<Purchase> getPurchases() {
+    public List<PurchaseDTO> getPurchases() {
         return purchases;
     }
 
-    public List<Customer_Game> getCustomer_games() {
-        return customer_games;
+    public List<GamesDTO> getGames() {
+        return games;
     }
 }

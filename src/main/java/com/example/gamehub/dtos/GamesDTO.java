@@ -1,33 +1,23 @@
 package com.example.gamehub.dtos;
 
-import com.example.gamehub.models.Customer_Game;
-import com.example.gamehub.models.Games;
 import com.example.gamehub.models.GameGenre;
 import com.example.gamehub.models.GamePlatform;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.OneToMany;
+import com.example.gamehub.models.Games;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GamesDTO {
 
-    private Long id;
-    private String title;
-    private String image;
-    private Long stock;
-    private String description;
-    private Long sales;
-    private double price;
-    private LocalDate date;
-    private float discount;
+    private final Long id;
+    private final String title, description, image;
+    private final Long stock, sales, owned;
+    private final double price;
+    private final LocalDate date;
+    private final float discount;
+    private final List<GameGenre> genre;
+    private final List<GamePlatform> platforms;
 
-    private List<GameGenre> genre;
-
-    private List<GamePlatform> platforms;
-
-    private List<Customer_Game> customerGames = new ArrayList<>();
 
     public GamesDTO(Games games) {
         id = games.getId();
@@ -41,7 +31,7 @@ public class GamesDTO {
         discount = games.getDiscount();
         genre = games.getGenres();
         platforms = games.getPlatforms();
-        customerGames = games.getCustomerGames();
+        this.owned = games.getOwned() == null ? 0L : games.getOwned();
     }
 
     public Long getId() {
@@ -88,7 +78,7 @@ public class GamesDTO {
         return platforms;
     }
 
-    public List<Customer_Game> getCustomerGames() {
-        return customerGames;
+    public Long getOwned() {
+        return owned;
     }
 }
