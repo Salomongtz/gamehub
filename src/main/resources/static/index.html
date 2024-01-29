@@ -46,9 +46,9 @@
          
         </div>
 
-        <div v-if="customer != null">
-          <p class="text-white">{{customer.name}}</p>
-          <p class="text-white">Log out</p>
+        <div v-if="customer != null" class="login flex text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
+          <p class="text-white">{{customer.name}} </p>
+          <p class="cursor-pointer text-white" @click.prevent="logout()">|| Log out</p>
         </div>
 
         
@@ -374,6 +374,7 @@
         <form
           action=""
           class="form gradient flex flex-col bg-amarillo border-md p-12 gap-4 w-[25rem] h-[30rem] z-50"
+          @submit.prevent="login()" 
         >
           <img
             src="assets/images/closeMenu.png"
@@ -418,9 +419,9 @@
             ¿Forgot your Password?</a
           >
 
-          <button
+          <button type="submit"
             class="bg-amarillo p-2 text-negro w-[90%] mt-2 font-semibold"
-            @click.prevent="login()"  
+             
           >
             LOG IN
           </button>
@@ -432,17 +433,18 @@
         v-if="signUp"
       >
         <form
-          action=""
+          action="submit"
           class="form gradient flex flex-col bg-amarillo border-md p-12 gap-4 w-[25rem] h-[30rem] z-50"
+          @submit.prevent="register()" 
         >
           <img
             src="assets/images/closeMenu.png"
             alt=""
             class="w-4 absolute right-6 top-4 @"
-            @click.prevent="formSignUp()"
+            @click="formSignUp()"
           />
           <div class="mb-8 text-white">
-            <button class="w-1/2" @click.prevent="formLogIn()">LOG IN</button>
+            <button class="w-1/2" @click="formLogIn()">LOG IN</button>
             <button class="border-b-[0.2rem] border-amarillo w-1/2 pb-2">
               SIGN UP
             </button>
@@ -493,9 +495,9 @@
 
           <p class="text-sm text-red-400"></p>
 
-          <button
+          <button type="submit"
             class="bg-amarillo p-2 text-negro w-[90%] mt-2 font-semibold"
-            @click.prevent="register()" 
+            
           >
             SIGN UP
           </button>
@@ -503,6 +505,7 @@
       </template>
     </div>
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="index.js"></script>
