@@ -25,6 +25,7 @@ public class SecurityConfig {
                         "/pages/cart.html", "/javaScript/cart.js", "/assets/images/**", "/assets/tipografias/**",
                         "/taildwind.config.js", "/style.css", "/styles.css").permitAll()
                 .requestMatchers("/pages/profile.html", "/javaScript/profile.js").hasAuthority("CUSTOMER")
+                .requestMatchers("/pages/admin.html", "/javaScript/admin.js").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/customers").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/games").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/purchase").hasAuthority("CUSTOMER")

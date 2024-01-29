@@ -22,12 +22,22 @@
             </div>
 
             <!--OPCION LOGIN -->
-            <div class="login text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
+            <div v-if="customer == null"
+                class="login text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
                 <p class="cursor-pointer bg-gris py-[0.2rem] px-2 rounded-md" @click.prevent="formLogIn()">
                     Log In
                 </p>
                 <p class="cursor-pointer" @click.prevent="formSignUp()">Sign Up</p>
+
+
             </div>
+
+            <div v-if="customer != null">
+                <p class="text-white">{{customer.name}}</p>
+                <p class="text-white">Log out</p>
+            </div>
+
+
 
             <!--NAVBAR ESCRITORIO -->
             <div class="navBar">
