@@ -202,7 +202,7 @@
             <div class="cardContainer pb-10">
               <div class="card inline-block" v-for="games of offerGames">
                 <div class="gradient rounded-md h-[20rem] w-[30rem] text-white">
-                  <a href="">
+                  <a v-bind:href="'/pages/gamedetails.html?id='+games.id">
                     <img v-bind:src="games.image" alt="" class="w-full" />
                     <div class="p-2 text-wrap relative">
                       <div class="flex justify-between">
