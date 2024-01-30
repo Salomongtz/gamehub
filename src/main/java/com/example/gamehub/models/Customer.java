@@ -2,6 +2,7 @@ package com.example.gamehub.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,8 +15,8 @@ public class Customer {
     private RoleType role=RoleType.CUSTOMER;
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Purchase> purchases;
-    @ElementCollection
-    private List<Games> games;
+    @ManyToMany(mappedBy = "customers")
+    private List<Games> games = new ArrayList<>();
 
     public Customer() {
     }
@@ -33,6 +34,7 @@ public class Customer {
     }
 
     public void addGame(Games game){
+        game.getCustomers().add(this);
         games.add(game);
     }
 

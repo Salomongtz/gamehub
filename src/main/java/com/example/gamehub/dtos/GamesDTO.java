@@ -39,7 +39,7 @@ public class GamesDTO {
         publisher = games.getPublisher();
         screenshots = games.getScreenshots();
         this.owned = games.getOwned() == null ? 0L : games.getOwned();
-        this.rating = games.getRating() == null ? Rating.NOTRATED : games.getRating();
+        this.rating = games.getRating() == null ? Rating.RP : games.getRating();
     }
 
     public Long getId() {

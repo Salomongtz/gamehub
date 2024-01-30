@@ -14,7 +14,7 @@ public class Games {
     private String title, description, developer, publisher, imageURL;
     @Column(columnDefinition = "TEXT")
     private String longDescription;
-    private Long sales,stock, owned=0L;
+    private Long sales, stock, owned = 0L;
     private double price;
     private LocalDate releaseDate;
     private float discount;
@@ -26,13 +26,16 @@ public class Games {
     private List<GamePlatform> platforms;
     @OneToMany(mappedBy = "games")
     private List<Purchase_Game> purchaseGames = new ArrayList<>();
+    @ManyToMany
+    private List<Customer> customers= new ArrayList<>();
 
     public Games() {
     }
 
-    public Games(String title, String description, String developer, String publisher, String imageURL, String longDescription, Long sales,
+    public Games(String title, String description, String developer, String publisher, String longDescription,
+                 String imageURL, Long sales,
                  double price, Long stock, LocalDate releaseDate, float discount, Rating rating, List<GameGenre> genres,
-                 List<GamePlatform> platforms, List<String> screenshots ) {
+                 List<GamePlatform> platforms, List<String> screenshots) {
         this.title = title;
         this.description = description;
         this.longDescription = longDescription == null ? "" : longDescription;
@@ -49,7 +52,6 @@ public class Games {
         this.genres = genres;
         this.platforms = platforms;
     }
-
 
     public void addPurchaseGame(Purchase_Game purchaseGame) {
         purchaseGame.setGame(this);
@@ -179,6 +181,7 @@ public class Games {
     public void setOwned(Long owned) {
         this.owned = owned;
     }
+
     //    public String getCoverURL() {
 //        return coverURL;
 //    }
@@ -201,6 +204,14 @@ public class Games {
 
     public void setScreenshots(List<String> screenshots) {
         this.screenshots = screenshots;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
     }
 
     @Override

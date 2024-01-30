@@ -15,12 +15,13 @@ public record GameRecord(
 
         String imageURL,
 //        String coverURL,
-//        String longDescription,
+        String longDescription,
         Long sales,
         double price,
         LocalDate releaseDate,
         float discount,
         Rating rating,
+        List<String> screenshots,
         List<GameGenre> genres,
         List<GamePlatform> platforms
         ) {
