@@ -106,19 +106,15 @@ public class CustomerServiceImplement implements CustomerService {
         Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
         Mail mail = new Mail(from, subject, to, content);
 
-        SendGrid sg = new SendGrid("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");
+        SendGrid sg = new SendGrid("");
         Request request = new Request();
-        try {
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
-            Response response = sg.api(request);
-            System.out.println(response.getStatusCode());
-            System.out.println(response.getBody());
-            System.out.println(response.getHeaders());
-        } catch (IOException ex) {
-            throw ex;
-        }
+        request.setMethod(Method.POST);
+        request.setEndpoint("mail/send");
+        request.setBody(mail.build());
+        Response response = sg.api(request);
+        System.out.println(response.getStatusCode());
+        System.out.println(response.getBody());
+        System.out.println(response.getHeaders());
     }
     private ResponseEntity<String> runVerifications(String firstName, String lastName, String email, String password) {
         if (firstName.isBlank()) {
