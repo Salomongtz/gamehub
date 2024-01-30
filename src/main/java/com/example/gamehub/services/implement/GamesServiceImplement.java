@@ -60,7 +60,7 @@ public class GamesServiceImplement implements GamesService {
     @Override
     public ResponseEntity<String> createGame(GameRecord gameRecord) {
         Games game = new Games(gameRecord.title(), gameRecord.description(), gameRecord.developer(),
-                gameRecord.description(), gameRecord.imageURL(), gameRecord.sales(), gameRecord.price(),
+                gameRecord.description(), gameRecord.imageURL(), gameRecord.sales(), gameRecord.price(), gameRecord.stock(),
                 gameRecord.releaseDate(), gameRecord.discount(), gameRecord.rating(), gameRecord.genres(),
                 gameRecord.platforms());
 
@@ -107,13 +107,14 @@ public class GamesServiceImplement implements GamesService {
         games.setImageURL(gameRecord.imageURL());
         games.setSales(gameRecord.sales());
         games.setPrice(gameRecord.price());
+        games.setStock(gameRecord.stock());
         games.setReleaseDate(gameRecord.releaseDate());
         games.setDiscount(gameRecord.discount());
         games.setRating(gameRecord.rating());
         games.setGenres(gameRecord.genres());
         games.setPlatforms(gameRecord.platforms());
-        games.setCoverURL(gameRecord.coverURL());
-        games.setLongDescription(gameRecord.longDescription());
+//        games.setCoverURL(gameRecord.coverURL());
+//        games.setLongDescription(gameRecord.longDescription());
         gamesRepository.save(games);
 
         return ResponseEntity.ok("Game updated successfully");

@@ -5,6 +5,7 @@ import com.example.gamehub.records.GameRecord;
 import com.example.gamehub.services.GamesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class GamesController {
     }
 
     @PatchMapping("/{id}")
+    @Transactional
     public ResponseEntity<String> updateGame(@PathVariable Long id, @RequestBody GameRecord gameRecord) {
         return gamesService.updateGame(id, gameRecord);
     }
