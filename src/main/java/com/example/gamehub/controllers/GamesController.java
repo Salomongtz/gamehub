@@ -2,10 +2,10 @@ package com.example.gamehub.controllers;
 
 import com.example.gamehub.dtos.GamesDTO;
 import com.example.gamehub.records.GameRecord;
-import com.example.gamehub.repositories.GamesRepository;
 import com.example.gamehub.services.GamesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +29,17 @@ public class GamesController {
 
     @GetMapping("/{id}")
     public GamesDTO getGameById(@PathVariable Long id) {
-        return gamesService.getGameDTOById(id);
+        return gamesService.findGameDTOById(id);
     }
 
+    @PatchMapping("/{id}")
+    @Transactional
+    public ResponseEntity<String> updateGame(@PathVariable Long id, @RequestBody GameRecord gameRecord) {
+        return gamesService.updateGame(id, gameRecord);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String>deleteGameById(@PathVariable Long id){
+        return gamesService.deleteById(id);
+    }
 }

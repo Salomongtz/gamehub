@@ -9,19 +9,19 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name, lastName, email, password;
+    private String firstName, lastName, email, password;
     @Enumerated(EnumType.STRING)
     private RoleType role=RoleType.CUSTOMER;
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Purchase> purchases;
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    private List<Customer_Game> customer_games;
+    @ElementCollection
+    private List<Games> games;
 
     public Customer() {
     }
 
-    public Customer(String name, String lastName, String email, String password) {
-        this.name = name;
+    public Customer(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
@@ -32,20 +32,20 @@ public class Customer {
         purchases.add(purchase);
     }
 
-    public void addCustomer_game(Customer_Game customer_game){
-        customer_game.setCustomer(this);
-        customer_games.add(customer_game);
+    public void addGame(Games game){
+        games.add(game);
     }
+
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -88,25 +88,24 @@ public class Customer {
         this.purchases = purchases;
     }
 
-    public List<Customer_Game> getCustomer_games() {
-        return customer_games;
+    public List<Games> getGames() {
+        return games;
     }
 
-    public void setCustomer_games(List<Customer_Game> customer_games) {
-        this.customer_games = customer_games;
+    public void setGames(List<Games> games) {
+        this.games = games;
     }
 
     @Override
     public String toString() {
         return "Customer{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 ", purchases=" + purchases +
-                ", customer_games=" + customer_games +
                 '}';
     }
 }

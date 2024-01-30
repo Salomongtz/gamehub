@@ -17,7 +17,8 @@ public class Purchase_Game {
     public Purchase_Game() {
     }
 
-    public Purchase_Game(int quantity) {
+    public Purchase_Game(Games games,int quantity) {
+        this.games = games;
         this.quantity = quantity;
     }
 
@@ -59,6 +60,8 @@ public class Purchase_Game {
         return "Purchase_Game{" +
                 "id=" + id +
                 ", quantity=" + quantity +
+                ", purchase=" + purchase +
+                ", game=" + games +
                 '}';
     }
 }

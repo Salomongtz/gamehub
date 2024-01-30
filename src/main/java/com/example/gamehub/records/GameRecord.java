@@ -13,6 +13,8 @@ public record GameRecord(
         String developer,
         String publisher,
         String imageURL,
+//        String coverURL,
+//        String longDescription,
         Long sales,
         double price,
         LocalDate releaseDate,

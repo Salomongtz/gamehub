@@ -1,4 +1,3 @@
-// import {login, register, logout, formLogIn, formSignUp, showMenu, newGamesFunction, offerGamesFunction,modalLogeado, loadData} from './assets/modules/funciones.js';
 const { createApp } = Vue;
 
 let app = createApp({
@@ -10,6 +9,7 @@ let app = createApp({
       signUp: false,
 
       games:[],
+      game:{},
       newGames:"",
       newest:{},
       offerGames:[],
@@ -23,79 +23,26 @@ let app = createApp({
 
       error: "",
 
-
-      
-  
-
     };
-    
   },
 
-
- 
-
   
-    created(){
-
-      this.loadData();
-
-      // loadData()
-      // newGamesFunction()
-      // offerGamesFunction()    
-      // login()
-      // register()
-      // logout()
-      // formLogIn()
-      // formSignUp()
-      // showMenu()
-
-
-        // axios.get("/api/games" )
-        // .then(response => {
-        //     this.games = response.data
-        //     this.gamesDate = this.games.date
-        //     console.log(response)
-           
-            
-
-        //   })
-        //   .catch(error => {            
-        //     console.log("Error", error)  
-        //   }),
-
-        //   axios.get("/api/customers")
-        //   .then(response => {
-        //       this.customer = response.data            
-        //       console.log(response)
-            
-              
-        //     })
-        //     .catch(error => {     
-        //       this.customer = null,       
-        //       console.log("Error", error)  
-        //     })
-        
-
-      },
-    
-
-  
-  
-
-  methods: {
-
-    loadData(){
-      axios.get("/api/games" )
+    beforeCreate(){
+        axios.get("/api/games",  )
         .then(response => {
             this.games = response.data
             this.gamesDate = this.games.date
+            const searchId = location.search
+            const paramsId = new URLSearchParams(searchId)
+            const ID = paramsId.get('id')
+
+             
+                
+            this.game = this.games.find(game=>game.id == ID) 
             console.log(response)
-
-            this.newGamesFunction()
-            this.offerGamesFunction()
-           
+            console.log(this.game)
             
-
+            this.offerGamesFunction()     
           })
           .catch(error => {            
             console.log("Error", error)  
@@ -112,24 +59,15 @@ let app = createApp({
               this.customer = null,       
               console.log("Error", error)  
             })
-    },
+        
 
+      },
+    
 
-   
-    newGamesFunction(){
-        let juegosPorFecha = this.games.toSorted( (a, b) => {
-            if (a.date < b.date) return 1
-            if (a.date > b.date) return -1
-            return 0
-        }
-        )
-        this.newGames = juegosPorFecha.slice(1,6)
-        this.newest= juegosPorFecha.slice(0,1)
-        console.log(juegosPorFecha)
-        console.log(this.newest)
-        return juegosPorFecha
-       
-          },
+  
+  
+
+  methods: {
     offerGamesFunction(){
         let juegosPorOferta = this.games.toSorted( (a, b) => {
             if (a.discount < b.discount) return 1
@@ -140,6 +78,8 @@ let app = createApp({
         this.offerGames = juegosPorOferta.slice(0,6)
         console.log(this.offerGames)
     },
+
+   
 
 
     // ---------FUNCIONES DE MODAL PARA LOGIN Y HAMB MENU---------------------
@@ -205,7 +145,7 @@ let app = createApp({
         .then(response => {
           console.log(response)
           this.customer = null
-          window.location.href="index.html"
+          window.location.href="gamedetails.html"
           
         })
         .catch(error => console.log("Error", error))
