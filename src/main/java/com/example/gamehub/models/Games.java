@@ -45,7 +45,7 @@ public class Games {
         this.stock = stock;
         this.releaseDate = releaseDate;
         this.discount = discount;
-        this.rating = rating;
+        this.rating = rating == null ? Rating.RP : rating;
         this.genres = genres;
         this.platforms = platforms;
     }

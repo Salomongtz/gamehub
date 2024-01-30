@@ -12,6 +12,7 @@ public record GameRecord(
         String description,
         String developer,
         String publisher,
+
         String imageURL,
 //        String coverURL,
 //        String longDescription,
