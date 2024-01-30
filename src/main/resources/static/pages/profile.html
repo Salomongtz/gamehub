@@ -5,42 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="shortcut icon" href="../assets/images/SXESlogo.png" type="image/x-icon" />
 </head>
 
-<body>
+<body class="bg-gris text-white">
     <div id="app">
         <header class="gradient bg-gris h-[6rem] w-full gap-4 relative flex items-center">
             <!--LOGO -->
             <div class="w-24 ml-4">
-                <img src="assets/images/SXESlogo.png" alt="" />
+                <img src="../assets/images/SXESlogo.png" alt="" />
             </div>
 
             <!--MENU HAMBURGUESA -->
             <div class="hamburg flex justify-right w-8 absolute right-10 top-8 md:hidden lg:hidden"
-                v-if="navMenu == false" @click.prevent="showMenu()">
-                <img class="" src="assets/images/menuHamb.png" alt="" />
-            </div>
-
-            <!--OPCION LOGIN -->
-            <div class="login text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
-                <p class="cursor-pointer bg-gris py-[0.2rem] px-2 rounded-md" @click.prevent="formLogIn()">
-                    Log In
-                </p>
-                <p class="cursor-pointer" @click.prevent="formSignUp()">Sign Up</p>
-            </div>
-
-            <!--NAVBAR ESCRITORIO -->
-            <div class="navBar">
-                <nav class="flex justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0">
-                    <a href="#">Store</a>
-                    <a href="#">My account</a>
-                    <a href="#">Cart</a>
-                    <a href="#" class="">About Us</a>
-                </nav>
+                v-if="navMenu == false" @click="navMenu=!navMenu">
+                <img class="" src="../assets/images/menuHamb.png" alt="" />
             </div>
 
             <!--NAVBAR HAMBURGUESA -->
-            <div v-if="navMenu == true">
+            <div v-else>
                 <nav
                     class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[24rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center">
                     <a href="#" class="pl-6">Store</a>
@@ -53,178 +37,64 @@
                         <a href="#" class="pl-6" @click.prevent="formSignUp()">Sign up</a>
                     </div>
 
-                    <img src="assets/images/closeMenu.png" alt="" class="w-6 absolute right-6 top-6"
+                    <img src="../assets/images/closeMenu.png" alt="" class="w-6 absolute right-6 top-6"
                         @click.prevent="showMenu()" />
                 </nav>
             </div>
+
+            <!-- LOGOUT -->
+            <div class="login flex text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
+                <p class="text-white">{{customer.name}} </p>
+                <p class="cursor-pointer text-white" @click.prevent="logout()">|| Log out</p>
+            </div>
+
+
+
+            <!--NAVBAR ESCRITORIO -->
+            <div class="navBar">
+                <nav class="flex justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0">
+                    <a href="#">Store</a>
+                    <a href="#">My account</a>
+                    <a href="#">Cart</a>
+                    <a href="#" class="">About Us</a>
+                </nav>
+            </div>
+
+
         </header>
 
         <main class="flex flex-col items-center h-full mb-16 gap-12">
-            <img id="banner"
-                src="https://assets.xboxservices.com/assets/58/81/58819069-871d-4aea-baee-52bfd15d1977.jpg?n=Fortnite_Sneaky-Slider-1084_876951_1600x675.jpg"
-                alt="" class="h-64 w-full object-cover object-top" />
-
-            <a href="">
-                <img src="assets/images/StoreIndex.png" alt="" class="object-cover" id="storeButton" />
-            </a>
-
-            <!--SECCION ESCRITORIO -->
-
-            <div id="desktopSections" class=" flex flex-col gap-24 items-center">
-
-                <!-- --------------------- NEW GAMES SECTION----------------------- -->
-
-                <section id="" class="cardContainer flex flex-col items-center gap-10  w-[70vw]">
-                    <h1 class="gamer text-5xl font-semibold text-amarillo">NEW</h1>
-                    <div class="bg-gris rounded-md h-[20rem] w-[100%] relative  " v-for="newes of newest">
-                        <img v-bind:src="newes.image" alt="" class="w-full h-full object-cover">
-                        <div class="flex bg-black/80 w-full h-24 absolute bottom-0 items-center">
-                            <p class="gamer text-[5rem] text-white ">{{newes.title}}</p>
-                            <p class="text-white ">{{newes.description}} </p>
-                        </div>
-                    </div>
-                    <div class="cardContainer pb-10">
-                        <div class="card h-[20rem] w-[20rem] gradient text-white bg-gris rounded-md inline-block "
-                            v-for="games of newGames">
-                            <a href="">
-                                <img v-bind:src="games.image" alt="">
-                                <div class=" p-2 text-wrap">
-                                    <div class="flex justify-between items-center">
-                                        <h1 class="text-lg font-semibold">{{games.title}} </h1>
-                                        <!-- <h1>{{(games.price - 2)}}</h1> -->
-                                        <h1 class="bg-morado p-2 font-semibold">{{Intl.NumberFormat('en-US',
-                                            {style: 'currency',
-                                            currency: 'USD'}).
-                                            format(games.price)}} </h1>
-                                    </div>
-                                    <h1 class="text-sm line-clamp-3 pt-2">{{games.description}}... </h1>
-                                    <div v-for="genre of games.genre" class="inline-block my-2 wrap-none">
-                                        <p class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm ">
-                                            {{genre }} </p>
-                                    </div>
+            <img class="h-64 w-full object-cover object-top" id="banner" alt="banner"
+                src="https://assets.xboxservices.com/assets/58/81/58819069-871d-4aea-baee-52bfd15d1977.jpg?n=Fortnite_Sneaky-Slider-1084_876951_1600x675.jpg" />
+            <div id="profileSection">
+                <h2 class=" text-2xl font-semi-bold" id="name">{{firstName}} {{lastName}}</h2>
+            </div>
+            <div class="flex flex-col" id="librarySection">
+                <h3 class=" text-2xl font-semi-bold">My library</h3>
+                <a href="library.html">See all</a>
+                <div class="cardContainer pb-6">
+                    <div v-for="games of games.slice(0, 4)" class="card gradient rounded-md h-[15rem] w-[15rem]">
+                        <a href="">
+                            <img v-bind:src="games.image" alt="" class="h-[60%] object-cover" />
+                            <div class="p-2 text-wrap">
+                                <div class="flex justify-between items-center">
+                                    <h1 class="text-lg font-semibold">{{games.title}}</h1>
+                                    <!-- <h1>{{(games.price - 2)}}</h1> -->
+                                    <h1 class="bg-morado p-2 font-semibold">
+                                        {{Intl.NumberFormat('en-US', {style: 'currency',
+                                        currency: 'USD'}). format(games.price)}}
+                                    </h1>
                                 </div>
-                            </a>
-                        </div>
-                    </div>
-                </section>
-                <!-- --------------------- SPECIAL OFFERS SECTION----------------------- -->
-                <section id="ofers" class="  flex flex-col items-center w-[70vw] gap-10">
-                    <h1 class="gamer text-5xl text-amarillo">SPECIAL OFFERS</h1>
-                    <div class="cardContainer pb-10">
-                        <div class=" card  inline-block" v-for="games of offerGames">
-                            <div class=" gradient rounded-md h-[20rem] w-[30rem] text-white ">
-                                <a href="">
-                                    <img v-bind:src="games.image" alt="" class="w-full">
-                                    <div class=" p-2 text-wrap relative">
-                                        <div class="flex justify-between ">
-                                            <h1 class="text-lg font-semibold">{{games.title}} </h1>
-
-                                            <div class="flex  gap-6 pt-2">
-                                                <div class="flex flex-col items-center gap-2">
-                                                    <p class="text-sm">BEFORE</p>
-                                                    <p class="py-2 b-[0.2rem] font-semibold line-through">
-                                                        {{Intl.NumberFormat('en-US',
-                                                        {style: 'currency',
-                                                        currency: 'USD'}).
-                                                        format((games.price *1.1))}}</p>
-                                                </div>
-                                                <div class="flex flex-col items-center gap-2">
-                                                    <p class="text-sm"> NOW</p>
-                                                    <h1 class="bg-morado p-2 font-semibold">{{Intl.NumberFormat('en-US',
-                                                        {style: 'currency',
-                                                        currency: 'USD'}).
-                                                        format(games.price)}} </h1>
-                                                </div>
-                                            </div>
-                                            <!-- <h1></h1> -->
-                                        </div>
-                                        <div class="absolute bottom-2 left-2">
-                                            <div v-for="genre of games.genre" class="inline-block  wrap-none ">
-                                                <p
-                                                    class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm ">
-                                                    {{genre }} </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
+                                <div v-for="genre of games.genre.slice(0, 3)" class="inline-block my-2 wrap-none">
+                                    <p class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm">
+                                        {{genre }}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
-                </section>
-
-                <section id="categoryBrowse" class=" flex flex-col font-semibold  items-center gap-4 bg-gris  py-10">
-                    <div class="">
-                        <h1 class="gamer text-amarillo text-5xl text-center mb-10">BROWSE BY CATEGORY</h1>
-                        <div class="cardContainer pr-4 w-[60rem]">
-                            <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
-                            <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
-                            <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
-                            <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
-                            <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
-                            <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
-                        </div>
-                    </div>
-                </section>
+                </div>
             </div>
-
-            <!--SECCION MOBILE -->
-
-            <div id="mobileSections">
-                <section id="nuevos" class="  flex flex-col font-semibold text-white items-center gap-4">
-                    <h1 class="gamer text-xl">NEW</h1>
-                    <div class="cardContainer">
-                        <div class=" inline-block pr-4" v-for="games of newGames">
-                            <div class="card gradient rounded-md h-[15rem] w-[15rem]">
-                                <a href="">
-                                    <img v-bind:src="games.image" alt="" class="h-[60%]">
-                                    <div class=" p-2 text-wrap">
-                                        <div class="flex justify-between items-center">
-                                            <h1 class="text-lg font-semibold">{{games.title}} </h1>
-                                            <!-- <h1>{{(games.price - 2)}}</h1> -->
-                                            <h1 class="bg-morado p-2 font-semibold">{{Intl.NumberFormat('en-US',
-                                                {style: 'currency',
-                                                currency: 'USD'}).
-                                                format(games.price)}} </h1>
-                                        </div>
-                                        <div v-for="genre of games.genre" class="inline-block my-2 wrap-none">
-                                            <p class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm ">
-                                                {{genre }} </p>
-
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </section>
-
-                <section id="ofertas"
-                    class="cardContainer flex flex-col font-semibold text-amarillo items-center gap-4">
-                    <h1 class="gamer text-xl">SPECIAL OFFERS</h1>
-                    <div class="cardContainer gap-4">
-                        <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-                        <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-                        <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-                        <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-                        <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-                        <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-                    </div>
-                </section>
-                <section id="nuevos" class="cardContainer flex flex-col font-semibold text-amarillo items-center gap-4">
-                    <h1 class="gamer text-xl">BROWSE BY CATEGORY</h1>
-                    <div class="cardContainer pr-4 w-[60rem]">
-                        <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-                        <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-                        <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-                        <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-                        <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-                        <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-                    </div>
-                </section>
-            </div>
-
         </main>
 
         <footer class="bg-gris h-[5rem]"></footer>

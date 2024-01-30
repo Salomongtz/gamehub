@@ -42,6 +42,7 @@ public class GamehubApplication {
 			Customer admin = new Customer("Salomon","Gutierrez","salo@admin.com",password.encode("Salomon1!"));
 			admin.setRole(RoleType.ADMIN);
 			customerRepository.save(admin);
+			System.out.println(admin);
 		};
 	}
 }

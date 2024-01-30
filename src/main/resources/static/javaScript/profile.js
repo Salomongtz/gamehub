@@ -3,27 +3,33 @@ const { createApp } = Vue;
 let app = createApp({
     data() {
         return {
-            name: "",
+            customer: "",
+            firstName: "",
             lastName: "",
             email: "",
             password: "",
             games: [],
-            newGames: [],
-            offerGames: [],
-            newest: [],
+            navMenu: false
         };
+    },
+    created() {
+        this.loadData()
     },
     methods: {
         loadData() {
             axios.get("/api/customers")
-                .then(response => { console.log(response.data) })
+                .then(response => {
+                    this.customer = response.data
+                    this.games=response.data.games
+                    this.firstName = response.data.name
+                    this.lastName = response.data.lastName
+                    this.email = response.data.email
+                    console.log(response.data)
+                })
                 .catch(error => {
                     console.log(error)
                 })
         }
-    },
-    created() {
-        this.loadData()
     }
 });
 app.mount("#app");
