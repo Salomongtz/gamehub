@@ -69,23 +69,22 @@
             <div id="profileSection">
                 <h2 class=" text-2xl font-semi-bold" id="name">{{firstName}} {{lastName}}</h2>
             </div>
-            <div class="flex flex-col" id="librarySection">
+            <div class="flex flex-col px-2 items-center justify-evenly" id="librarySection">
                 <h3 class=" text-2xl font-semi-bold">My library</h3>
-                <a href="library.html">See all</a>
-                <div class="cardContainer pb-6">
-                    <div v-for="games of games.slice(0, 4)" class="card gradient rounded-md h-[15rem] w-[15rem]">
+                <a href="library.html">See all your games</a>
+                <div class="cardContainer pb-6 flex flex-wrap justify-center">
+                    <div v-for="games of games.slice(0, 4)" class="card gradient rounded-md h-72 w-80 hover:scale-105">
                         <a href="">
                             <img v-bind:src="games.image" alt="" class="h-[60%] object-cover" />
-                            <div class="p-2 text-wrap">
+                            <div class="p-2 text-wrap h-auto">
                                 <div class="flex justify-between items-center">
-                                    <h1 class="text-lg font-semibold">{{games.title}}</h1>
-                                    <!-- <h1>{{(games.price - 2)}}</h1> -->
-                                    <h1 class="bg-morado p-2 font-semibold">
-                                        {{Intl.NumberFormat('en-US', {style: 'currency',
-                                        currency: 'USD'}). format(games.price)}}
-                                    </h1>
+                                    <span class="text-lg font-semibold">{{games.title}}</span>
+                                    <span class="bg-morado p-2 font-semibold">
+                                        {{games.owned}}
+                                    </span>
                                 </div>
-                                <div v-for="genre of games.genre.slice(0, 3)" class="inline-block my-2 wrap-none">
+                                <div v-for="genre of games.genre.slice(0, 3)"
+                                    class="h-auto inline-block my-2 wrap-none">
                                     <p class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm">
                                         {{genre }}
                                     </p>
@@ -94,6 +93,32 @@
                         </a>
                     </div>
                 </div>
+            </div>
+            <div class="flex flex-col px-2 items-center justify-evenly w-full" id="purchaseSection">
+                <h3 class=" text-2xl font-semi-bold">My purchases</h3>
+                <a href="purchases.html">See your entire purchase history</a>
+                <table class="w-full border border-amarillo" id="purchasesTable">
+                    <thead class="text-black bg-amarillo">
+                        <tr>
+                            <th>Date</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-gris text-center">
+                        <tr :class="index % 2 == 0 ? 'bg-negro' : 'bg-gris'" v-for="(purchase, index) in purchases" :key="purchase.id">
+                            <td>{{ purchase.purchaseDate }}</td>
+                            <td>
+                                <ul>
+                                    <li v-for="game in purchase.games" :key="game.id">
+                                       {{ game.game.title }}
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>{{ new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(purchase.totalAmount) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </main>
 

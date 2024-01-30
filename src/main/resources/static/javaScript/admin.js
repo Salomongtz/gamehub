@@ -31,8 +31,12 @@ let app = createApp({
       this.fileInput = event.target.files[0]
       const result = this.imageKit.upload({
         file: this.fileInput,
-        publicKey:this.publicKey,
+        publicKey: this.publicKey,
+        signature: null,
+        expire: Math.floor(new Date(new Date().getMinutes + 30).getTime() / 1000),
+        token: null,
         fileName: this.fileInput.name,
+        useUniqueFileName: false,
         folder: "gamehub-games"
       })
       console.log(result);

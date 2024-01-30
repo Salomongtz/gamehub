@@ -9,6 +9,7 @@ let app = createApp({
             email: "",
             password: "",
             games: [],
+            purchases: [],
             navMenu: false
         };
     },
@@ -24,6 +25,7 @@ let app = createApp({
                     this.firstName = response.data.name
                     this.lastName = response.data.lastName
                     this.email = response.data.email
+                    this.purchases = response.data.purchases
                     console.log(response.data)
                 })
                 .catch(error => {
