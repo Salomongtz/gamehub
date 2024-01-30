@@ -41,7 +41,7 @@ let app = createApp({
             this.game = this.games.find(game=>game.id == ID) 
             console.log(response)
             console.log(this.game)
-            this.newGamesFunction()
+            
             this.offerGamesFunction()     
           })
           .catch(error => {            
@@ -68,6 +68,16 @@ let app = createApp({
   
 
   methods: {
+    offerGamesFunction(){
+        let juegosPorOferta = this.games.toSorted( (a, b) => {
+            if (a.discount < b.discount) return 1
+            if (a.discount > b.discount) return -1
+            return 0
+        }
+        )
+        this.offerGames = juegosPorOferta.slice(0,6)
+        console.log(this.offerGames)
+    },
 
    
 
@@ -135,7 +145,7 @@ let app = createApp({
         .then(response => {
           console.log(response)
           this.customer = null
-          window.location.href="index.html"
+          window.location.href="gamedetails.html"
           
         })
         .catch(error => console.log("Error", error))
