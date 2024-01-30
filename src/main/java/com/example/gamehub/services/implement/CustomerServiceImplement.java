@@ -19,18 +19,6 @@ import java.io.IOException;
 
 import java.util.List;
 
-import io.github.cdimascio.dotenv.Dotenv;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import com.sendgrid.Method;
-import com.sendgrid.Request;
-import com.sendgrid.Response;
-import com.sendgrid.SendGrid;
-import com.sendgrid.helpers.mail.Mail;
-import com.sendgrid.helpers.mail.objects.Content;
-import com.sendgrid.helpers.mail.objects.Email;
-
-
 @Service
 public class CustomerServiceImplement implements CustomerService {
     @Autowired
@@ -60,7 +48,6 @@ public class CustomerServiceImplement implements CustomerService {
 
     @Override
     public ResponseEntity<?> register(CustomerRecord customerRecord) throws IOException {
-        sendEmail();
         ResponseEntity<String> BAD_REQUEST = runVerifications(customerRecord.firstName(), customerRecord.lastName(),
                 customerRecord.email(), customerRecord.password());
         if (BAD_REQUEST != null) {
@@ -72,7 +59,7 @@ public class CustomerServiceImplement implements CustomerService {
         Customer customer = new Customer(customerRecord.firstName(), customerRecord.lastName(),
                 customerRecord.email(), passwordEncoder.encode(customerRecord.password()));
         customerRepository.save(customer);
-
+        sendEmail();
         return new ResponseEntity<>(customer + "\nCreated successfully!", HttpStatus.CREATED);
     }
 
@@ -112,17 +99,14 @@ public class CustomerServiceImplement implements CustomerService {
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 
-    public void sendEmail() throws IOException {
-        Dotenv dotenv = Dotenv.configure().load();
+    private void sendEmail() throws IOException {
         Email from = new Email("rokkuman10@gmail.com");
         String subject = "Sending with SendGrid is Fun";
-        Email to = new Email("alvarosop23@gmail.com");
-        Content content = new Content("text/plain", "hola s");
+        Email to = new Email("maverick0598@gmail.com");
+        Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
         Mail mail = new Mail(from, subject, to, content);
 
-        String apiKey = dotenv.get("SENDGRID_API_KEY");
-
-        SendGrid sg = new SendGrid(apiKey);
+        SendGrid sg = new SendGrid("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");
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
