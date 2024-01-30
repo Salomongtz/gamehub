@@ -11,11 +11,12 @@ import java.util.List;
 public class GamesDTO {
 
     private final Long id;
-    private final String title, description, image;
+    private final String title, description, image, developer, publisher, longDescription;
     private final Long stock, sales, owned;
     private final double price;
     private final LocalDate date;
     private final float discount;
+    private final List<String> screenshots;
     private final List<GameGenre> genre;
     private final List<GamePlatform> platforms;
     private final Rating rating;
@@ -27,12 +28,16 @@ public class GamesDTO {
         image = games.getImageURL();
         stock = games.getStock();
         description = games.getDescription();
+        longDescription = games.getLongDescription();
         sales = games.getSales();
         price = games.getPrice();
         date = games.getReleaseDate();
         discount = games.getDiscount();
         genre = games.getGenres();
         platforms = games.getPlatforms();
+        developer = games.getDeveloper();
+        publisher = games.getPublisher();
+        screenshots = games.getScreenshots();
         this.owned = games.getOwned() == null ? 0L : games.getOwned();
         this.rating = games.getRating() == null ? Rating.NOTRATED : games.getRating();
     }
@@ -87,5 +92,13 @@ public class GamesDTO {
 
     public Rating getRating() {
         return rating;
+    }
+
+    public String getDeveloper() {
+        return developer;
+    }
+
+    public String getPublisher() {
+        return publisher;
     }
 }

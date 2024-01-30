@@ -12,13 +12,14 @@ public class Games {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title, description, developer, publisher, imageURL;
-//    @Column(columnDefinition = "TEXT")
-//    private String longDescription;
+    @Column(columnDefinition = "TEXT")
+    private String longDescription;
     private Long sales,stock, owned=0L;
     private double price;
     private LocalDate releaseDate;
     private float discount;
     private Rating rating;
+    private List<String> screenshots = new ArrayList<>();
     @ElementCollection
     private List<GameGenre> genres;
     @ElementCollection
@@ -29,15 +30,17 @@ public class Games {
     public Games() {
     }
 
-    public Games(String title, String description, String developer, String publisher, String imageURL, Long sales,
+    public Games(String title, String description, String developer, String publisher, String imageURL, String longDescription, Long sales,
                  double price, Long stock, LocalDate releaseDate, float discount, Rating rating, List<GameGenre> genres,
-                 List<GamePlatform> platforms) {
+                 List<GamePlatform> platforms, List<String> screenshots ) {
         this.title = title;
         this.description = description;
+        this.longDescription = longDescription == null ? "" : longDescription;
         this.developer = developer;
         this.publisher = publisher;
         this.imageURL = imageURL;
-        this.sales = sales;
+        this.screenshots = screenshots == null ? new ArrayList<>() : screenshots;
+        this.sales = sales == null ? 0L : sales;
         this.price = price;
         this.stock = stock;
         this.releaseDate = releaseDate;
@@ -184,13 +187,21 @@ public class Games {
 //        this.coverURL = coverURL;
 //    }
 //
-//    public String getLongDescription() {
-//        return longDescription;
-//    }
-//
-//    public void setLongDescription(String longDescription) {
-//        this.longDescription = longDescription;
-//    }
+    public String getLongDescription() {
+        return longDescription;
+    }
+
+    public void setLongDescription(String longDescription) {
+        this.longDescription = longDescription;
+    }
+
+    public List<String> getScreenshots() {
+        return screenshots;
+    }
+
+    public void setScreenshots(List<String> screenshots) {
+        this.screenshots = screenshots;
+    }
 
     @Override
     public String toString() {
@@ -206,4 +217,6 @@ public class Games {
                 ", platform='" + platforms + '\'' +
                 '}';
     }
+
+
 }
