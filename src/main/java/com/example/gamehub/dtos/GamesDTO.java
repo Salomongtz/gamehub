@@ -101,4 +101,12 @@ public class GamesDTO {
     public String getPublisher() {
         return publisher;
     }
+
+    public String getLongDescription() {
+        return longDescription;
+    }
+
+    public List<String> getScreenshots() {
+        return screenshots;
+    }
 }
