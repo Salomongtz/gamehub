@@ -107,7 +107,10 @@ public class CustomerServiceImplement implements CustomerService {
     @Override
     public ResponseEntity<?> addToCart(PurchaseRecord purchaseRecord, String email) {
         Customer customer =  customerRepository.findByEmail(email);
-        customer.getCart().add(purchaseRecord);;
+        customer.getCart().add(purchaseRecord);
+        customerRepository.save(customer);
+        return new ResponseEntity<>("Added to cart successfully!", HttpStatus.OK);
+
     }
 
     private void sendEmail() throws IOException {

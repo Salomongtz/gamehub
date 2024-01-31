@@ -225,13 +225,14 @@ localStorage.setItem('cart', JSON.stringify(cart))
       confirmButtonText: "See cart",
       denyButtonText: `Maybe later`,
       denyButtonColor: '#151515',
+      confirmButtonColor: "#452C6D",
 
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         Swal.fire("Saved!", "", "success");
       } else if (result.isDenied) {
-        Swal.fire("Changes are not saved", "", "info");
+        Swal.close()
       }
     });
   }
