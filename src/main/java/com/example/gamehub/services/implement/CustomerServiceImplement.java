@@ -3,6 +3,7 @@ package com.example.gamehub.services.implement;
 import com.example.gamehub.dtos.CustomerDTO;
 import com.example.gamehub.models.Customer;
 import com.example.gamehub.records.CustomerRecord;
+import com.example.gamehub.records.PurchaseRecord;
 import com.example.gamehub.repositories.CustomerRepository;
 import com.example.gamehub.services.CustomerService;
 import com.sendgrid.helpers.mail.Mail;
@@ -101,6 +102,12 @@ public class CustomerServiceImplement implements CustomerService {
         }
         customerRepository.save(customer);
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> addToCart(PurchaseRecord purchaseRecord, String email) {
+        Customer customer =  customerRepository.findByEmail(email);
+        customer.getCart().add(purchaseRecord);;
     }
 
     private void sendEmail() throws IOException {
