@@ -2,6 +2,7 @@ package com.example.gamehub.models;
 
 import com.example.gamehub.records.PurchaseRecord;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +12,13 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName, lastName, email, password;
+    private String firstName, lastName, email, password, cart;
     @Enumerated(EnumType.STRING)
     private RoleType role = RoleType.CUSTOMER;
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Purchase> purchases;
     @ManyToMany(mappedBy = "customers")
     private List<Games> games = new ArrayList<>();
-
-    private List <PurchaseRecord> cart = new ArrayList<>();
 
     public Customer() {
     }
@@ -114,11 +113,11 @@ public class Customer {
                 '}';
     }
 
-    public List<PurchaseRecord> getCart() {
+    public String getCart() {
         return cart;
     }
 
-    public void setCart(List<PurchaseRecord> cart) {
+    public void setCart(String cart) {
         this.cart = cart;
     }
 }

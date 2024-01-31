@@ -7,7 +7,7 @@ import java.util.List;
 public class CustomerDTO {
 
     private Long id;
-    private String name, lastName, email;
+    private String name, lastName, email, cart;
 
     private List<PurchaseDTO> purchases;
 
@@ -23,6 +23,7 @@ public class CustomerDTO {
         this.email = customer.getEmail();
         this.purchases = customer.getPurchases().stream().map(PurchaseDTO::new).toList();
         this.games = customer.getGames().stream().map(GamesDTO::new).toList();
+        this.cart=customer.getCart();
     }
 
     public Long getId() {
@@ -47,5 +48,9 @@ public class CustomerDTO {
 
     public List<GamesDTO> getGames() {
         return games;
+    }
+
+    public String getCart() {
+        return cart;
     }
 }
