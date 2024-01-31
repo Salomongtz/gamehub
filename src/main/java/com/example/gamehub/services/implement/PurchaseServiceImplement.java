@@ -57,17 +57,16 @@ public class PurchaseServiceImplement implements PurchaseService {
             Games game = gamesRepository.findByTitle(purchaseRecord.title());
             ResponseEntity<String> checkGame = checkGame(game);
             if (checkGame != null) return checkGame;
-            totalAmount += (game.getPrice() - (game.getPrice() * game.getDiscount()))* purchaseRecord.amount();
-            Purchase_Game purchaseGame = new Purchase_Game(game, purchaseRecord.amount());
+            totalAmount += (game.getPrice() - (game.getPrice() * game.getDiscount())) * purchaseRecord.amount();
+            Purchase_Game purchaseGame = new Purchase_Game(purchaseRecord.amount());
             game.setSales(game.getSales() + purchaseRecord.amount());
             game.setStock(game.getStock() - purchaseRecord.amount());
             game.addPurchaseGame(purchaseGame);
             purchaseGames.add(purchaseGame);
             purchaseGameRepository.save(purchaseGame);
             game.setOwned(game.getOwned() + (long) purchaseRecord.amount());
-            if (!customer.getGames().contains(game)) {
-                customer.addGame(game);
-            }
+            customer.addGame(game);
+            gamesRepository.save(game);
         }
 
         Purchase purchase = new Purchase(LocalDate.now(), totalAmount);

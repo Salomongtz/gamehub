@@ -12,6 +12,7 @@ public record GameRecord(
         String description,
         String developer,
         String publisher,
+
         String imageURL,
 //        String coverURL,
         String longDescription,
@@ -20,6 +21,7 @@ public record GameRecord(
         LocalDate releaseDate,
         float discount,
         Rating rating,
+        List<String> screenshots,
         List<GameGenre> genres,
         List<GamePlatform> platforms
         ) {

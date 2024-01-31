@@ -17,8 +17,7 @@ public class Purchase_Game {
     public Purchase_Game() {
     }
 
-    public Purchase_Game(Games games,int quantity) {
-        this.games = games;
+    public Purchase_Game(int quantity) {
         this.quantity = quantity;
     }
 
