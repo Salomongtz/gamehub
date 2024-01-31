@@ -14,7 +14,7 @@ public record GameRecord(
         String publisher,
         String imageURL,
 //        String coverURL,
-//        String longDescription,
+        String longDescription,
         Long sales,
         double price,
         LocalDate releaseDate,
