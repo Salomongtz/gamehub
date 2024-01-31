@@ -9,8 +9,10 @@ let app = createApp({
             description: "",
             developer: "",
             imageURL: "",
+            stock:"",
             sales: 0,
             price: 0,
+            pulbisher:"",
             releaseDate: "",
             discount: 0,
             ratingOptions: ["E", "E10PLUS", "T", "M", "AO", "RP", "RP17", "NOTRATED"],
@@ -25,13 +27,15 @@ let app = createApp({
             editDescription:"",
             editImageURL:"",
             editPrice:"",
-            editSelectedGenres:"",
-            editSelectedPlatforms:"",
+            editSelectedGenres:[],
+            editSelectedPlatforms:[],
             editReleaseDate:"",
             editSales:"",
             editRating:"",
             editDeveloper:"",
             editDiscount:"",
+            editStock:"",
+            editPublisher:""
         };
     },
 
@@ -67,6 +71,8 @@ let app = createApp({
                 imageURL: this.imageURL,
                 sales: this.sales,
                 price: this.price,
+                publisher: this.publisher,
+                stock: this.stock,
                 releaseDate: this.releaseDate,
                 discount: this.discount,
                 rating: this.rating,
@@ -92,26 +98,52 @@ let app = createApp({
         },
 
         dataGame() {
-            console.log(this.selectedGame) 
-                    this.editTitle = this.selectedGame.title;
-                    this.editDescription = this.selectedGame.description;
-                    this.editDeveloper = this.selectedGame.developer;
-                    this.editImageURL = this.selectedGame.image;
-                    this.editSales = this.selectedGame.sales;
-                    this.editPrice = this.selectedGame.price;
-                    this.editReleaseDate = this.selectedGame.date;
-                    this.editDiscount = this.selectedGame.discount;
-                    this.editRating = this.selectedGame.rating;
-                    this.editSelectedGenres = this.selectedGame.genre;
-                    this.editSelectedPlatforms = this.selectedGame.platforms;
-                    console.log(this.editTitle)
-                    console.log(this.editDescription)
+            console.log(this.selectedGame);
+            this.editTitle = this.selectedGame.title;
+            this.editDescription = this.selectedGame.description;
+            this.editDeveloper = this.selectedGame.developer;
+            this.editImageURL = this.selectedGame.image;
+            this.editSales = this.selectedGame.sales;
+            this.editPrice = this.selectedGame.price;
+            this.editPublisher = this.selectedGame.publisher; // Corregido el nombre de la propiedad
+            this.editStock = this.selectedGame.stock; // Corregido el nombre de la propiedad
+            this.editReleaseDate = this.selectedGame.date;
+            this.editDiscount = this.selectedGame.discount;
+            this.editRating = this.selectedGame.rating;
+            this.editSelectedGenres = this.selectedGame.genre;
+            this.editSelectedPlatforms = this.selectedGame.platforms;
         },
 
         editGame(id){
-            axios.patch(`/api/games/${id}`,gameEdit)
-            .then()
-        }
+            console.log(id);
+            const sales =  parseFloat(this.editSales)
+            const price =  parseFloat(this.editPrice)
+            const gameEdit = {
+                title: this.editTitle,
+                description: this.editDescription,
+                developer: this.editDeveloper,
+                publisher: this.editPublisher,
+                imageURL: this.editImageURL,
+                sales: sales,
+                stock: this.editStock,
+                price: price,
+                releaseDate: this.editReleaseDate,
+                discount: this.editDiscount,
+                rating: this.editRating,
+                genres: this.editSelectedGenres,
+                platforms: this.editSelectedPlatforms
+            };
+        
+            axios.patch(`/api/games/${id}`, gameEdit)
+                .then((response) => {
+                    console.log(response.data);
+                    this.loadData();
+                })
+                .catch((error) => console.error(error));
+                console.log(editGame())
+        },
+        
+        
 
     }
 });

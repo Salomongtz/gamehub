@@ -110,6 +110,19 @@
                         </div>
 
                         <div class="mb-4">
+                            <label for="publisher" class="block text-sm font-medium text-amarillo">Pulbiser:</label>
+                            <input v-model="publisher" type="text" id="publisher"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        </div>
+                    
+                        <div class="mb-4">
+                            <label for="stock" class="block text-sm font-medium text-amarillo">Stock:</label>
+                            <input v-model="stock" type="number" id="stock"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        </div>
+
+
+                        <div class="mb-4">
                             <label for="releaseDate" class="block text-sm font-medium text-amarillo">Fecha de
                                 Lanzamiento:</label>
                             <input v-model="releaseDate" type="date" id="releaseDate"
@@ -155,7 +168,7 @@
                         </div>
                     </form>
 
-                    <form id="editGameForm" v-show="currentForm === 'editGameForm'" @submit="editGame(selectedGame.id)"
+                    <form id="editGameForm" v-show="currentForm === 'editGameForm'" @submit.prevent="editGame(selectedGame.id)"
                         class="max-w-md mx-auto bg-gris p-6 rounded-md shadow-lg sm:w-[600px] block text-sm font-medium text-gray-600 mt-6">
                         <h2 class="text-2xl font-bold mb-4 text-center text-amarillo">Editar Juego:</h2>
 
@@ -190,15 +203,28 @@
 
                         <div class="mb-4">
                             <label for="editSales" class="block text-sm font-medium text-amarillo">Ventas:</label>
-                            <input v-model="editSales" type="number" id="editSales" :value="editSales"
+                            <input v-model="editSales" type="text" id="editSales" :value="editSales"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
 
                         <div class="mb-4">
                             <label for="editPrice" class="block text-sm font-medium text-amarillo">Precio:</label>
-                            <input v-model="editPrice" type="number" id="editPrice" :value="editPrice"
+                            <input v-model="editPrice" type="text" id="editPrice" :value="editPrice"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
+
+                        <div class="mb-4">
+                            <label for="editPublisher" class="block text-sm font-medium text-amarillo">Pulbiser:</label>
+                            <input v-model="editPublisher" type="text" id="editPublisher" :value="editPublisher"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        </div>
+                    
+                        <div class="mb-4">
+                            <label for="editStock" class="block text-sm font-medium text-amarillo">Stock:</label>
+                            <input v-model="editStock" type="number" id="editStock" :value="editStock"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                        </div>
+                    
 
                         <div class="mb-4">
                             <label for="editReleaseDate" class="block text-sm font-medium text-amarillo">Fecha de
@@ -240,7 +266,7 @@
                         </div>
 
                         <div>
-                            <button type="button" @click="editGame"
+                            <button type="submit"
                                 class="w-full p-2 bg-amarillo hover:text-amarillo text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
                                 Actualizar Juego
                             </button>

@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/purchase").hasAuthority("CUSTOMER")
                 .requestMatchers(HttpMethod.GET, "/api/games", "/api/games/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/customers").hasAuthority("CUSTOMER")
-                .requestMatchers(HttpMethod.PATCH, "/api/games").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PATCH, "/api/games/*").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PATCH, "/api/customers").hasAuthority("CUSTOMER")
                 .requestMatchers(HttpMethod.DELETE, "/api/games/*").hasAuthority("ADMIN")
 
