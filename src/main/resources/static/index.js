@@ -205,7 +205,8 @@ let app = createApp({
         .then(response => {
           console.log(response)
           this.customer = null
-          window.location.href="index.html"
+          location.reload();
+          // window.location.href="index.html"
           
         })
         .catch(error => console.log("Error", error))
