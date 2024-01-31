@@ -32,20 +32,15 @@ public class CustomerController {
     }
 
     @PatchMapping
-    public ResponseEntity<String> updateCustomer(@RequestBody CustomerRecord customerRecord, Authentication authentication) {
+    public ResponseEntity<String> updateCustomer(@RequestBody CustomerRecord customerRecord,
+                                                 Authentication authentication) {
         return customerService.updateCustomer(customerRecord, authentication.getName());
     }
 
-    @PatchMapping("/api/customers/purchase")
-    public ResponseEntity<?> addToCart(@RequestBody PurchaseRecord purchaseRecord,
-                                                    Authentication authentication){
-       return customerService.addToCart(purchaseRecord, authentication.getName());
-
-
-
-
-
-
+    @PatchMapping("/api/customers/cart")
+    public ResponseEntity<?> addToCart(@RequestBody String cart,
+                                       Authentication authentication) {
+        return customerService.addToCart(cart, authentication.getName());
     }
 }
 

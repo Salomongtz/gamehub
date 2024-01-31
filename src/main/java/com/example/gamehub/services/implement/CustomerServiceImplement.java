@@ -3,23 +3,23 @@ package com.example.gamehub.services.implement;
 import com.example.gamehub.dtos.CustomerDTO;
 import com.example.gamehub.models.Customer;
 import com.example.gamehub.records.CustomerRecord;
-import com.example.gamehub.records.PurchaseRecord;
 import com.example.gamehub.repositories.CustomerRepository;
 import com.example.gamehub.services.CustomerService;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.sendgrid.*;
 import java.io.IOException;
-
 import java.util.List;
 
 @Service
@@ -53,7 +53,7 @@ public class CustomerServiceImplement implements CustomerService {
     }
 
     @Override
-    public ResponseEntity<?> register(CustomerRecord customerRecord) throws IOException {
+    public ResponseEntity<?> register(CustomerRecord customerRecord) {
         ResponseEntity<String> BAD_REQUEST = runVerifications(customerRecord.firstName(), customerRecord.lastName(),
                 customerRecord.email(), customerRecord.password());
         if (BAD_REQUEST != null) {
@@ -105,12 +105,11 @@ public class CustomerServiceImplement implements CustomerService {
     }
 
     @Override
-    public ResponseEntity<?> addToCart(PurchaseRecord purchaseRecord, String email) {
+    public ResponseEntity<?> addToCart(String cart, String email) {
         Customer customer =  customerRepository.findByEmail(email);
-        customer.getCart().add(purchaseRecord);
+        customer.setCart(cart);
         customerRepository.save(customer);
         return new ResponseEntity<>("Added to cart successfully!", HttpStatus.OK);
-
     }
 
     private void sendEmail() throws IOException {
