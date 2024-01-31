@@ -1,5 +1,6 @@
 package com.example.gamehub.models;
 
+import com.example.gamehub.records.PurchaseRecord;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ public class Customer {
     private List<Purchase> purchases;
     @ManyToMany(mappedBy = "customers")
     private List<Games> games = new ArrayList<>();
+
+    private List <PurchaseRecord> cart = new ArrayList<>();
 
     public Customer() {
     }
@@ -109,5 +112,13 @@ public class Customer {
                 ", role=" + role +
                 ", purchases=" + purchases +
                 '}';
+    }
+
+    public List<PurchaseRecord> getCart() {
+        return cart;
+    }
+
+    public void setCart(List<PurchaseRecord> cart) {
+        this.cart = cart;
     }
 }
