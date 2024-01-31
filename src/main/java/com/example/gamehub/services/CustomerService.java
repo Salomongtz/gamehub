@@ -3,6 +3,7 @@ package com.example.gamehub.services;
 import com.example.gamehub.dtos.CustomerDTO;
 import com.example.gamehub.models.Customer;
 import com.example.gamehub.records.CustomerRecord;
+import com.example.gamehub.records.PurchaseRecord;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
@@ -18,4 +19,6 @@ public interface CustomerService {
     ResponseEntity<?> register(CustomerRecord customerRecord) throws IOException;
 
     ResponseEntity<String> updateCustomer(CustomerRecord customerRecord, String email);
+
+    ResponseEntity <?> addToCart (PurchaseRecord purchaseRecord, String email);
 }

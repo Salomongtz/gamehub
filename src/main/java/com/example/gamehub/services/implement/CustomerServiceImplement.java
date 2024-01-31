@@ -3,12 +3,15 @@ package com.example.gamehub.services.implement;
 import com.example.gamehub.dtos.CustomerDTO;
 import com.example.gamehub.models.Customer;
 import com.example.gamehub.records.CustomerRecord;
+import com.example.gamehub.records.PurchaseRecord;
 import com.example.gamehub.repositories.CustomerRepository;
 import com.example.gamehub.services.CustomerService;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +28,9 @@ public class CustomerServiceImplement implements CustomerService {
     CustomerRepository customerRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+
+//    @Value("${SENDGRID_API_KEY}")
+//    private final String SENDGRID_API_KEY=${SENDGRID_API_KEY};
 
     @Override
     public List<Customer> getAllCustomers() {
@@ -59,7 +65,6 @@ public class CustomerServiceImplement implements CustomerService {
         Customer customer = new Customer(customerRecord.firstName(), customerRecord.lastName(),
                 customerRecord.email(), passwordEncoder.encode(customerRecord.password()));
         customerRepository.save(customer);
-        sendEmail();
         return new ResponseEntity<>(customer + "\nCreated successfully!", HttpStatus.CREATED);
     }
 
@@ -99,14 +104,25 @@ public class CustomerServiceImplement implements CustomerService {
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<?> addToCart(PurchaseRecord purchaseRecord, String email) {
+        Customer customer =  customerRepository.findByEmail(email);
+        customer.getCart().add(purchaseRecord);;
+    }
+
     private void sendEmail() throws IOException {
+
+        Dotenv dotenv = Dotenv.configure().load();
+        String apiKey = dotenv.get("SENDGRID_API_KEY");
+
         Email from = new Email("rokkuman10@gmail.com");
         String subject = "Sending with SendGrid is Fun";
         Email to = new Email("maverick0598@gmail.com");
         Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
         Mail mail = new Mail(from, subject, to, content);
 
-        SendGrid sg = new SendGrid("");
+        SendGrid sg = new SendGrid(apiKey);
+
         Request request = new Request();
         request.setMethod(Method.POST);
         request.setEndpoint("mail/send");

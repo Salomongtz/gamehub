@@ -20,10 +20,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.requestMatchers("/index.html", "/index.js", "/pages/store.html",
-                        "/javaScript/store.js",
-                        "/pages/cart.html", "/javaScript/cart.js", "/assets/images/**", "/assets/tipografias/**",
-                        "/taildwind.config.js", "/style.css", "/styles.css", "/pages/gamedetails.html", "/pages/gamedetails.html?id=*", "/javaScript/gamedetails.js" , "assets/modules/funciones.js").permitAll()
+        http.authorizeHttpRequests(auth -> auth.requestMatchers("/index.html", "/index.js", "/pages/store.html", "/javaScript/store.js",
+                        "/pages/cart.html", "/javaScript/cart.js", "/assets/images/**", "/assets/tipografias/**", "/taildwind.config.js", "/style.css",
+                        "/styles.css", "/pages/gamedetails.html", "/pages/gamedetails.html?id=*", "/javaScript/gamedetails.js" , "assets/modules/funciones.js",
+                        "/pages/aboutUs.html", "/javaScript/aboutUs.js" , "/pages/cart.html" , "/javaScript/cart.js").permitAll()
                 .requestMatchers("/pages/profile.html", "/javaScript/profile.js").hasAuthority("CUSTOMER")
                 .requestMatchers("/pages/admin.html","/javaScript/admin.js").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/customers").permitAll()
@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/purchase").hasAuthority("CUSTOMER")
                 .requestMatchers(HttpMethod.GET, "/api/games", "/api/games/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/customers").hasAuthority("CUSTOMER")
-                .requestMatchers(HttpMethod.PATCH, "/api/games").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PATCH, "/api/games/*").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PATCH, "/api/customers").hasAuthority("CUSTOMER")
                 .requestMatchers(HttpMethod.DELETE, "/api/games/*").hasAuthority("ADMIN")
 

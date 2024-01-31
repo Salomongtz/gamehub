@@ -125,32 +125,34 @@
               class="bg-gris rounded-md h-[20rem] w-[100%] relative  "
               v-for="newes of newest"
             >
+             <a v-bind:href="'/pages/gamedetails.html?id='+newes.id">
               <img
-                v-bind:src="newes.image"
-                alt=""
-                class="w-full h-full object-cover"
-              />
+              v-bind:src="newes.image"
+              alt=""
+              class="w-full h-full object-cover"
+            />
+            <div
+              class="flex bg-black/90 w-full  absolute bottom-0 items-center p-2"
+            >
+              <p class="gamer text-[5rem] text-white mx-4">{{newes.title}}</p>
+              <div class="block ">
+                <p class="text-white text-wrap text-shadow  font-medium p-2">{{newes.description}}</p>
               <div
-                class="flex bg-black/90 w-full  absolute bottom-0 items-center p-2"
-              >
-                <p class="gamer text-[5rem] text-white mx-4">{{newes.title}}</p>
-                <div class="block ">
-                  <p class="text-white text-wrap text-shadow  font-medium p-2">{{newes.description}}</p>
-                <div
-                    v-for="genre of newes.genre.slice(0, 4)" 
-                      class="inline-block wrap-none text-white"
+                  v-for="genre of newes.genre.slice(0, 4)" 
+                    class="inline-block wrap-none text-white"
+                  >
+                    <p
+                      class="mx-2  p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm"
                     >
-                      <p
-                        class="mx-2  p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm"
-                      >
-                        {{genre }}
-                      </p>   
-                    </div>      
-                </div>
-                <h1 class="bg-morado px-4 py-2 font-semibold text-white mr-4">
-                  FREE
-                </h1>
+                      {{genre }}
+                    </p>   
+                  </div>      
               </div>
+              <h1 class="bg-morado px-4 py-2 font-semibold text-white mr-4">
+                FREE
+              </h1>
+            </div>
+             </a>
             </div>
 
             <div class="cardContainer pb-10 items-center">
@@ -158,7 +160,7 @@
                 class="card h-[20rem] w-[20rem] gradient text-white rounded-md relative"
                 v-for="games of newGames"
               >
-                <a href="">
+                <a v-bind:href="'/pages/gamedetails.html?id='+games.id">
                   <img v-bind:src="games.image" alt="" />
                   <div class="p-2 text-wrap">
                     <div class="flex justify-between items-center">
@@ -368,7 +370,25 @@
         <!-- LOG IN -->
       </main>
 
-      <footer class="bg-gris h-[5rem]"></footer>
+      <footer class="bg-gris  flex flex-col justify-center gap-2 relative">
+        <img src="../assets/images/SXESlogo.png" alt="" class="w-20 mx-auto absolute left-4">
+        <div class="flex gap-2 font-semibold text-white mx-auto p-4 justify-around">
+          <a href="" class="border-r-2 px-6">Privacy Policy </a>
+          <a href="" class="border-r-2 px-6">Terms of Use </a>
+          <a href="" class="border-r-2 px-6">Refund Policy </a>
+          <a href="" class="border-r-2 px-6">Support </a>
+          <a href="" class="border-r-2 px-6">Legal </a>
+        </div>
+        
+       
+        <div class="flex  justify-center gap-4 text-white p-4">
+          <p>Wisisncon 346</p>
+          <p>Oklahoma, Masachusetts, USA</p>          
+          <p>+1 (555) 555-5555</p>
+          <p>© 2022. All rights reserved</p>
+        </div>
+        
+      </footer>
 
       <template class="absolute inset-0 bg-black/80 w-full h-full" v-if="logIn">
         <form

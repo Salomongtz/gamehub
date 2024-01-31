@@ -26,6 +26,7 @@ dependencies {
 	implementation 'org.postgresql:postgresql'
 	implementation 'com.sendgrid:sendgrid-java:4.10.1'
 	implementation 'io.github.cdimascio:java-dotenv:5.2.2'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 }
 
 tasks.named('test') {

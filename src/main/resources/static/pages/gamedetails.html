@@ -92,24 +92,41 @@
         </div>
       </header>
 
-      <main class="px-28 ">
-        <h1 class="gamer text-white text-5xl text-center font-semibold p-6"> {{game.title}} </h1>
+      <main class="px-28 flex flex-col justify-center">
+        <h1 class="gamer text-white text-5xl text-center font-semibold py-12"> {{game.title}} </h1>
 
-        <div id="gameContent" class="flex  justify-around gap-10 items-center">
-            <img v-bind:src="game.image" alt="" class="w-[37rem] object-cover">
+        <div id="gameContent" class="flex flex-col justify-center gap-10 items-center w-[60%] mx-auto">
+            <img v-bind:src="game.image" alt="" class="w-[100%] object-cover">
+            <div class=" text-white  mx-4 ">
+              <div
+              v-for="genre of game.genre" 
+                class="inline-block wrap-none"
+              >
+                <p
+                  class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm"
+                >
+                  {{genre }}
+                </p>
+              </div>
+            </div>
            
             <div>
-                <p class="text-white p-4 w-[37rem]">{{game.description}}</p>
-                <div id="gamePrice" class="flex self-bottom justify-around pt-12 text-lg">
+                <p class="text-white text-lg p-4 w-[100%]">{{game.description}}</p>
+                <div id="gamePrice" class="flex flex-col items-center py-6 text-lg gap-10">
                     <div class="flex items-center gap-8">
                         <p v-if="offerGames.includes(game)" class="text-white b-[0.1px]  line-through">${{(game.price * 1.1).toLocaleString().slice(0,5)}} </p>
                         <h1 class="p-[0.7rem] bg-morado text-white">${{game.price.toLocaleString()}}</h1>
                     </div>
-                    <div class="flex gap-8">
-                        <button class="p-2 border-2 border-white text-white ">Add to cart</button>
+                    <div class="flex gap-8" v-if="customer != null">
+                        <button class="p-2 border-2 border-white text-white " @click="addToCart(game.id)">Add to cart</button>
                         <button class="p-[0.7rem] bg-gris text-amarillo font-semibold">Buy now</button>
-
                     </div>
+                    <div class="flex gap-8" v-if="customer == null">
+                      <button class="p-2 border-2 border-white/20 text-white/20 ">Add to cart</button>
+                      <button class="p-[0.7rem] bg-gris/20 text-amarillo/20 font-semibold">Buy now</button>
+                  </div>
+
+
 
                    
                     
@@ -118,23 +135,12 @@
             </div>
             
         </div>
-        <div class=" text-white my-6 mx-4 ">
-            <div
-            v-for="genre of game.genre" 
-              class="inline-block wrap-none"
-            >
-              <p
-                class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm"
-              >
-                {{genre }}
-              </p>
-            </div>
-          </div>
-
-        
         
 
-          <div id="gameTable" class="text-white flex flex-col gap-4 text-sm bg-gris/50 p-4 w-[30rem] mx-auto my-10">
+        
+        <div id="gameData2" class="flex  justify-center items-center">
+          
+          <div id="gameTable" class="text-white flex flex-col gap-4 text-sm bg-gris/50 p-4 w-[30rem]  my-10">
             
             <div  class="gameData flex gap-6 border-b-[0.2px] p-2  justify-between">
                 <p class="font-semibold text-white/50">SALES:</p>
@@ -169,6 +175,20 @@
                 </div>
             </div>
           </div>
+
+          <div class="p-8">
+            <img src="../assets/images/Everyone_SP.svg" alt="" v-if="game.rating == 'E'" class="w-20">
+            <img src="../assets/images/Mature_SP.svg" alt="" v-if="game.rating == 'M'" class="w-20">
+            <img src="../assets/images/Adult_SP.svg" alt="" v-if="game.rating == 'AO'" class="w-20">
+            <img src="../assets/images/Everyone10_SP.svg" alt="" v-if="game.rating == 'E10PLUS'" class="w-20">
+            <img src="../assets/images/RatingPending_Spanish-1.svg" alt="" v-if="game.rating == 'RP'" class="w-20">
+            <img src="../assets/images/Teen_SP.svg" alt="" v-if="game.rating == 'T'" class="w-20">
+            <img src="../assets/images/RP-LM17-Spanish.svg" alt="" v-if="game.rating == 'RP17'" class="w-20">
+
+          </div>
+
+        </div>
+
        
       </main>
 
