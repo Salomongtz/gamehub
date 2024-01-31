@@ -5,6 +5,7 @@ import com.example.gamehub.models.Customer;
 import com.example.gamehub.records.CustomerRecord;
 import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface CustomerService {
@@ -14,7 +15,7 @@ public interface CustomerService {
 
     CustomerDTO getCustomerDTOByEmail(String email);
 
-    ResponseEntity<?> register(CustomerRecord customerRecord);
+    ResponseEntity<?> register(CustomerRecord customerRecord) throws IOException;
 
     ResponseEntity<String> updateCustomer(CustomerRecord customerRecord, String email);
 }
