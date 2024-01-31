@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="../assets/images/SXESlogo.png" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>Store</title>
+    <title>AboutUs</title>
 </head>
 
 <body>
@@ -38,8 +38,10 @@
                     <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
                         href="./store.html">Store</a>
                     <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="#">My account</a>
-                    <a class="bg-amarillo text-negro  w-[10rem] h-[2rem] rounded-md" href="./cart.html">Cart</a>
-                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="#" class="">About
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+                        href="./cart.html">Cart</a>
+                    <a class="bg-amarillo text-negro  w-[10rem] h-[2rem] rounded-md" href="./aboutUs.html"
+                        class="">About
                         Us</a>
                 </nav>
             </div>
@@ -47,9 +49,10 @@
             <div v-if="navMenu == true">
                 <nav
                     class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[24rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center ">
-                    <a href="#" class="pl-6">Store</a>
+                    <a href="../index.html" class="pl-6">Home</a>
+                    <a href="./store.html" class="pl-6">Store</a>
                     <a href="#" class="pl-6">My Account</a>
-                    <a href="#" class="pl-6">Cart</a>
+                    <a href="./cart.html" class="pl-6">Cart</a>
                     <a href="#" class="pl-6">About Us</a>
 
                     <div class="flex flex-col border-t-[0.1px] border-white/50 pt-4  gap-4">
@@ -78,57 +81,43 @@
                 <img src="../assets/images/StoreIndex.png" alt="" class="object-cover">
             </a>
 
-
-            <!-- TARJETAS DE JUEGOS -->
-            <div class="flex w-[90%]  justify-center text-center  items-center  flex-wrap items-center justify-center">
-                <template v-if="filteredGames.length > 0 " v-for="game of filteredGames">
-                    <div class="flex flex-wrap gap-10 p-2  justify-be  items-center">
-                        <div class="card h-[20rem] w-[20rem] gradient text-white rounded-md relative">
-                            <a v-bind:href="'/pages/gamedetails.html?id='+game.id">
-                                <img v-bind:src="game.image" alt="game image" />
-                                <div class="p-2 text-wrap">
-                                    <div class="flex justify-between items-center">
-                                        <h1 class="text-lg font-semibold">{{game.title}}</h1>
-                                        <h1 class="bg-morado p-2 font-semibold">
-                                            {{Intl.NumberFormat('en-US', {style: 'currency',
-                                            currency: 'USD'}). format(game.price)}}
-                                        </h1>
-                                    </div>
-
-                                    <h1 class="text-sm line-clamp-3 pt-2">
-                                        {{game.description}}
-                                    </h1>
-                                </div>
-                                <div class="absolute bottom-2 left-2">
-                                    <div v-for="genre of game.genre.slice(0, 4)" class="inline-block wrap-none">
-                                        <p class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm">
-                                            {{genre}}
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+            <div id="headerAboutUS" class="flex items-end">
+                <nav class="navAboutUs">
+                    <a href="#vision">Emiliano Díaz</a>
+                    <a href="#knowledge">Salomón Gutiérrez</a>
+                    <a href="#space">Sofia Pincolinni</a>
+                    <a href="#future">Xavier Nochelli</a>
+                </nav>
             </div>
-            </template>
-            <template v-else>
-                <h2
-                    class="flex justify-center font-bold  bg-amarillo text-black items-center border solid border-white justify-items-center h-[15rem] w-[15rem] border-solid-5 p-5 rounded-lg">
-                    No found Games</h2>
-            </template>
-
+            <div id="page" class=" flex flex-col rounded-md  w-[80%]">
+                <section class="sectionAboutUs rounded-xl" id="vision" style="background-image:url(https://assets.codepen.io/214624/vision.jpg)">
+                    <h1>Emiliano Díaz</h1>
+                </section>
+                <section class="sectionAboutUs rounded-xl"  id="knowledge" style="background-image:url(https://assets.codepen.io/214624/knowledge.jpg)">
+                    <h1>Salomón Gutiérrez</h1>
+                </section>
+                <section class="sectionAboutUs rounded-xl"  id="space" style="background-image:url(https://assets.codepen.io/214624/space.jpg)">
+                    <h1>Sofia Pincolinni</h1>
+                </section>
+                <section class="sectionAboutUs rounded-xl"  id="future" style="background-image:url(https://assets.codepen.io/214624/future.jpg)">
+                    <h1>Xavier Nochelli</h1>
+                </section>
+            </div>
         </main>
 
-
-        <footer class="bg-gris h-[5rem]">
-
+        <footer class="text-amarillo body-font bg-gris h-[5rem] text-center">
+            <p class="py-8">Cohort52 Grupo-3 MindHub © 2023 Inc.</p>
         </footer>
 
+
     </div>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../javaScript/aboutUs.js"></script>
+    <script src="../taildwind.config.js"></script>
+
 </body>
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="../javaScript/store.js"></script>
-<script src="../taildwind.config.js"></script>
 
 </html>
