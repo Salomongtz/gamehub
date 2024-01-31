@@ -32,10 +32,10 @@ public class Games {
     public Games() {
     }
 
-    public Games(String title, String description, String developer, String publisher, String longDescription,
+    public Games(String title, String description, String developer, String publisher,
                  String imageURL, Long sales,
                  double price, Long stock, LocalDate releaseDate, float discount, Rating rating, List<GameGenre> genres,
-                 List<GamePlatform> platforms, List<String> screenshots) {
+                 List<GamePlatform> platforms,String longDescription, List<String> screenshots) {
         this.title = title;
         this.description = description;
         this.longDescription = longDescription == null ? "" : longDescription;

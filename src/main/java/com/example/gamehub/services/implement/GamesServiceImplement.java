@@ -60,8 +60,10 @@ public class GamesServiceImplement implements GamesService {
     @Override
     public ResponseEntity<String> createGame(GameRecord gameRecord) {
         Games game = new Games(gameRecord.title(), gameRecord.description(), gameRecord.developer(),
-                        gameRecord.description(), gameRecord.longDescription(), gameRecord.imageURL(), gameRecord.sales(), gameRecord.price(), gameRecord.stock(), gameRecord.releaseDate(),
+                gameRecord.description(), gameRecord.imageURL(), gameRecord.sales(), gameRecord.price(),
+                gameRecord.stock(), gameRecord.releaseDate(),
                 gameRecord.discount(), gameRecord.rating(), gameRecord.genres(), gameRecord.platforms(),
+                gameRecord.longDescription(),
                 gameRecord.screenshots());
 
         ResponseEntity<String> FORBIDDEN = verifyNonBlankFields(gameRecord);
