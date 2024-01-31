@@ -145,7 +145,7 @@ let app = createApp({
         .then(response => {
           console.log(response)
           this.customer = null
-          window.location.href="gamedetails.html"
+          location.reload();
           
         })
         .catch(error => console.log("Error", error))
@@ -192,16 +192,53 @@ let app = createApp({
     }
   })
  },
+
+ addToCart(gameId) {                          
+                        
+  let cart = JSON.parse(localStorage.getItem("cart")) || []
+  
+     //para sacar de favo
+  if (cart.includes(gameId)){
+          cart.splice(cart.indexOf(gameId), 1)
+          
+  }
+
+else {
+  cart.push (gameId)   
+  this.cartAdded()            
+  
+}
+localStorage.setItem('cart', JSON.stringify(cart))
+
+
  
   },
 
+  cartAdded(){
+    Swal.fire({
+      title: "Succesfully added to cart!",
+      background: '#151515',
+      color : 'white',
+      icon: "success",
+      
+      showDenyButton: true,
+      confirmButtonText: "See cart",
+      denyButtonText: `Maybe later`,
+      denyButtonColor: '#151515',
 
-
-  computed: {
-    logName() {
-      console.log(this.password)
-    }
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Saved!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
   }
+
+  },
+
+ 
 
 
   
