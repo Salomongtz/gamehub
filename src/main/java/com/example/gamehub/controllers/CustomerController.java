@@ -36,16 +36,11 @@ public class CustomerController {
         return customerService.updateCustomer(customerRecord, authentication.getName());
     }
 
-    @PatchMapping("/api/customers/purchase")
+    @PatchMapping("/purchase")
     public ResponseEntity<?> addToCart(@RequestBody PurchaseRecord purchaseRecord,
-                                                    Authentication authentication){
-       return customerService.addToCart(purchaseRecord, authentication.getName());
-
-
-
-
-
-
+                                       Authentication authentication) {
+        String userEmail = authentication.getName();
+        return customerService.addToCart(purchaseRecord, userEmail);
     }
 }
 

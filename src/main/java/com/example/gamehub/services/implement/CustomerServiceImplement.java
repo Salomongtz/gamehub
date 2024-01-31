@@ -106,8 +106,19 @@ public class CustomerServiceImplement implements CustomerService {
 
     @Override
     public ResponseEntity<?> addToCart(PurchaseRecord purchaseRecord, String email) {
-        Customer customer =  customerRepository.findByEmail(email);
-        customer.getCart().add(purchaseRecord);;
+        Customer customer = customerRepository.findByEmail(email);
+
+        if (customer.getEmail().isBlank()) {
+            return new ResponseEntity<>("Invalid user email", HttpStatus.BAD_REQUEST);
+        }
+        if (customer == null) {
+            return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+        }
+
+        customer.getCart().add(purchaseRecord);
+        customerRepository.save(customer);
+
+        return ResponseEntity.ok("Purchase added to cart successfully");
     }
 
     private void sendEmail() throws IOException {

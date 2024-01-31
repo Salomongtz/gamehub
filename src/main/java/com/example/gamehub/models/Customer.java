@@ -101,6 +101,14 @@ public class Customer {
         this.games = games;
     }
 
+    public List<PurchaseRecord> getCart() {
+        return cart;
+    }
+
+    public void setCart(List<PurchaseRecord> cart) {
+        this.cart = cart;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -114,11 +122,4 @@ public class Customer {
                 '}';
     }
 
-    public List<PurchaseRecord> getCart() {
-        return cart;
-    }
-
-    public void setCart(List<PurchaseRecord> cart) {
-        this.cart = cart;
-    }
 }
