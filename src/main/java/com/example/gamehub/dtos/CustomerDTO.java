@@ -1,6 +1,7 @@
 package com.example.gamehub.dtos;
 
 import com.example.gamehub.models.Customer;
+import com.example.gamehub.models.RoleType;
 
 import java.util.List;
 
@@ -8,6 +9,8 @@ public class CustomerDTO {
 
     private Long id;
     private String name, lastName, email, cart;
+
+    private RoleType roleType;
 
     private List<PurchaseDTO> purchases;
 
@@ -21,6 +24,7 @@ public class CustomerDTO {
         this.name = customer.getFirstName();
         this.lastName = customer.getLastName();
         this.email = customer.getEmail();
+        this.roleType = customer.getRole();
         this.purchases = customer.getPurchases().stream().map(PurchaseDTO::new).toList();
         this.games = customer.getGames().stream().map(GamesDTO::new).toList();
         this.cart=customer.getCart();
@@ -40,6 +44,10 @@ public class CustomerDTO {
 
     public String getEmail() {
         return email;
+    }
+
+    public RoleType getRoleType() {
+        return roleType;
     }
 
     public List<PurchaseDTO> getPurchases() {

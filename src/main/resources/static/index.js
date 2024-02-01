@@ -151,21 +151,24 @@ let app = createApp({
     login() {
       axios.post("/api/login?email=" + this.email + "&password=" + this.password)
         .then(response => {
-          
-          console.log(response)
-          this.logIn=false
+          if(response.status.toString().startsWith("2")){
 
+          this.logIn=false
           axios.get("/api/customers")
-          .then(response => {
-              this.customer = response.data            
-              console.log(response)
+          .then(response2 => {
+            this.customer = response2.data            
+            console.log(response2)
+            if(response2.data.roleType == "ADMIN"){
+              window.location.href="/pages/admin.html"
+            }else{
               this.modalLogeado()
-              
-            })
-            .catch(error => {            
-              console.log("Error", error)  
-            })
-  
+            }
+            
+          })
+          .catch(error => {            
+            console.log("Error", error)  
+          })
+          }
 
           // window.location.href="index.html"
           
