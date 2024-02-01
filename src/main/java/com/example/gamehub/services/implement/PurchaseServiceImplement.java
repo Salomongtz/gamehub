@@ -17,21 +17,27 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Attachments;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 
@@ -92,18 +98,55 @@ public class PurchaseServiceImplement implements PurchaseService {
         purchaseRepository.save(purchase);
         purchaseGameRepository.saveAll(purchaseGames);
         getPDFReceipt(authentication.getName(), purchase.getId());
+        sendReceiptEmail(authentication.getName(), customer.getFirstName() + " " + customer.getLastName(), purchase.getId());
         return ResponseEntity.ok("Purchase successful");
     }
 
+    private void sendReceiptEmail(String email, String fullName, Long purchaseId) throws IOException {
+
+        Dotenv dotenv = Dotenv.configure().load();
+        String apiKey = dotenv.get("SENDGRID_API_KEY");
+
+        Email from = new Email("gamehubnotify@gmail.com");
+        String subject = "GameHub Receipt";
+        Email to = new Email(email);
+        Content content = new Content("text/plain", fullName + "," + "\n" + "Thanks for your purchase! We appreciate your " +
+                "support. Here is your receipt: ");
+        Mail mail = new Mail(from, subject, to, content);
+
+        SendGrid sg = new SendGrid(apiKey);
+
+        Request request = new Request();
+
+        // Obtener el PDF como byte[]
+        ByteArrayOutputStream pdfStream = getPDFReceipt(email, purchaseId);
+        byte[] pdfBytes = pdfStream.toByteArray();
+        // Adjuntar el PDF al correo electrónico
+        Attachments attachments = new Attachments();
+        attachments.setContent(Base64.getEncoder().encodeToString(pdfBytes));
+        attachments.setType("application/pdf");
+        attachments.setFilename("order.pdf");
+        attachments.setDisposition("attachment");
+        attachments.setContentId("OrderAttachment");
+
+        mail.addAttachments(attachments);
+
+        request.setMethod(Method.POST);
+        request.setEndpoint("mail/send");
+        request.setBody(mail.build());
+        Response response = sg.api(request);
+        System.out.println(response.getStatusCode());
+        System.out.println(response.getBody());
+        System.out.println(response.getHeaders());
+        ResponseEntity.ok("Email sent successfully");
+    }
+
     @Override
-    public ResponseEntity<?> getPDFReceipt(String email, Long purchaseId) throws IOException {
+    public ByteArrayOutputStream getPDFReceipt(String email, Long purchaseId) throws IOException {
         Customer customer = customerRepository.findByEmail(email);
         Purchase purchase = purchaseRepository.findById(purchaseId).orElse(null);
-        if (customer == null) {
-            return ResponseEntity.badRequest().body("Customer not found");
-        }
-        if (purchase == null) {
-            return ResponseEntity.badRequest().body("Purchase not found");
+        if (customer == null || purchase == null) {
+            return null;
         }
         //Get customer and purchase data.
         String fullName = customer.getFirstName() + " " + customer.getLastName();
@@ -115,13 +158,13 @@ public class PurchaseServiceImplement implements PurchaseService {
         //Get games
         List<Purchase_Game> games = purchase.getPurchaseGames();
         //Create new PDF document
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd A H m s");
-        String formatNow = now.format(formatter);
-        FileOutputStream fileOutputStream = new FileOutputStream(formatNow.replaceAll(" ", "_") + ".pdf");
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        LocalDateTime now = LocalDateTime.now();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd A H m s");
+//        String formatNow = now.format(formatter);
+//        FileOutputStream fileOutputStream = new FileOutputStream(formatNow.replaceAll(" ", "_") + ".pdf");
         Document document = new Document();
-        PdfWriter.getInstance(document, fileOutputStream);
+        PdfWriter.getInstance(document, byteArrayOutputStream);
         //Open document
         document.open();
         //Define Fonts
@@ -246,6 +289,6 @@ public class PurchaseServiceImplement implements PurchaseService {
         //Close document
         document.close();
 
-        return new ResponseEntity<>("PDF Receipt Created", HttpStatus.OK);
+        return byteArrayOutputStream;
     }
 }

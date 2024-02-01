@@ -33,11 +33,11 @@ public class CustomerController {
 
     @PatchMapping
     public ResponseEntity<String> updateCustomer(@RequestBody CustomerRecord customerRecord,
-                                                 Authentication authentication) {
+                                                 Authentication authentication) throws IOException {
         return customerService.updateCustomer(customerRecord, authentication.getName());
     }
 
-    @PatchMapping("/api/customers/cart")
+    @PatchMapping("/cart")
     public ResponseEntity<?> addToCart(@RequestBody String cart,
                                        Authentication authentication) {
         return customerService.addToCart(cart, authentication.getName());
