@@ -102,7 +102,7 @@
                             class="    text-white select-none "
                             for="generosSelect">Genre:</label>
                         <select class="text-white rounded-sm w-full h-10 bg-negro  " name="generosSelect" id="generosSelect"
-                            v-on:input="filterGenre">
+                            v-on:input="filterGenre" v-model="selectGenre">
                             <option class=" rounded-lg" value="all">All Genres</option>
                             <template v-if="genres.length > 0" v-for="genre of genres">
                                 <option v-bind:value="genre">{{genre}}</option>

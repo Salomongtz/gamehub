@@ -220,13 +220,6 @@ body {
   position: relative;
 }
 
-h1 {
-  font-size: 120px;
-  margin: 0;
-  z-index: 2;
-  position: relative;
-}
-
 .navAboutUs {
   display: flex;
   flex-wrap: wrap;
