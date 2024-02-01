@@ -53,16 +53,13 @@ let app = createApp({
           this.cart = JSON.parse(localStorage.getItem("cart")) || []
           this.nombre = this.cart.map(game => game.title)
           this.juego = this.games.filter(game => this.nombre.includes(game.title))
-
           console.log(this.cart)
           console.log(localStorage.getItem("cart").toString())
           console.log(this.juego)
-    
-
         })
         .catch(error => {
           console.log(error)
-        
+
         });
       axios.get("/api/customers")
         .then(response => {
@@ -76,10 +73,6 @@ let app = createApp({
           console.log("Error", error)
         })
 
-     
-
-
-     
     },
     showMenu() {
       if (this.navMenu == false) {
@@ -104,12 +97,12 @@ let app = createApp({
               this.customer = response.data
               console.log(response)
               this.modalLogeado()
-
+              this.cart = this.customer.cart
+              localStorage.setItem("cart", JSON.stringify(this.cart))
             })
             .catch(error => {
               console.log("Error", error)
             })
-
 
         })
         .catch(error => {
@@ -139,32 +132,29 @@ let app = createApp({
         })
     },
     logout() {
-
       axios.post("/api/logout")
         .then(response => {
           console.log(response)
           this.customer = null
           location.reload();
-
+          localStorage.clear();
         })
         .catch(error => console.log("Error", error))
-
-
     },
 
-    hola(){
+    hola() {
       console.log("hola")
     },
 
-    patchData(){
+    patchData() {
 
-      
-      axios.patch("/api/customers/cart",{cart:localStorage.getItem("cart").toString()})
-      .then(response => {
-        
-        console.log(response)
-      })
-      .catch(error => console.log("Error", error))
+
+      axios.patch("/api/customers/cart", { cart: localStorage.getItem("cart").toString() })
+        .then(response => {
+
+          console.log(response)
+        })
+        .catch(error => console.log("Error", error))
       console.log(this.customer)
     },
 

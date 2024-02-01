@@ -49,6 +49,7 @@ let app = createApp({
                 .then((response) => {
                     this.games = response.data;
                     console.log(this.games);
+                    this.cart = JSON.parse(localStorage.getItem("cart")) || []
                 })
                 .catch((error) => console.error(error));
         },
@@ -66,7 +67,16 @@ let app = createApp({
             } else {
                 this.currentForm = 'deleteGame';
             }
-        },
+        },logout() {
+            axios.post("/api/logout")
+              .then(response => {
+                console.log(response)
+                this.customer = null
+                location.reload();
+                localStorage.clear();
+              })
+              .catch(error => console.log("Error", error))
+          },
 
         createGame() {
             const gameData = {
@@ -234,9 +244,6 @@ let app = createApp({
             this.editStock = "";
             this.editPublisher = "";
         }
-        
-        
-
     }
 });
 

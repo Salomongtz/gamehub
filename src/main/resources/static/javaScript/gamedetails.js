@@ -39,11 +39,12 @@ let app = createApp({
         const searchId = location.search
         const paramsId = new URLSearchParams(searchId)
         const ID = paramsId.get('id')
+        this.cart = JSON.parse(localStorage.getItem("cart")) || []
 
         this.game = this.games.find(game => game.id == ID)
         console.log(response)
         console.log(this.game)
-
+        
         this.offerGamesFunction()
       })
       .catch(error => {
@@ -103,20 +104,18 @@ let app = createApp({
             .then(response => {
               this.customer = response.data
               console.log(response)
+              this.cart = this.customer.cart
+              localStorage.setItem("cart", JSON.stringify(this.cart))
               this.modalLogeado()
-
             })
             .catch(error => {
               console.log("Error", error)
             })
-
         })
         .catch(error => {
           this.error = "Incorrect username or password"
           console.log("Error", error)
-
         })
-
     },
 
     register() {
@@ -200,27 +199,23 @@ let app = createApp({
     },
 
     addToCart(gameName, quantity) {
-
       let cart = JSON.parse(localStorage.getItem("cart")) || []
-      let aux=cart.find(game =>game.title == gameName)
-      if (aux) {
-       aux.quantity += quantity
+      let aux = cart.find(game => game.title == gameName)
 
+      if (aux) {
+        aux.quantity += quantity
       }
 
       else {
-
         let item = {
           title: gameName,
           quantity: quantity
         }
-
         cart.push(item)
       }
       localStorage.setItem("cart", JSON.stringify(cart))
 
       //para sacar de favo
-
 
       // else {
       //   cart.push(gameName,quantity)   
@@ -229,17 +224,12 @@ let app = createApp({
       // }
       // localStorage.setItem('cart', JSON.stringify(cart))
 
-
-
     },
 
 
     agregarAlCarro(articulo) {
       let storageCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
       const index = storageCarrito.findIndex(item => item.id === articulo._id);
-      let cart = {
-
-      }
 
       if (index !== -1) {
         if (storageCarrito[index].cantidad + 1 > articulo.disponibles) {
@@ -257,11 +247,6 @@ let app = createApp({
       localStorage.setItem('carrito', JSON.stringify(storageCarrito))
       this.localStorage = storageCarrito
     }, // finaliza AgregarAlCarro
-
-
-
-
-
 
     cartAdded() {
       Swal.fire({
@@ -285,16 +270,6 @@ let app = createApp({
         }
       });
     }
-
   },
-
-
-
-
-
-
-
-
-
 
 }).mount("#app");
