@@ -54,7 +54,7 @@ let app = createApp({
           .then(response => {
               this.customer = response.data   
               this.cart = response.data.cart  
-              localStorage.setItem('cart', JSON.stringify(this.cart))      
+                  
               console.log(response)
             
               
@@ -110,12 +110,6 @@ let app = createApp({
               console.log("Error", error)  
             })
   
-
-          // window.location.href="index.html"
-          
-
-
-
         })
         .catch(error => {
           this.error = "Incorrect username or password"
