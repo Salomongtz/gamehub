@@ -128,7 +128,7 @@
                 <h1 class="text-xl font-semibold text-center text-amarillo p-4">ORDER BY:</h1>
                 <div class="flex  flex-wrap  w-[90%] ">
 
-                <div class="flex flex-wrap object-right-top gap-10 w-[90%] justify-center items-center">
+                <div class="flex flex-wrap object-right-top gap-10 w-[90%] justify-center items-center p-2">
 
                     <div
                         class="flex  flex-wrap   gap-5 ">
@@ -137,7 +137,7 @@
                             for="generoInput">Price: $ {{ selectedPriceRange }}</label>
                         <input class="text-black h-10 rounded-lg" type="range" placeholder="range" name="generoInput"
                             id="generoInput" v-on:input="filterPrice" v-model="selectedPriceRange">
-                        <div class="flex  gap-2 text-white">
+                        <div class="flex  gap-2 text-white justify-center">
                             <button
                                 class="h-10 flex-wrap  select-none"
                                 @click="sortGamesByPriceAsc">Low to High
