@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #151515;
   width: 100vw;
@@ -144,6 +149,20 @@ body {
     flex-direction: column;
   }
 
+  footer {
+    font-size: 0.7rem;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+  }
+
+  footer div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+  }
+
 }
 
 @media screen and (min-width: 768px) {
@@ -181,8 +200,9 @@ body {
 
   #categoryBrowse {
     width: 100vw;
+    display: flex;
+    flex-direction: column;
   }
-
 
 
 }
@@ -191,13 +211,13 @@ body {
 
 .sectionAboutUs {
   display: flex;
-  background-repeat:no-repeat;
-  background-size:cover;
+  background-repeat: no-repeat;
+  background-size: cover;
   min-height: 100%;
   padding: 50px;
   justify-content: center;
   color: #fff;
-  position:relative;
+  position: relative;
 }
 
 h1 {
@@ -207,8 +227,6 @@ h1 {
   position: relative;
 }
 
-
-
 .navAboutUs {
   display: flex;
   flex-wrap: wrap;
@@ -216,7 +234,7 @@ h1 {
   justify-content: center;
   align-items: center;
   padding: 0 20px;
-  position:initial;
+  position: initial;
   left: 0px;
   margin: 0 auto;
   top: 0px;
@@ -226,15 +244,4 @@ h1 {
   backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, .06);
   transition: 1s all cubic-bezier(0.075, 0.82, 0.165, 1) .2s;
-}
-
-a {
-  text-align: center;
-  font-weight: 700;
-  display: block;
-  padding: 10px 20px;
-  line-height: 1;
-  font-size: 15px;
-  letter-spacing: 2px;
-  transition: .3s all cubic-bezier(0.075, 0.82, 0.165, 1) .6s;
 }
