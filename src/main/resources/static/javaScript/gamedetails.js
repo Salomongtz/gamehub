@@ -35,9 +35,7 @@ let app = createApp({
             const searchId = location.search
             const paramsId = new URLSearchParams(searchId)
             const ID = paramsId.get('id')
-
-             
-                
+            
             this.game = this.games.find(game=>game.id == ID) 
             console.log(response)
             console.log(this.game)

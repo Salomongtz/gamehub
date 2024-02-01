@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/games", "/api/games/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/customers").hasAnyAuthority("CUSTOMER","ADMIN")
                 .requestMatchers(HttpMethod.PATCH, "/api/games/*").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.PATCH, "/api/customers").hasAuthority("CUSTOMER")
+                .requestMatchers(HttpMethod.PATCH, "/api/customers/cart").hasAuthority("CUSTOMER")
                 .requestMatchers(HttpMethod.DELETE, "/api/games/*").hasAuthority("ADMIN")
 
                 .requestMatchers("/h2-console/**").permitAll().anyRequest().denyAll());

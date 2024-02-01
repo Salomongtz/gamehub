@@ -29,9 +29,6 @@ public class CustomerServiceImplement implements CustomerService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-//    @Value("${SENDGRID_API_KEY}")
-//    private final String SENDGRID_API_KEY=${SENDGRID_API_KEY};
-
     @Override
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
@@ -53,7 +50,7 @@ public class CustomerServiceImplement implements CustomerService {
     }
 
     @Override
-    public ResponseEntity<?> register(CustomerRecord customerRecord) {
+    public ResponseEntity<?> register(CustomerRecord customerRecord) throws IOException {
         ResponseEntity<String> BAD_REQUEST = runVerifications(customerRecord.firstName(), customerRecord.lastName(),
                 customerRecord.email(), customerRecord.password());
         if (BAD_REQUEST != null) {
@@ -65,6 +62,8 @@ public class CustomerServiceImplement implements CustomerService {
         Customer customer = new Customer(customerRecord.firstName(), customerRecord.lastName(),
                 customerRecord.email(), passwordEncoder.encode(customerRecord.password()));
         customerRepository.save(customer);
+        sendWelcomeEmail(customerRecord.email(), customerRecord.password(),
+                customerRecord.firstName() + " " + customerRecord.lastName());
         return new ResponseEntity<>(customer + "\nCreated successfully!", HttpStatus.CREATED);
     }
 
@@ -106,21 +105,27 @@ public class CustomerServiceImplement implements CustomerService {
 
     @Override
     public ResponseEntity<?> addToCart(String cart, String email) {
-        Customer customer =  customerRepository.findByEmail(email);
+        Customer customer = customerRepository.findByEmail(email);
+        if (customer == null) {
+            return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+        }
         customer.setCart(cart);
         customerRepository.save(customer);
-        return new ResponseEntity<>("Added to cart successfully!", HttpStatus.OK);
+        return new ResponseEntity<>("Cart saved successfully!", HttpStatus.OK);
     }
 
-    private void sendEmail() throws IOException {
+    private void sendWelcomeEmail(String email, String password, String fullName) throws IOException {
 
         Dotenv dotenv = Dotenv.configure().load();
         String apiKey = dotenv.get("SENDGRID_API_KEY");
 
-        Email from = new Email("rokkuman10@gmail.com");
-        String subject = "Sending with SendGrid is Fun";
-        Email to = new Email("maverick0598@gmail.com");
-        Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
+        Email from = new Email("gamehubnotify@gmail.com");
+        String subject = "Welcome to GameHub!";
+        Email to = new Email(email);
+        Content content = new Content("text/plain", fullName + "," + "\nThanks for shopping with us!\n" + "Welcome to" +
+                " " +
+                "GameHUB! You received this email because you signed up for a GameHub account, here are your account " +
+                "details:" + "\n" + "Email: " + email + "\n" + "Password: " + password + "\n" + "Happy gaming!");
         Mail mail = new Mail(from, subject, to, content);
 
         SendGrid sg = new SendGrid(apiKey);
@@ -134,6 +139,7 @@ public class CustomerServiceImplement implements CustomerService {
         System.out.println(response.getBody());
         System.out.println(response.getHeaders());
     }
+
     private ResponseEntity<String> runVerifications(String firstName, String lastName, String email, String password) {
         if (firstName.isBlank()) {
             return new ResponseEntity<>("Missing NAME data", HttpStatus.BAD_REQUEST);
