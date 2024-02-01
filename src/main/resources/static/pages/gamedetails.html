@@ -118,12 +118,19 @@
                         <h1 class="p-[0.7rem] bg-morado text-white">${{game.price.toLocaleString()}}</h1>
                     </div>
                     <div class="flex gap-8" v-if="customer != null">
-                        <button class="p-2 border-2 border-white text-white " @click="addToCart(game.id)">Add to cart</button>
+                      
+                      
+                        <button class="p-2 border-2 border-white text-white " @click="addToCart(game.title, quantity)">Add to cart</button>
                         <button class="p-[0.7rem] bg-gris text-amarillo font-semibold">Buy now</button>
                     </div>
                     <div class="flex gap-8" v-if="customer == null">
                       <button class="p-2 border-2 border-white/20 text-white/20 ">Add to cart</button>
                       <button class="p-[0.7rem] bg-gris/20 text-amarillo/20 font-semibold">Buy now</button>
+                  </div>
+                  <div class="flex gap-2 items-center">
+                    <img src="../assets/images/less.png" alt="" class="object-cover w-[1.2rem] h-[1.2rem] cursor-pointer " @click.prevent="remove()">
+                    <input type="number" v-model="quantity" class="w-12 h-8 bg-white/10 text-white text-center rounded-sm text-xs">
+                    <img src="../assets/images/more.png" alt="" class="object-cover w-[1.2rem] h-[1.2rem] cursor-pointer" @click.prevent="add()">
                   </div>
 
 

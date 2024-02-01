@@ -8,11 +8,15 @@ let app = createApp({
       logIn: false,
       signUp: false,
 
+
       games:[],
       game:{},
       newGames:"",
       newest:{},
       offerGames:[],
+
+      quantity:"1",
+      cart:[],
 
       customer:null,
 
@@ -50,7 +54,9 @@ let app = createApp({
 
           axios.get("/api/customers")
           .then(response => {
-              this.customer = response.data            
+              this.customer = response.data   
+              this.cart = response.data.cart  
+              localStorage.setItem('cart', JSON.stringify(this.cart))      
               console.log(response)
             
               
@@ -193,26 +199,75 @@ let app = createApp({
   })
  },
 
- addToCart(gameId) {                          
+ add(){
+  this.quantity ++
+ },
+
+ remove(){
+  this.quantity --
+ },
+
+ addToCart(gameName,quantity) {                          
                         
   let cart = JSON.parse(localStorage.getItem("cart")) || []
-  
-     //para sacar de favo
-  if (cart.includes(gameId)){
-          cart.splice(cart.indexOf(gameId), 1)
-          
+  if (cart.includes(gameName)){
+    quantity ++      
+}
+
+else{ 
+
+  let item = {
+    title: gameName,
+    quantity: quantity
   }
 
-else {
-  cart.push (gameId)   
-  this.cartAdded()            
-  
+  cart.push(item)
 }
-localStorage.setItem('cart', JSON.stringify(cart))
+  localStorage.setItem("cart", JSON.stringify(cart))
+  
+     //para sacar de favo
+  
+
+// else {
+//   cart.push(gameName,quantity)   
+//   this.cartAdded()           
+  
+// }
+// localStorage.setItem('cart', JSON.stringify(cart))
 
 
  
   },
+
+
+  agregarAlCarro(articulo) {
+    let storageCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const index = storageCarrito.findIndex(item => item.id === articulo._id);
+    let cart = {
+
+    }
+
+    if (index !== -1) {
+      if (storageCarrito[index].cantidad + 1 > articulo.disponibles) {
+        alert("Se excedió el límite de stock para este artículo");
+        return; // No agregar más al carrito si excede el límite
+      }
+      storageCarrito[index].cantidad++;
+    } else {
+      if (1 > articulo.disponibles) {
+        alert("Se excedió el límite de stock para este artículo");
+        return; // No agregar al carrito si excede el límite
+      }
+      storageCarrito.push({ id: articulo._id, cantidad: 1 });
+    }
+    localStorage.setItem('carrito', JSON.stringify(storageCarrito))
+    this.localStorage = storageCarrito
+  }, // finaliza AgregarAlCarro
+
+
+
+
+
 
   cartAdded(){
     Swal.fire({

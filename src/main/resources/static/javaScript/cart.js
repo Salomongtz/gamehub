@@ -17,16 +17,16 @@ let app = createApp({
                 console.log("Games", this.games)
             })
             .catch(error => {
-                if (error.response) {
-                    Swal.fire({
-                        background: "linear-gradient(to right, #191970, #00BFFF) no-repeat 0 0 / cover",
-                        color: "white",
-                        icon: 'error',
-                        title: 'Dear customer, we must inform you:',
-                        text: `${JSON.stringify(error.response.data, null, 2)}`,
-                        footer:  `Error de respuesta: ${error.response.status}`
-                    });
-                }
+                // if (error.response) {
+                //     Swal.fire({
+                //         background: "linear-gradient(to right, #191970, #00BFFF) no-repeat 0 0 / cover",
+                //         color: "white",
+                //         icon: 'error',
+                //         title: 'Dear customer, we must inform you:',
+                //         text: `${JSON.stringify(error.response.data, null, 2)}`,
+                //         footer:  `Error de respuesta: ${error.response.status}`
+                //     });
+                // }
             });
             
         },
