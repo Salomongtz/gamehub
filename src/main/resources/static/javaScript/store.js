@@ -3,6 +3,8 @@ const { createApp } = Vue;
 let app = createApp({
     data() {
         return {
+            modalFilter:false,
+
             navMenu: false,
             games: [],
             filteredGames: [],
@@ -160,6 +162,10 @@ let app = createApp({
                 this.navMenu = false
             }
         },
+
+        filterMenu(){
+            this.modalFilter = !this.modalFilter
+        }
     }
 
 

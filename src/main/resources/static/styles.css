@@ -160,6 +160,10 @@ background: linear-gradient(0deg, rgb(26, 26, 26) 0%, rgba(21,21,21,1) 100%);
 
     }
 
+    #filterMenu{
+      display: none;
+    }
+
 }
 
   @media screen and (min-width: 768px)  {
@@ -201,5 +205,8 @@ background: linear-gradient(0deg, rgb(26, 26, 26) 0%, rgba(21,21,21,1) 100%);
         flex-direction: column;
     }
     
+    #filter{
+      display: none;
+    }
    
   }
