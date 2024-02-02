@@ -49,7 +49,6 @@ let app = createApp({
                 .then((response) => {
                     this.games = response.data;
                     console.log(this.games);
-                    this.cart = JSON.parse(localStorage.getItem("cart")) || []
                 })
                 .catch((error) => console.error(error));
         },
@@ -67,16 +66,7 @@ let app = createApp({
             } else {
                 this.currentForm = 'deleteGame';
             }
-        },logout() {
-            axios.post("/api/logout")
-              .then(response => {
-                console.log(response)
-                this.customer = null
-                location.reload();
-                localStorage.clear();
-              })
-              .catch(error => console.log("Error", error))
-          },
+        },
 
         createGame() {
             const gameData = {
@@ -123,7 +113,7 @@ let app = createApp({
                 text: "You won't be able to revert this!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
+                confirmButtonColor: "#FFD02B",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Yes, delete it!"
             }).then((result) => {
@@ -193,6 +183,7 @@ let app = createApp({
                 showDenyButton: true,
                 showCancelButton: true,
                 confirmButtonText: "Save",
+                confirmButtonColor: "#FFD02B",
                 denyButtonText: `Don't save`
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -244,6 +235,9 @@ let app = createApp({
             this.editStock = "";
             this.editPublisher = "";
         }
+        
+        
+
     }
 });
 
