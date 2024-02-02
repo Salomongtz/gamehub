@@ -53,10 +53,15 @@ let app = createApp({
                 .catch((error) => console.error(error));
         },
 
-        toggleForm() {
-            if (this.currentForm === 'deleteGame') {
+        toggleForm(event) {
+
+            const deleteButton = document.querySelector(".delete");
+            const createButton = document.querySelector(".create");
+            const updateButton = document.querySelector(".update");
+
+            if (event.target == createButton) {
                 this.currentForm = 'createGameForm';
-            } else if (this.currentForm === 'createGameForm') {
+            } else if (event.target == updateButton) {
                 this.currentForm = 'editGameForm';
             } else {
                 this.currentForm = 'deleteGame';
@@ -76,16 +81,30 @@ let app = createApp({
                 releaseDate: this.releaseDate,
                 discount: this.discount,
                 rating: this.rating,
-                genres: this.selectedGenres,  // Utiliza selectedGenres en lugar de genres
-                platforms: this.selectedPlatforms  // Utiliza selectedPlatforms en lugar de platforms
+                genres: this.selectedGenres,
+                platforms: this.selectedPlatforms
             };
-
+        
             axios.post("/api/games", gameData)
-                .then((response) => {
-                    console.log(response.data);
+                .then(() => {
                     this.loadData();
+                    this.clearFields();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 })
-                .catch((error) => console.error(error));
+                .catch((error) => {
+                    console.error(error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong!",
+                    });
+                });
         },
 
         deleteGame(id) {
@@ -94,32 +113,34 @@ let app = createApp({
                 text: "You won't be able to revert this!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
+                confirmButtonColor: "#FFD02B",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Yes, delete it!"
             }).then((result) => {
                 if (result.isConfirmed) {
                     axios.delete(`/api/games/${id}`)
-                        .then((response) => {
+                        .then(() => {
+                            this.loadData();
+                            this.clearFields();
                             Swal.fire({
                                 title: "Deleted!",
                                 text: "Your file has been deleted.",
                                 icon: "success"
                             });
-                            this.loadData();
                         })
                         .catch((error) => {
+                            console.error(error);
                             Swal.fire({
                                 title: "Error",
-                                text: "An error occurred while deleting the file.",
+                                text: "An error occurred while deleting the game.",
                                 icon: "error"
                             });
-                            console.error(error);
                         });
                 }
             });
         },
         
+
         dataGame() {
             console.log(this.selectedGame);
             this.editTitle = this.selectedGame.title;
@@ -128,8 +149,8 @@ let app = createApp({
             this.editImageURL = this.selectedGame.image;
             this.editSales = this.selectedGame.sales;
             this.editPrice = this.selectedGame.price;
-            this.editPublisher = this.selectedGame.publisher; // Corregido el nombre de la propiedad
-            this.editStock = this.selectedGame.stock; // Corregido el nombre de la propiedad
+            this.editPublisher = this.selectedGame.publisher; 
+            this.editStock = this.selectedGame.stock; 
             this.editReleaseDate = this.selectedGame.date;
             this.editDiscount = this.selectedGame.discount;
             this.editRating = this.selectedGame.rating;
@@ -137,10 +158,10 @@ let app = createApp({
             this.editSelectedPlatforms = this.selectedGame.platforms;
         },
 
-        editGame(id){
+        editGame(id) {
             console.log(id);
-            const sales =  parseFloat(this.editSales)
-            const price =  parseFloat(this.editPrice)
+            const sales = parseFloat(this.editSales);
+            const price = parseFloat(this.editPrice);
             const gameEdit = {
                 title: this.editTitle,
                 description: this.editDescription,
@@ -157,14 +178,63 @@ let app = createApp({
                 platforms: this.editSelectedPlatforms
             };
         
-            axios.patch(`/api/games/${id}`, gameEdit)
-                .then((response) => {
-                    console.log(response.data);
-                    this.loadData();
-                })
-                .catch((error) => console.error(error));
-                console.log(editGame())
+            Swal.fire({
+                title: "Do you want to save the changes?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Save",
+                confirmButtonColor: "#FFD02B",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.patch(`/api/games/${id}`, gameEdit)
+                        .then(() => {
+                            this.loadData();
+                            this.clearFields();
+                            Swal.fire("Saved!", "", "success");
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Something went wrong!",
+                            });
+                        });
+                } else if (result.isDenied) {
+                    Swal.fire("Changes are not saved", "", "info");
+                }
+            });
         },
+
+        clearFields() {
+            this.title = "";
+            this.description = "";
+            this.developer = "";
+            this.imageURL = "";
+            this.stock = "";
+            this.sales = 0;
+            this.price = 0;
+            this.publisher = "";
+            this.releaseDate = "";
+            this.discount = 0;
+            this.rating = "";
+            this.selectedGenres = [];
+            this.selectedPlatforms = [];
+            this.editTitle = "";
+            this.editDescription = "";
+            this.editImageURL = "";
+            this.editPrice = "";
+            this.editSelectedGenres = [];
+            this.editSelectedPlatforms = [];
+            this.editReleaseDate = "";
+            this.editSales = "";
+            this.editRating = "";
+            this.editDeveloper = "";
+            this.editDiscount = "";
+            this.editStock = "";
+            this.editPublisher = "";
+        }
         
         
 
