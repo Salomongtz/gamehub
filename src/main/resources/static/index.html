@@ -56,13 +56,16 @@
         <!--NAVBAR ESCRITORIO -->
         <div class="navBar">
           <nav
-            class="flex justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0"
-          >
-            <a href="#">Store</a>
-            <a href="#">My account</a>
-            <a href="#">Cart</a>
-            <a href="#" class="">About Us</a>
-          </nav>
+          class="flex items-center text-center  justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0  ">
+          <a class="bg-amarillo text-negro  w-[10rem] h-[2rem] rounded-md"
+              href="../index.html">Home</a>
+          <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+              href="./pages/store.html">Store</a>
+          <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="./pages/profile.html">My account</a>
+          <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+              href="./pages/cart.html">Cart</a>
+          <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="./pages/aboutUs.html">About Us</a>
+      </nav>
         </div>
 
         <!--NAVBAR HAMBURGUESA -->
@@ -70,10 +73,11 @@
           <nav
             class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[24rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center"
           >
-            <a href="#" class="pl-6">Store</a>
-            <a href="#" class="pl-6">My account</a>
-            <a href="#" class="pl-6">Cart</a>
-            <a href="#" class="pl-6">About Us</a>
+          <a href="../index.html" class="pl-6">Home</a>
+          <a href="./store.html" class="pl-6">Store</a>
+          <a href="./profile.html" class="pl-6">My Account</a>
+          <a href="./cart.html" class="pl-6">Cart</a>
+          <a href="./aboutUs.html" class="pl-6">About Us</a>
 
             <div
               class="flex flex-col border-t-[0.1px] border-white/50 pt-4 gap-4"
@@ -113,7 +117,7 @@
 
         <div id="desktopSections" class="flex flex-col gap-24 items-center">
           <!-- --------------------- NEW GAMES SECTION----------------------- -->
-            <h1 class="text-white text-2xl" @click.prevent="logout()"> LOG OUT</h1>
+           
           
           <section
             id=""
@@ -251,14 +255,14 @@
           </section>
 
           <section
-            id="categoryBrowse"
+            
             class="flex flex-col font-semibold items-center gap-4 bg-gris py-10"
           >
-            <div class="">
+            <div class="" id="categoryBrowse">
               <h1 class="gamer text-amarillo text-5xl text-center mb-10">
                 BROWSE BY CATEGORY
               </h1>
-              <div class="cardContainer pr-4 w-[60rem]">
+              <div class="cardContainer pr-4 ">
                 <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
                 <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>
                 <div class="card gradient rounded-md h-[15rem] w-[15rem]"></div>

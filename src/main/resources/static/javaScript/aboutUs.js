@@ -9,6 +9,7 @@ let app = createApp({
             genres: [],
             platforms: [],
             price: [],
+            cart: []
         };
     },
     created() {
@@ -28,6 +29,8 @@ let app = createApp({
                     console.log("plataformas", this.platforms);
                     this.price = [...new Set(response.data.flatMap(data => data.platforms))].sort();
                     console.log("Precios", this.price);
+                    this.cart = JSON.parse(localStorage.getItem("cart")) || []
+
                 })
                 .catch(error => {
                     if (error.response) {
@@ -41,6 +44,15 @@ let app = createApp({
                         });
                     }
                 });
+        }, logout() {
+            axios.post("/api/logout")
+                .then(response => {
+                    console.log(response)
+                    this.customer = null
+                    location.reload();
+                    localStorage.clear();
+                })
+                .catch(error => console.log("Error", error))
         },
     }
 }).mount("#app");

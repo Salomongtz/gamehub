@@ -89,14 +89,37 @@ let app = createApp({
         },
 
         deleteGame(id) {
-            axios.delete(`/api/games/${id}`)
-                .then((response) => {
-                    console.log(response.data);
-                    this.loadData();
-                })
-                .catch((error) => console.error(error));
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete(`/api/games/${id}`)
+                        .then((response) => {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                            this.loadData();
+                        })
+                        .catch((error) => {
+                            Swal.fire({
+                                title: "Error",
+                                text: "An error occurred while deleting the file.",
+                                icon: "error"
+                            });
+                            console.error(error);
+                        });
+                }
+            });
         },
-
+        
         dataGame() {
             console.log(this.selectedGame);
             this.editTitle = this.selectedGame.title;
