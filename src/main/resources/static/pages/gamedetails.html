@@ -101,6 +101,11 @@
             <div class="flex gap-8" v-if="customer != null">
               <button class="p-2 border-2 border-white text-white " @click="addToCart(game.id)">Add to cart</button>
               <button class="p-[0.7rem] bg-gris text-amarillo font-semibold">Buy now</button>
+              <div class="flex items-center gap-2">
+                <button><img src="../assets/images/less.png" alt="" class="w-5 h-5 object-cover" @click.prevent="remove()"></button>
+                <input type="number" class="bg-gris w-10 h-6 text-sm text-white font-semibold text-center pl-2" v-model="quantity">
+                <button><img src="../assets/images/more.png" alt="" class="w-5 h-5 object-cover"@click.prevent="add()"></button>
+              </div>
             </div>
             <div class="flex gap-8" v-if="customer == null">
               <button class="p-2 border-2 border-white/20 text-white/20 ">Add to cart</button>
