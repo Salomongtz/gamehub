@@ -83,27 +83,89 @@
             </a>
 
             <div id="headerAboutUS" class="flex items-end">
-                <nav class="navAboutUs flex flex-wrap " id="AboutUs">
+                <nav class="navAboutUs flex flex-wrap p-5" id="AboutUs">
                     <a href="#AboutUs">About Us</a>
-                    <a href="#Emi">Emiliano Díaz</a>
                     <a href="#Salo">Salomón Gutiérrez</a>
+                    <a href="#Emi">Emiliano Díaz</a>
                     <a href="#Sofia">Sofia Pincolinni</a>
                     <a href="#Xavi">Xavier Nochelli</a>
                 </nav>
             </div>
 
-            <div id="page" class="flex flex-col rounded-md w-[80%]">
+            <div id="page" class="flex flex-col rounded-md w-[80%] gap-10">
+
+                <!-- Salomón Gutiérrez Section -->
+                <section class="sectionAboutUs rounded-xl flex flex-col gap5 bg-slate-500" id="Salo"
+                    style="background-image:url(../assets/images/10.png)">
+
+                    <div class="flex flex-col  justify-center items-center gap-5">
+
+                        <div class="flex flex-wrap text-3xl items-center text-center justify-center gap-5">
+                            <a class="absolute top-50 right-44 mt-2 mr-2"  href="#AboutUs">
+                                <img class="w-10 h-10" src="../assets/images/flecha-hacia-arriba.png" alt="flecha-hacia-arriba">
+                            </a>
+                        </div>
+
+                        <div class="flex flex-wrap text-3xl items-center text-center justify-center gap-5">
+                            <img class="imagePerson  rounded-xl  w-[6rem] h-[6rem]" src="../assets/images/Xavi.jpg"
+                                alt="imagePerson">
+                            <h1>Salomón Gutiérrez</h1>
+                        </div>
+
+                        <div class="flex flex-wrap text-2xl items-center text-center justify-center gap-5">
+                            <img class=" w-[6rem] h-[6rem] bg-black rounded-lg" src="../assets/images/logoMH.webp"
+                                alt="MindHublogo">
+                            <h2>Full Stack JAVA Developer</h2>
+                            <p>Cohort N° 52</p>
+                        </div>
+
+                        <h2>In this proyect Backend Developer</h2>
+
+                        <p class="w-[50%]">Salomón is a creator of our application, working closely with Emiliano on
+                            the backend
+                            development. His expertise in implementing services and creating solid data models has been
+                            crucial to the success of our project. Salomón brings a unique perspective to our team,
+                            combining technical skills with a creative mindset.</p>
+
+                    </div>
+
+                    <div class="flex justify-around flex-wrap gap-4">
+                        <a class="bg-amarillo rounded-lg" href="http://www.linkedin.com/in/">
+                            <img class="text-negro w-[7rem] h-[7rem]" src="../assets/images/logotipo-de-linkedin.png"
+                                alt="LinkedIn logo">
+                        </a>
+                        <a class="bg-amarillo rounded-lg" href="http://www.github.com">
+                            <img class="text-negro w-[7rem] h-[7rem] rounded-md"
+                                src="../assets/images/signo-de-github.png" alt="GitHub logo">
+                        </a>
+                    </div>
+
+                </section>
+
                 <!-- Emiliano Díaz Section -->
-                <section class="sectionAboutUs rounded-xl flex flex-col  gap-12" id="Emi"
+                <section class="sectionAboutUs rounded-xl flex flex-col  gap-7 bg-slate-500" id="Emi"
                     style="background-image:url(../assets/images/12.png)">
 
-                    <div class="flex flex-col justify-center items-center gap-12">
+                    <div class="flex flex-col justify-center items-center gap-5">
 
-                        <a href="#AboutUs">Back to Navbar</a>
+                        <div class="flex flex-wrap text-3xl items-center text-center justify-center gap-5">
+                            <a class="absolute top-50 right-44 mt-2 mr-2"  href="#AboutUs">
+                                <img class="w-10 h-10" src="../assets/images/flecha-hacia-arriba.png" alt="flecha-hacia-arriba">
+                            </a>
+                        </div>
 
-                        <h1>Emiliano Díaz</h1>
+                        <div class="flex flex-wrap text-3xl items-center text-center justify-center gap-5">
+                            <img class="imagePerson  rounded-xl  w-[6rem] h-[6rem]" src="../assets/images/Xavi.jpg"
+                                alt="imagePerson">
+                            <h1>Emiliano Díaz</h1>
+                        </div>
 
-                        <h2>Full Stack JAVA Developer</h2>
+                        <div class="flex flex-wrap text-2xl items-center text-center justify-center gap-5">
+                            <img class=" w-[6rem] h-[6rem] bg-black rounded-lg" src="../assets/images/logoMH.webp"
+                                alt="MindHublogo">
+                            <h2>Full Stack JAVA Developer</h2>
+                            <p>Cohort N° 52</p>
+                        </div>
 
                         <h2>In this proyect Backend Developer</h2>
 
@@ -114,69 +176,46 @@
 
                     </div>
 
-                    <div class="flex justify-around flex-wrap">
-                        <button>
-                            <img class="bg-amarillo text-negro w-[10rem] h-[10rem] rounded-md"
-                                src="../assets/images/logotipo-de-linkedin.png" alt="LinkedIn logo">
-                            <a href="http://www.linkedin.com/in/emiliano-diaz"></a>
-                        </button>
-                        <button>
-                            <img class="bg-amarillo text-negro w-[10rem] h-[10rem] rounded-md"
+                    <div class="flex justify-around flex-wrap gap-4">
+                        <a class="bg-amarillo rounded-lg" href="http://www.linkedin.com/in/emiliano-diaz">
+                            <img class="text-negro w-[7rem] h-[7rem]" src="../assets/images/logotipo-de-linkedin.png"
+                                alt="LinkedIn logo">
+                        </a>
+                        <a class="bg-amarillo rounded-lg" href="http://www.github.com">
+                            <img class="text-negro w-[7rem] h-[7rem] rounded-md"
                                 src="../assets/images/signo-de-github.png" alt="GitHub logo">
-                            <a href="http://www.github.com"></a>
-                        </button>
-                    </div>
-                </section>
-
-                <!-- Salomón Gutiérrez Section -->
-                <section class="sectionAboutUs rounded-xl flex flex-col gap-12" id="Salo"
-                    style="background-image:url(../assets/images/10.png)">
-
-                    <div class="flex flex-col justify-center items-center gap-12">
-
-                        <a href="#AboutUs">Back to Navbar</a>
-
-                        <h1>Salomón Gutiérrez</h1>
-
-                        <h2>Full Stack JAVA Developer</h2>
-
-                        <h2>In this proyect Backend Developer</h2>
-
-                        <p class="w-[50%]">Salomón is a co-creator of our application, working closely with Emiliano on the backend
-                            development. His expertise in implementing services and creating solid data models has been
-                            crucial to the success of our project. Salomón brings a unique perspective to our team,
-                            combining technical skills with a creative mindset.</p>
-
+                        </a>
                     </div>
 
-                    <div class="flex justify-around flex-wrap">
-                        <button>
-                            <img class="bg-amarillo text-negro w-[10rem] h-[10rem] rounded-md"
-                                src="../assets/images/logotipo-de-linkedin.png" alt="LinkedIn logo">
-                            <a href="http://www.linkedin.com/in/emiliano-diaz"></a>
-                        </button>
-                        <button>
-                            <img class="bg-amarillo text-negro w-[10rem] h-[10rem] rounded-md"
-                                src="../assets/images/signo-de-github.png" alt="GitHub logo">
-                            <a href="http://www.github.com"></a>
-                        </button>
-                    </div>
                 </section>
 
                 <!-- Sofia Pincolinni Section -->
-                <section class="sectionAboutUs rounded-xl flex flex-col gap-12" id="Sofia"
+                <section class="sectionAboutUs rounded-xl flex flex-col gap5 bg-slate-500" id="Sofia"
                     style="background-image:url(../assets/images/13.png)">
+                    <div class="flex flex-col justify-center items-center gap-5">
 
-                    <div class="flex flex-col justify-center items-center gap-12">
+                        <div class="flex flex-wrap text-3xl items-center text-center justify-center gap-5">
+                            <a class="absolute top-50 right-44 mt-2 mr-2"  href="#AboutUs">
+                                <img class="w-10 h-10" src="../assets/images/flecha-hacia-arriba.png" alt="flecha-hacia-arriba">
+                            </a>
+                        </div>
 
-                        <a href="#AboutUs">Back to Navbar</a>
+                        <div class="flex flex-wrap text-3xl items-center text-center justify-center gap-5">
+                            <img class="imagePerson  rounded-xl  w-[6rem] h-[6rem]" src="../assets/images/Xavi.jpg"
+                                alt="imagePerson">
+                            <h1>Sofia Pincolinni</h1>
+                        </div>
 
-                        <h1>Sofia Pincolinni</h1>
-
-                        <h2>Full Stack JAVA Developer</h2>
+                        <div class="flex flex-wrap text-2xl items-center text-center justify-center gap-5">
+                            <img class=" w-[6rem] h-[6rem] bg-black rounded-lg" src="../assets/images/logoMH.webp"
+                                alt="MindHublogo">
+                            <h2>Full Stack JAVA Developer</h2>
+                            <p>Cohort N° 52</p>
+                        </div>
 
                         <h2>In this proyect Frontend Developer & Designer</h2>
-                        <p class="w-[50%]">Sofia is a talented frontend designer and developer, breathing life into our application.
+                        <p class="w-[50%]">Sofia is a talented frontend designer and developer, breathing life into our
+                            application.
                             With
                             exceptional skills in HTML, JavaScript, and design, Sofia creates an engaging and
                             user-friendly
@@ -186,34 +225,47 @@
 
                     </div>
 
-                    <div class="flex justify-around flex-wrap">
-                        <button>
-                            <img class="bg-amarillo text-negro w-[10rem] h-[10rem] rounded-md"
-                                src="../assets/images/logotipo-de-linkedin.png" alt="LinkedIn logo">
-                            <a href="http://www.linkedin.com/in/emiliano-diaz"></a>
-                        </button>
-                        <button>
-                            <img class="bg-amarillo text-negro w-[10rem] h-[10rem] rounded-md"
+                    <div class="flex justify-around flex-wrap gap-4">
+                        <a class="bg-amarillo rounded-lg" href="http://www.linkedin.com/in/">
+                            <img class="text-negro w-[7rem] h-[7rem]" src="../assets/images/logotipo-de-linkedin.png"
+                                alt="LinkedIn logo">
+                        </a>
+                        <a class="bg-amarillo rounded-lg" href="http://www.github.com">
+                            <img class="text-negro w-[7rem] h-[7rem] rounded-md"
                                 src="../assets/images/signo-de-github.png" alt="GitHub logo">
-                            <a href="http://www.github.com"></a>
-                        </button>
+                        </a>
                     </div>
+
                 </section>
 
                 <!-- Xavier Nochelli Section -->
-                <section class="sectionAboutUs rounded-xl flex flex-col gap-12" id="Xavi"
+                <section class="sectionAboutUs rounded-xl flex flex-col gap-7 bg-slate-500" id="Xavi"
                     style="background-image:url(../assets/images/11.png)">
 
-                    <div class="flex flex-col justify-center items-center gap-12">
+                    <div class="flex flex-col justify-center items-center gap-5">
 
-                        <a href="#AboutUs">Back to Navbar</a>
+                        <div class="flex flex-wrap text-3xl items-center text-center justify-center gap-5">
+                            <a class="absolute top-50 right-44 mt-2 mr-2"  href="#AboutUs">
+                                <img class="w-10 h-10" src="../assets/images/flecha-hacia-arriba.png" alt="flecha-hacia-arriba">
+                            </a>
+                        </div>
 
-                        <h1>Xavier Nochelli</h1>
+                        <div class="flex flex-wrap text-3xl items-center justify-center gap-5">
+                            <img class="imagePerson  rounded-xl  w-[6rem] h-[6rem]" src="../assets/images/Xavi.jpg"
+                                alt="imagePerson">
+                            <h1>Xavier Nochelli</h1>
+                        </div>
 
-                        <h2>Full Stack JAVA Developer</h2>
+                        <div class="flex flex-wrap text-2xl items-center text-center justify-center gap-5">
+                            <img class=" w-[6rem] h-[6rem] bg-black rounded-lg" src="../assets/images/logoMH.webp"
+                                alt="MindHublogo">
+                            <h2>Full Stack JAVA Developer</h2>
+                            <p>Cohort N° 52</p>
+                        </div>
 
                         <h2>In this proyect Frontend Developer</h2>
-                        <p class="w-[50%]">Xavier is a passionate frontend developer focused on creating interactive and appealing
+                        <p class="w-[50%]">Xavier is a passionate frontend developer focused on creating interactive and
+                            appealing
                             interfaces. He works closely with Sofia to implement the application's design using the
                             latest
                             web technologies. Xavier is known for translating design ideas into solid code and
@@ -222,18 +274,17 @@
 
                     </div>
 
-                    <div class="flex justify-around flex-wrap">
-                        <button>
-                            <img class="bg-amarillo text-negro w-[7rem] h-[7rem] rounded-md"
-                                src="../assets/images/logotipo-de-linkedin.png" alt="LinkedIn logo">
-                            <a href="www.linkedin.com/in/xavier-nochelli/"></a>
-                        </button>
-                        <button>
-                            <img class="bg-amarillo text-negro w-[7rem] h-[7rem] rounded-md"
+                    <div class="flex justify-around flex-wrap gap-4">
+                        <a class="bg-amarillo rounded-lg" href="https://www.linkedin.com/in/xavier-nochelli/">
+                            <img class="text-negro w-[7rem] h-[7rem]" src="../assets/images/logotipo-de-linkedin.png"
+                                alt="LinkedIn logo">
+                        </a>
+                        <a class="bg-amarillo rounded-lg" href="https://github.com/Xn0ch3">
+                            <img class="text-negro w-[7rem] h-[7rem] rounded-md"
                                 src="../assets/images/signo-de-github.png" alt="GitHub logo">
-                            <a href="www.https://github.com/Xn0ch3"></a>
-                        </button>
+                        </a>
                     </div>
+
                 </section>
             </div>
 
