@@ -19,6 +19,7 @@ public class Games {
     private LocalDate releaseDate;
     private float discount;
     private Rating rating;
+    private boolean stateGame = true;
     private List<String> screenshots = new ArrayList<>();
     @ElementCollection
     private List<GameGenre> genres;
@@ -34,7 +35,7 @@ public class Games {
 
     public Games(String title, String description, String developer, String publisher,
                  String imageURL, Long sales,
-                 double price, Long stock, LocalDate releaseDate, float discount, Rating rating, List<GameGenre> genres,
+                 double price, Long stock, LocalDate releaseDate, float discount, Rating rating , List<GameGenre> genres,
                  List<GamePlatform> platforms,String longDescription, List<String> screenshots) {
         this.title = title;
         this.description = description;
@@ -174,6 +175,14 @@ public class Games {
         this.rating = rating;
     }
 
+    public boolean isStateGame() {
+        return stateGame;
+    }
+
+    public void setStateGame(boolean stateGame) {
+        this.stateGame = stateGame;
+    }
+
     public Long getOwned() {
         return owned;
     }
@@ -224,6 +233,7 @@ public class Games {
                 ", price=" + price +
                 ", date=" + releaseDate +
                 ", discount=" + discount +
+                ", stateGame=" + stateGame +
                 ", genre='" + genres + '\'' +
                 ", platform='" + platforms + '\'' +
                 '}';
