@@ -15,6 +15,9 @@ public interface GamesService {
     Games findById(Long id);
     Games findByTitle(String title);
 
-    Games getGameById(Long id);
-    GamesDTO getGameDTOById(Long id);
+    GamesDTO findGameDTOById(Long id);
+
+    ResponseEntity<String> updateGame(Long id, GameRecord gameRecord);
+    ResponseEntity<String> deleteById(Long id);
+
 }

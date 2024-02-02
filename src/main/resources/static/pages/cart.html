@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="shortcut icon" href="../assets/images/SXESlogo.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Store</title>
+</head>
+
+<body>
+    <div id="app">
+        <header class="gradient bg-gris h-[6rem] w-full gap-4 relative flex items-center">
+            <!--LOGO -->
+            <div class="w-24 ml-4">
+                <img src="../assets/images/SXESlogo.png" alt="" />
+            </div>
+
+            <!--MENU HAMBURGUESA -->
+            <div class="hamburg flex justify-right w-8 absolute right-10 top-8 md:hidden lg:hidden"
+                v-if="navMenu == false" @click.prevent="showMenu()">
+                <img class="" src="../assets/images/menuHamb.png" alt="" />
+            </div>
+
+            <!--OPCION LOGIN -->
+            <div v-if="customer == null"
+                class="login text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
+                <p class="cursor-pointer bg-gris py-[0.2rem] px-2 rounded-md" @click.prevent="formLogIn()">
+                    Log In
+                </p>
+                <p class="cursor-pointer" @click.prevent="formSignUp()">Sign Up</p>
+
+
+            </div>
+
+            <div v-if="customer != null"
+                class="login flex text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
+                <p class="text-white">{{customer.name}} </p>
+                <p class="cursor-pointer text-white" @click.prevent="logout()">|| Log out</p>
+            </div>
+
+
+
+            <!--NAVBAR ESCRITORIO -->
+            <div class="navBar">
+                <nav
+                    class="flex items-center text-center  justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0  ">
+                    <a class="bg-amarillo text-negro  w-[10rem] h-[2rem] rounded-md" href="../index.html">Home</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+                        href="./pages/store.html">Store</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+                        href="./pages/profile.html">My account</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+                        href="./pages/cart.html">Cart</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+                        href="./pages/aboutUs.html">About Us</a>
+                </nav>
+            </div>
+
+            <!--NAVBAR HAMBURGUESA -->
+            <div v-if="navMenu == true">
+                <nav
+                    class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[24rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center">
+                    <a href="../index.html" class="pl-6">Home</a>
+                    <a href="./store.html" class="pl-6">Store</a>
+                    <a href="./profile.html" class="pl-6">My Account</a>
+                    <a href="./cart.html" class="pl-6">Cart</a>
+                    <a href="./aboutUs.html" class="pl-6">About Us</a>
+
+                    <div class="flex flex-col border-t-[0.1px] border-white/50 pt-4 gap-4">
+                        <a href="#" class="pl-6" @click.prevent="formLogIn()">Log In</a>
+                        <a href="#" class="pl-6" @click.prevent="formSignUp()">Sign up</a>
+                    </div>
+
+                    <img src="../assets/images/closeMenu.png" alt="" class="w-6 absolute right-6 top-6"
+                        @click.prevent="showMenu()" />
+                </nav>
+            </div>
+        </header>
+
+        <main class="flex flex-col items-center h-full mb-16 gap-12">
+
+            <img src="https://assets.xboxservices.com/assets/58/81/58819069-871d-4aea-baee-52bfd15d1977.jpg?n=Fortnite_Sneaky-Slider-1084_876951_1600x675.jpg"
+                alt="" class="
+            h-64 w-full object-cover object-top">
+
+            <h1 class="gamer text-5xl text-amarillo">YOUR CART</h1>
+
+
+
+
+
+            <!-- TARJETAS DE JUEGOS -->
+            <div class="flex flex-col  justify-center text-center m-auto gap-4">
+                <template v-if="juego.length > 0 " v-for="juegos of juego" class="flex">
+                    <div class="flex flex-col m-auto">
+                        <div
+                            class="flex flex-row h-[7rem] w-[45rem] items-center gradient text-white rounded-md p-2 gap-4">
+
+                            <img v-bind:src="juegos.image" alt="game image"
+                                class="h-[6rem] w-2/6 object-contain rounded-md" />
+                            <h1 class="w-1/6 ">{{juegos.title}}</h1>
+                            <select class="text-white w-1/6  bg-negro rounded-sm px-4 h-8 text-sm " name="platformsSelect"
+                                id="platformsSelect" v-on:input="platform">
+                                <option class=" rounded-lg" value="all">Platform</option>
+                                <template v-for="platform of juegos.platforms">
+                                    <option v-bind:value="platform">{{platform}}</option>                                  
+                                
+                                </template>
+                            </select>
+                            <div class="flex w-1/6 items-center ml-4 gap-2">
+                                <button><img src="../assets/images/less.png" alt="" class="w-5 h-5 object-cover" @click.prevent="remove()"></button>
+                                <input type="number" class="bg-gris w-10 h-6 text-sm text-white font-semibold text-center pl-2" v-model="quantity">
+                                <button><img src="../assets/images/more.png" alt="" class="w-5 h-5 object-cover"@click.prevent="add()"></button>
+                              </div>
+
+                              <div class="p-2 w-1/6 bg-morado"> {{Intl.NumberFormat('en-US',
+                                {style: 'currency',
+                                currency: 'USD'}).
+                                format(juegos.price)}} </div>
+
+
+
+                        </div>
+                    </div>
+            </div>
+
+
+
+            </template>
+            <template v-else>
+                <h2
+                    class="flex justify-center font-bold  bg-amarillo text-black items-center border solid border-white justify-items-center h-[15rem] w-[15rem] border-solid-5 p-5 rounded-lg">
+                    No found Games</h2>
+            </template>
+
+
+            <div class="py-12">
+                <h1 class="text-white text-xl font-semibold">Cart Details</h1>
+                <table class="table-fixed w-[70%] bg-gris text-white m-auto p-2">
+                    <thead>
+                        <tr>
+                            <th>Quantity</th>
+                            <th>Name</th>
+                            <th>Platform</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-for="juegos of juego">
+                            <tr>
+                                <td class="py-2 border-b-[0.3px] border-white/20"> {{quantity}}</td>
+                                <td class="py-2 border-b-[0.3px] border-white/20"> {{juegos.title}} </td>
+                                <td class="py-2 border-b-[0.3px] border-white/20"> {{plataform}} </td>
+                                <td class="py-2 border-b-[0.3px] border-white/20"> {{Intl.NumberFormat('en-US',
+                                    {style: 'currency',
+                                    currency: 'USD'}).
+                                    format(juegos.price)}} </td>
+                        </template>
+                        </tr>
+                        <tr class="mt-8">
+                            <td class="pt-10 pb-2 border-b-[0.3px] border-white/20">TOTAL AMOUNT</td>
+                            <td class="pt-10 pb-2 border-b-[0.3px] border-white/20"></td>
+                            <td class="pt-10 pb-2 border-b-[0.3px] border-white/20"></td>
+                            <td class="pt-10 pb-2 border-b-[0.3px] border-white/20">{{Intl.NumberFormat('en-US',
+                                {style: 'currency',
+                                currency: 'USD'}).
+                                format(225)}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <button class="bg-morado text-white font-semibold text-lg py-2 px-4 m-4">PAY</button>
+            </div>
+
+
+        </main>
+
+
+        <footer class="bg-gris h-[5rem]">
+
+        </footer>
+        <template class="absolute inset-0 bg-black/80 w-full h-full" v-if="logIn">
+            <form action=""
+                class="form gradient flex flex-col bg-amarillo border-md p-12 gap-4 w-[25rem] h-[30rem] z-50"
+                @submit.prevent="login()">
+                <img src="../assets/images/closeMenu.png" alt="" class="w-4 absolute right-6 top-4"
+                    @click.prevent="formLogIn()" />
+
+                <div class="formNav mb-8 text-white">
+                    <button class="w-1/2 border-b-[0.2rem] border-amarillo pb-2">
+                        LOG IN
+                    </button>
+                    <button class="w-1/2" @click.prevent="formSignUp()">SIGN UP</button>
+                </div>
+
+                <div class="flex flex-col text-center gap-1 w-[100%]">
+                    <label for="" class="ml-4 text-left text-xs text-white">
+                        EMAIL
+                    </label>
+                    <input type="text" class="text-azulOscuro/90 font-semibold text-center" v-model="email" />
+                </div>
+
+                <div class="flex flex-col text-center gap-1 mt-4 w-[100%]">
+                    <label for="" class="ml-4 text-left text-xs text-white">
+                        PASSWORD</label>
+                    <input type="password" name="" class="text-azulOscuro text-center" v-model="password" />
+                </div>
+
+                <p class="text-sm text-red-400">{{error}}</p>
+
+                <a href="" class="text-xs text-white font-semibold">
+                    ¿Forgot your Password?</a>
+
+                <button type="submit" class="bg-amarillo p-2 text-negro w-[90%] mt-2 font-semibold">
+                    LOG IN
+                </button>
+            </form>
+        </template>
+
+        <template class="absolute inset-0 bg-black/80 w-full h-full" v-if="signUp">
+            <form action="submit"
+                class="form gradient flex flex-col bg-amarillo border-md p-12 gap-4 w-[25rem] h-[30rem] z-50"
+                @submit.prevent="register()">
+                <img src="../assets/images/closeMenu.png" alt="" class="w-4 absolute right-6 top-4 @"
+                    @click="formSignUp()" />
+                <div class="mb-8 text-white">
+                    <button class="w-1/2" @click="formLogIn()">LOG IN</button>
+                    <button class="border-b-[0.2rem] border-amarillo w-1/2 pb-2">
+                        SIGN UP
+                    </button>
+                </div>
+
+                <div class="flex flex-col gap-1 w-[100%]">
+                    <label for="" class="ml-4 text-left text-xs text-white">NAME</label>
+                    <input type="text" class="text-negro font-semibold text-center" v-model="name" />
+                </div>
+
+                <div class="flex flex-col gap-1 w-[100%]">
+                    <label for="" class="ml-4 text-left text-xs text-white">LAST NAME</label>
+                    <input type="text" class="text-azulOscuro/90 font-semibold text-center" v-model="lastName" />
+                </div>
+
+                <div class="flex flex-col gap-1 w-[100%]">
+                    <label for="" class="ml-4 text-left text-xs text-white">EMAIL</label>
+                    <input type="text" class="text-azulOscuro/90 font-semibold text-center" v-model="email" />
+                </div>
+
+                <div class="flex flex-col gap-1 w-[100%]">
+                    <label for="" class="ml-4 text-left text-xs text-white">
+                        PASSWORD</label>
+                    <input type="password" name="" class="text-azulOscuro/90 font-semibold text-center"
+                        v-model="password" />
+                </div>
+
+                <p class="text-sm text-red-400"></p>
+
+                <button type="submit" class="bg-amarillo p-2 text-negro w-[90%] mt-2 font-semibold">
+                    SIGN UP
+                </button>
+            </form>
+        </template>
+
+    </div>
+</body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="../javaScript/cart.js"></script>
+<script src="../taildwind.config.js"></script>
+
+</html>

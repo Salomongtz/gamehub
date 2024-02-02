@@ -59,6 +59,8 @@ public class Purchase_Game {
         return "Purchase_Game{" +
                 "id=" + id +
                 ", quantity=" + quantity +
+                ", purchase=" + purchase +
+                ", game=" + games +
                 '}';
     }
 }

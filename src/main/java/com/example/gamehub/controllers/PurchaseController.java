@@ -5,8 +5,10 @@ import com.example.gamehub.services.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,7 +18,8 @@ public class PurchaseController {
     private PurchaseService purchaseService;
 
     @PostMapping()
-    public ResponseEntity<?> purchase(Authentication authentication, @RequestBody List<PurchaseRecord> purchaseRecords) {
+    @Transactional
+    public ResponseEntity<?> purchase(Authentication authentication, @RequestBody List<PurchaseRecord> purchaseRecords) throws IOException {
         return purchaseService.purchase(authentication,purchaseRecords);
     }
 
