@@ -4,46 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
     <link rel="shortcut icon" href="../assets/images/SXESlogo.png" type="image/x-icon">
     <title>Store</title>
 </head>
 
 <body>
     <div id="app">
-        <header class="gradient bg-gris h-[6rem] w-full gap-4 relative flex items-center">
-            <div class="w-24 ml-4">
-                <img src="../assets/images/SXESlogo.png" alt="">
-            </div>
+        <header class="gradient bg-gris h-20 w-full gap-4 relative flex items-center">
+            <picture>
+                <img class="w-24 ml-4" src="../assets/images/SXESlogo.png" alt="">
+            </picture>
 
-
-            <div class="navBar">
-                <nav
-                    class="flex items-center text-center justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0">
-                    <a class="bg-amarillo text-negro  w-[10rem] h-[2rem] rounded-md" href="./admin.html">Admin</a>
-                </nav>
-            </div>
-
+            <nav class="flex items-center justify-center text-center gap-4 text-white font-semibold text-lg w-full absolute bottom-0"
+                style="align-items: center;">
+                <a class="bg-amarillo text-negro w-[10rem] h-[2rem] rounded-md" href="./admin.html">Admin</a>
+                <a class="text-white w-[10rem] h-[2rem] rounded-md" href="../index.html">Home</a>
+            </nav>
+            
         </header>
 
 
-        <main class="flex flex-col items-center h-full mb-16 gap-12">
+        <main class="flex flex-col items-center min-h-screen mb-16 gap-12">
 
             <section class="flex flex-col items-center">
 
                 <h2 class="gamer text-3xl font-semibold text-amarillo mt-6">Admin area</h2>
 
-                <div class="mt-4">
-                    <button @click="toggleForm"
-                        class="p-2 bg-amarillo hover:text-amarillo text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
-                        Toggle Form
-                    </button>
+                <div class="flex gap-4">
+                    <div class="mt-4">
+                        <button @click="toggleForm"
+                            class="delete p-2 bg-amarillo hover:text-amarillo hover:bg-gris text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                            Delete Form
+                        </button>
+                    </div>
+
+                    <div class="mt-4">
+                        <button @click="toggleForm"
+                            class="create p-2 bg-amarillo hover:text-amarillo hover:bg-gris text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                            Create Form
+                        </button>
+                    </div>
+
+                    <div class="mt-4">
+                        <button @click="toggleForm"
+                            class="update p-2 bg-amarillo hover:text-amarillo hover:bg-gris text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                            Update Game
+                        </button>
+                    </div>
                 </div>
 
                 <div class="flex gap-10">
-                    <form id="deleteGame" v-show="currentForm === 'deleteGame'"
+                    <form @submit.prevent="deleteGame(selectedGame)" id="deleteGame" v-if="currentForm === 'deleteGame'"
                         class="h-full max-w-md mx-auto bg-gris p-6 rounded-md shadow-lg sm:w-[600px] block text-sm font-medium text-gray-600 mt-6">
-
 
                         <h2 class="text-2xl font-bold mb-4 text-center text-amarillo">Delete Games:</h2>
 
@@ -57,54 +72,52 @@
                         </div>
 
                         <div>
-                            <button @click="deleteGame(selectedGame)"
-                                class="w-full p-2 bg-amarillo hover:text-amarillo text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                            <button type="submit"
+                                class="w-full p-2 bg-amarillo hover:text-amarillo hover:bg-gris text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
                                 Delete Game
                             </button>
                         </div>
-
                     </form>
 
 
-                    <form id="createGameForm" v-show="currentForm === 'createGameForm'"
+
+                    <form @submit.prevent="createGame" id="createGameForm" v-if="currentForm === 'createGameForm'"
                         class="max-w-md mx-auto bg-gris p-6 rounded-md shadow-lg sm:w-[600px] block text-sm font-medium text-gray-600 mt-6">
                         <h2 class="text-2xl font-bold mb-4 text-center text-amarillo">Create Game:</h2>
 
                         <div class="mb-4">
-                            <label for="title" class="block text-sm font-medium text-amarillo">Título:</label>
+                            <label for="title" class="block text-sm font-medium text-amarillo">Title:</label>
                             <input v-model="title" type="text" id="title"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
 
                         <div class="mb-4">
                             <label for="description"
-                                class="block text-sm font-medium text-amarillo">Descripción:</label>
+                                class="block text-sm font-medium text-amarillo">Description:</label>
                             <textarea v-model="description" id="description"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required></textarea>
                         </div>
 
                         <div class="mb-4">
-                            <label for="developer"
-                                class="block text-sm font-medium text-amarillo">Desarrollador:</label>
+                            <label for="developer" class="block text-sm font-medium text-amarillo">Developer:</label>
                             <input v-model="developer" type="text" id="developer"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
 
                         <div class="mb-4">
-                            <label for="imageURL" class="block text-sm font-medium text-amarillo">URL de la
-                                Imagen:</label>
+                            <label for="imageURL" class="block text-sm font-medium text-amarillo">URL Image:</label>
                             <input v-model="imageURL" type="text" id="imageURL"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
 
                         <div class="mb-4">
-                            <label for="sales" class="block text-sm font-medium text-amarillo">Ventas:</label>
+                            <label for="sales" class="block text-sm font-medium text-amarillo">Sales:</label>
                             <input v-model="sales" type="number" id="sales"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
 
                         <div class="mb-4">
-                            <label for="price" class="block text-sm font-medium text-amarillo">Precio:</label>
+                            <label for="price" class="block text-sm font-medium text-amarillo">Price:</label>
                             <input v-model="price" type="number" id="price"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
@@ -114,7 +127,7 @@
                             <input v-model="publisher" type="text" id="publisher"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
-                    
+
                         <div class="mb-4">
                             <label for="stock" class="block text-sm font-medium text-amarillo">Stock:</label>
                             <input v-model="stock" type="number" id="stock"
@@ -123,14 +136,14 @@
 
 
                         <div class="mb-4">
-                            <label for="releaseDate" class="block text-sm font-medium text-amarillo">Fecha de
-                                Lanzamiento:</label>
+                            <label for="releaseDate" class="block text-sm font-medium text-amarillo">Release
+                                Date:</label>
                             <input v-model="releaseDate" type="date" id="releaseDate"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
 
                         <div class="mb-4">
-                            <label for="discount" class="block text-sm font-medium text-amarillo">Descuento:</label>
+                            <label for="discount" class="block text-sm font-medium text-amarillo">Discount:</label>
                             <input v-model="discount" type="number" id="discount"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
@@ -145,7 +158,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-amarillo">Géneros:</label>
+                            <label class="block text-sm font-medium text-amarillo">Genres:</label>
                             <div v-for="genreOption in genreOptions" :key="genreOption">
                                 <input v-model="selectedGenres" :value="genreOption" type="checkbox" class="mr-2">
                                 <span class="text-sm text-gray-600">{{ genreOption }}</span>
@@ -153,7 +166,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-amarillo">Plataformas:</label>
+                            <label class="block text-sm font-medium text-amarillo">Platforms:</label>
                             <div v-for="platformOption in platformOptions" :key="platformOption">
                                 <input v-model="selectedPlatforms" :value="platformOption" type="checkbox" class="mr-2">
                                 <span class="text-sm text-gray-600">{{ platformOption }}</span>
@@ -161,54 +174,54 @@
                         </div>
 
                         <div>
-                            <button type="button" @click="createGame"
-                                class="w-full p-2 bg-amarillo hover:text-amarillo text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                            <button type="submit" @click="createGame"
+                                class="w-full p-2 bg-amarillo hover:text-amarillo hover:bg-gris text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
                                 Create Game
                             </button>
                         </div>
                     </form>
 
-                    <form id="editGameForm" v-show="currentForm === 'editGameForm'" @submit.prevent="editGame(selectedGame.id)"
+                    <form id="editGameForm" v-if="currentForm === 'editGameForm'"
+                        @submit.prevent="editGame(selectedGame.id)"
                         class="max-w-md mx-auto bg-gris p-6 rounded-md shadow-lg sm:w-[600px] block text-sm font-medium text-gray-600 mt-6">
-                        <h2 class="text-2xl font-bold mb-4 text-center text-amarillo">Editar Juego:</h2>
+                        <h2 class="text-2xl font-bold mb-4 text-center text-amarillo">Edit Game:</h2>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-amarillo">Seleccionar Juego:</label>
+                            <label class="block text-sm font-medium text-amarillo">Select Game:</label>
                             <select v-model="selectedGame" @change="dataGame()"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                                <option value="" disabled>Selecciona un juego</option>
+                                <option value="" disabled>Select Game</option>
                                 <option v-for="game in games" :key="game.id" :value="game">{{ game.title }}</option>
                             </select>
                         </div>
 
                         <div class="mb-4">
-                            <label for="editTitle" class="block text-sm font-medium text-amarillo">Título:</label>
+                            <label for="editTitle" class="block text-sm font-medium text-amarillo">Title:</label>
                             <input v-model="editTitle" type="text" id="editTitle" :value="editTitle"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
 
                         <div class="mb-4">
                             <label for="editDescription"
-                                class="block text-sm font-medium text-amarillo">Descripción:</label>
+                                class="block text-sm font-medium text-amarillo">Description:</label>
                             <textarea v-model="editDescription" id="editDescription" :value="editDescription"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required></textarea>
                         </div>
 
                         <div class="mb-4">
-                            <label for="editImageURL" class="block text-sm font-medium text-amarillo">URL de la
-                                Imagen:</label>
+                            <label for="editImageURL" class="block text-sm font-medium text-amarillo">URL image:</label>
                             <input v-model="editImageURL" type="text" id="editImageURL" :value="editImageURL"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
 
                         <div class="mb-4">
-                            <label for="editSales" class="block text-sm font-medium text-amarillo">Ventas:</label>
+                            <label for="editSales" class="block text-sm font-medium text-amarillo">Sales:</label>
                             <input v-model="editSales" type="text" id="editSales" :value="editSales"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
 
                         <div class="mb-4">
-                            <label for="editPrice" class="block text-sm font-medium text-amarillo">Precio:</label>
+                            <label for="editPrice" class="block text-sm font-medium text-amarillo">Price:</label>
                             <input v-model="editPrice" type="text" id="editPrice" :value="editPrice"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
@@ -218,23 +231,23 @@
                             <input v-model="editPublisher" type="text" id="editPublisher" :value="editPublisher"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
-                    
+
                         <div class="mb-4">
                             <label for="editStock" class="block text-sm font-medium text-amarillo">Stock:</label>
                             <input v-model="editStock" type="number" id="editStock" :value="editStock"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
-                    
+
 
                         <div class="mb-4">
-                            <label for="editReleaseDate" class="block text-sm font-medium text-amarillo">Fecha de
-                                Lanzamiento:</label>
+                            <label for="editReleaseDate" class="block text-sm font-medium text-amarillo">Release
+                                Date:</label>
                             <input v-model="editReleaseDate" type="date" id="editReleaseDate" :value="editReleaseDate"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
 
                         <div class="mb-4">
-                            <label for="editDiscount" class="block text-sm font-medium text-amarillo">Descuento:</label>
+                            <label for="editDiscount" class="block text-sm font-medium text-amarillo">Discount:</label>
                             <input v-model="editDiscount" type="number" id="editDiscount" :value="editDiscount"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
@@ -249,7 +262,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-amarillo">Géneros:</label>
+                            <label class="block text-sm font-medium text-amarillo">Genres:</label>
                             <div v-for="genreOption in genreOptions" :key="genreOption">
                                 <input v-model="editSelectedGenres" :value="genreOption" type="checkbox" class="mr-2">
                                 <span class="text-sm text-gray-600">{{ genreOption }}</span>
@@ -257,7 +270,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-amarillo">Plataformas:</label>
+                            <label class="block text-sm font-medium text-amarillo">Platforms:</label>
                             <div v-for="platformOption in platformOptions" :key="platformOption">
                                 <input v-model="editSelectedPlatforms" :value="platformOption" type="checkbox"
                                     class="mr-2">
@@ -267,8 +280,8 @@
 
                         <div>
                             <button type="submit"
-                                class="w-full p-2 bg-amarillo hover:text-amarillo text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
-                                Actualizar Juego
+                                class="w-full p-2 bg-amarillo hover:text-amarillo hover:bg-gris text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                                Update Game
                             </button>
                         </div>
                     </form>

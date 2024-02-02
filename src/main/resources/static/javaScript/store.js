@@ -39,7 +39,10 @@ let app = createApp({
                     console.log("plataformas", this.platforms)
                     this.price = [...new Set(response.data.flatMap(data => data.platforms))].sort();
                     console.log("Precios", this.price)
-
+                    this.cart = JSON.parse(localStorage.getItem("cart")) || []
+                    this.selectGenre = new URLSearchParams(window.location.search).get("genre").replace(/"/g, '')
+                    console.log(this.selectGenre)
+                    this.filterCrossSearch()
                 })
                 .catch(error => {
                     if (error.response) {
@@ -78,7 +81,16 @@ let app = createApp({
             console.log("Selected Title", this.search);
             this.filterCrossSearch();
         },
-
+        logout() {
+            axios.post("/api/logout")
+                .then(response => {
+                    console.log(response)
+                    this.customer = null
+                    location.reload();
+                    localStorage.clear();
+                })
+                .catch(error => console.log("Error", error))
+        },
         filterPrice(event) {
             this.selectedPirce = event.target.value;
             console.log("Selected Price", this.selectedPirce);
@@ -108,7 +120,7 @@ let app = createApp({
                 return dateA - dateB;
             });
         },
-        
+
         sortGamesByDateDesc() {
             this.filteredGames.sort((a, b) => {
                 const dateA = new Date(a.date);

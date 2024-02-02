@@ -1,347 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles.css" />
-    <link
-      rel="shortcut icon"
-      href="assets/images/SXESlogo.png"
-      type="image/x-icon"
-    />
-    <title>Game Hub</title>
-  </head>
 
-  <body>
-    <div id="app">
-      <header
-        class="gradient bg-gris h-[6rem] w-full gap-4 relative flex items-center"
-      >
-        <!--LOGO -->
-        <div class="w-24 ml-4">
-          <img src="../assets/images/SXESlogo.png" alt="" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="shortcut icon" href="assets/images/SXESlogo.png" type="image/x-icon" />
+  <title>Game Hub</title>
+</head>
+
+<body>
+  <div id="app">
+    <header class="gradient bg-gris h-[6rem] w-full gap-4 relative flex items-center">
+      <!--LOGO -->
+      <div class="w-24 ml-4">
+        <img src="../assets/images/SXESlogo.png" alt="" />
+      </div>
+
+      <!--MENU HAMBURGUESA -->
+      <div class="hamburg flex justify-right w-8 absolute right-10 top-8 md:hidden lg:hidden" v-if="navMenu == false"
+        @click.prevent="showMenu()">
+        <img class="" src="../assets/images/menuHamb.png" alt="" />
+      </div>
+
+      <!--OPCION LOGIN -->
+      <div v-if="customer == null" class="login text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
+        <p class="cursor-pointer bg-gris py-[0.2rem] px-2 rounded-md" @click.prevent="formLogIn()">
+          Log In
+        </p>
+        <p class="cursor-pointer" @click.prevent="formSignUp()">Sign Up</p>
+
+
+      </div>
+
+      <div v-if="customer != null"
+        class="login flex text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
+        <p class="text-white">{{customer.name}} </p>
+        <p class="cursor-pointer text-white" @click.prevent="logout()">|| Log out</p>
+      </div>
+
+
+
+      <!--NAVBAR ESCRITORIO -->
+      <div class="navBar">
+        <nav
+        class="flex items-center text-center  justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0  ">
+        <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+            href="../index.html">Home</a>
+        <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+            href="./store.html">Store</a>
+        <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="./profile.html">My account</a>
+        <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="./cart.html">Cart</a>
+        <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="#" class="">About
+            Us</a>
+    </nav>
+      </div>
+
+      <!--NAVBAR HAMBURGUESA -->
+      <div v-if="navMenu == true">
+        <nav
+          class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[24rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center">
+          <a href="../index.html" class="pl-6">Home</a>
+          <a href="./store.html" class="pl-6">Store</a>
+          <a href="./profile.html" class="pl-6">My Account</a>
+          <a href="./cart.html" class="pl-6">Cart</a>
+          <a href="./aboutUs.html" class="pl-6">About Us</a>
+
+          <div class="flex flex-col border-t-[0.1px] border-white/50 pt-4 gap-4">
+            <a href="#" class="pl-6" @click.prevent="formLogIn()">Log In</a>
+            <a href="#" class="pl-6" @click.prevent="formSignUp()">Sign up</a>
+          </div>
+
+          <img src="../assets/images/closeMenu.png" alt="" class="w-6 absolute right-6 top-6"
+            @click.prevent="showMenu()" />
+        </nav>
+      </div>
+    </header>
+
+    <main class="px-28 flex flex-col justify-center">
+      <h1 class="gamer text-white text-5xl text-center font-semibold py-12"> {{game.title}} </h1>
+
+      <div id="gameContent" class="flex flex-col justify-center gap-10 items-center w-[60%] mx-auto">
+        <img v-bind:src="game.image" alt="" class="w-[100%] object-cover">
+        <div class=" text-white  mx-4 ">
+          <div v-for="genre of game.genre" class="inline-block wrap-none">
+            <p class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm">
+              {{genre }}
+            </p>
+          </div>
         </div>
 
-        <!--MENU HAMBURGUESA -->
-        <div
-          class="hamburg flex justify-right w-8 absolute right-10 top-8 md:hidden lg:hidden"
-          v-if="navMenu == false"
-          @click.prevent="showMenu()"
-        >
-          <img class="" src="../assets/images/menuHamb.png" alt="" />
-        </div>
-
-        <!--OPCION LOGIN -->
-        <div  v-if="customer == null"
-          class="login text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center"
-        >
-          <p
-            class="cursor-pointer bg-gris py-[0.2rem] px-2 rounded-md"
-            @click.prevent="formLogIn()"
-          >
-            Log In
-          </p>
-          <p class="cursor-pointer" @click.prevent="formSignUp()">Sign Up</p>
-
-         
-        </div>
-
-        <div v-if="customer != null" class="login flex text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
-          <p class="text-white">{{customer.name}} </p>
-          <p class="cursor-pointer text-white" @click.prevent="logout()">|| Log out</p>
-        </div>
-
-        
-
-        <!--NAVBAR ESCRITORIO -->
-        <div class="navBar">
-          <nav
-            class="flex justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0"
-          >
-            <a href="#">Store</a>
-            <a href="#">My account</a>
-            <a href="#">Cart</a>
-            <a href="#" class="">About Us</a>
-          </nav>
-        </div>
-
-        <!--NAVBAR HAMBURGUESA -->
-        <div v-if="navMenu == true">
-          <nav
-            class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[24rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center"
-          >
-            <a href="#" class="pl-6">Store</a>
-            <a href="#" class="pl-6">My account</a>
-            <a href="#" class="pl-6">Cart</a>
-            <a href="#" class="pl-6">About Us</a>
-
-            <div
-              class="flex flex-col border-t-[0.1px] border-white/50 pt-4 gap-4"
-            >
-              <a href="#" class="pl-6" @click.prevent="formLogIn()">Log In</a>
-              <a href="#" class="pl-6" @click.prevent="formSignUp()">Sign up</a>
+        <div>
+          <p class="text-white text-lg p-4 w-[100%]">{{game.description}}</p>
+          <div id="gamePrice" class="flex flex-col items-center py-6 text-lg gap-10">
+            <div class="flex items-center gap-8">
+              <p v-if="offerGames.includes(game)" class="text-white b-[0.1px]  line-through">${{(game.price *
+                1.1).toLocaleString().slice(0,5)}} </p>
+              <h1 class="p-[0.7rem] bg-morado text-white">${{game.price.toLocaleString()}}</h1>
+            </div>
+            <div class="flex gap-8" v-if="customer != null">
+              <button class="p-2 border-2 border-white text-white " @click="addToCart(game.id)">Add to cart</button>
+              <button class="p-[0.7rem] bg-gris text-amarillo font-semibold">Buy now</button>
+            </div>
+            <div class="flex gap-8" v-if="customer == null">
+              <button class="p-2 border-2 border-white/20 text-white/20 ">Add to cart</button>
+              <button class="p-[0.7rem] bg-gris/20 text-amarillo/20 font-semibold">Buy now</button>
             </div>
 
-            <img
-              src="../assets/images/closeMenu.png"
-              alt=""
-              class="w-6 absolute right-6 top-6"
-              @click.prevent="showMenu()"
-            />
-          </nav>
+
+
+
+
+          </div>
+
         </div>
-      </header>
 
-      <main class="px-28 flex flex-col justify-center">
-        <h1 class="gamer text-white text-5xl text-center font-semibold py-12"> {{game.title}} </h1>
+      </div>
 
-        <div id="gameContent" class="flex flex-col justify-center gap-10 items-center w-[60%] mx-auto">
-            <img v-bind:src="game.image" alt="" class="w-[100%] object-cover">
-            <div class=" text-white  mx-4 ">
-              <div
-              v-for="genre of game.genre" 
-                class="inline-block wrap-none"
-              >
-                <p
-                  class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm"
-                >
-                  {{genre }}
-                </p>
+
+
+      <div id="gameData2" class="flex  justify-center items-center">
+
+        <div id="gameTable" class="text-white flex flex-col gap-4 text-sm bg-gris/50 p-4 w-[30rem]  my-10">
+
+          <div class="gameData flex gap-6 border-b-[0.2px] p-2  justify-between">
+            <p class="font-semibold text-white/50">SALES:</p>
+            <p> {{game.sales.toLocaleString()}} </p>
+          </div>
+          <div class="gameData flex gap-6 border-b-[0.2px] p-2 justify-between">
+            <p class="font-semibold text-white/50">STOCK:</p>
+            <p> {{game.stock}} </p>
+          </div>
+          <div class="gameData flex gap-6 border-b-[0.2px] p-2 justify-between">
+            <p class="font-semibold text-white/50">RELEASE DATE:</p>
+            <p> {{game.date}} </p>
+          </div>
+          <div class="gameData flex gap-6 p-2 justify-between">
+            <p class="font-semibold text-white/50 ">PLATFORMS:</p>
+            <div class="flex gap-4 items-center">
+              <div v-if="game.platforms.includes('PC')">
+                <img src="../assets/images/logoPC.png" alt="" class="w-8">
+              </div>
+              <div v-if="game.platforms.includes('PS5')">
+                <img src="../assets/images/logoPS5.png" alt="" class="w-16">
+              </div>
+              <div v-if="game.platforms.includes('PS4')">
+                <img src="../assets/images/logoPS4.png" alt="" class="w-[73px]">
+              </div>
+              <div v-if="game.platforms.includes('XBOX')">
+                <img src="../assets/images/logoXBOX.png" alt="" class="w-[28px]">
+              </div>
+              <div v-if="game.platforms.includes('SWITCH')">
+                <img src="../assets/images/logoSWITCH.png" alt="" class="w-8">
               </div>
             </div>
-           
-            <div>
-                <p class="text-white text-lg p-4 w-[100%]">{{game.description}}</p>
-                <div id="gamePrice" class="flex flex-col items-center py-6 text-lg gap-10">
-                    <div class="flex items-center gap-8">
-                        <p v-if="offerGames.includes(game)" class="text-white b-[0.1px]  line-through">${{(game.price * 1.1).toLocaleString().slice(0,5)}} </p>
-                        <h1 class="p-[0.7rem] bg-morado text-white">${{game.price.toLocaleString()}}</h1>
-                    </div>
-                    <div class="flex gap-8" v-if="customer != null">
-                      
-                      
-                        <button class="p-2 border-2 border-white text-white " @click="addToCart(game.title, quantity)">Add to cart</button>
-                        <button class="p-[0.7rem] bg-gris text-amarillo font-semibold">Buy now</button>
-                    </div>
-                    <div class="flex gap-8" v-if="customer == null">
-                      <button class="p-2 border-2 border-white/20 text-white/20 ">Add to cart</button>
-                      <button class="p-[0.7rem] bg-gris/20 text-amarillo/20 font-semibold">Buy now</button>
-                  </div>
-                  <div class="flex gap-2 items-center">
-                    <img src="../assets/images/less.png" alt="" class="object-cover w-[1.2rem] h-[1.2rem] cursor-pointer " @click.prevent="remove()">
-                    <input type="number" v-model="quantity" class="w-12 h-8 bg-white/10 text-white text-center rounded-sm text-xs">
-                    <img src="../assets/images/more.png" alt="" class="object-cover w-[1.2rem] h-[1.2rem] cursor-pointer" @click.prevent="add()">
-                  </div>
-
-
-
-                   
-                    
-                </div>
-
-            </div>
-            
+          </div>
         </div>
-        
 
-        
-        <div id="gameData2" class="flex  justify-center items-center">
-          
-          <div id="gameTable" class="text-white flex flex-col gap-4 text-sm bg-gris/50 p-4 w-[30rem]  my-10">
-            
-            <div  class="gameData flex gap-6 border-b-[0.2px] p-2  justify-between">
-                <p class="font-semibold text-white/50">SALES:</p>
-                <p> {{game.sales.toLocaleString()}} </p>
-            </div>
-            <div class="gameData flex gap-6 border-b-[0.2px] p-2 justify-between">
-                <p class="font-semibold text-white/50">STOCK:</p>
-                <p> {{game.stock}} </p>
-            </div>
-            <div class="gameData flex gap-6 border-b-[0.2px] p-2 justify-between">
-                <p class="font-semibold text-white/50">RELEASE DATE:</p>
-                <p> {{game.date}} </p>
-            </div>
-            <div class="gameData flex gap-6 p-2 justify-between">
-                <p class="font-semibold text-white/50 ">PLATFORMS:</p>                
-                    <div class="flex gap-4 items-center">
-                    <div v-if="game.platforms.includes('PC')">
-                        <img src="../assets/images/logoPC.png" alt="" class="w-8">
-                    </div>
-                    <div v-if="game.platforms.includes('PS5')">
-                        <img src="../assets/images/logoPS5.png" alt="" class="w-16">
-                    </div>
-                    <div v-if="game.platforms.includes('PS4')">
-                        <img src="../assets/images/logoPS4.png" alt="" class="w-[73px]">
-                    </div>
-                    <div v-if="game.platforms.includes('XBOX')">
-                        <img src="../assets/images/logoXBOX.png" alt="" class="w-[28px]">
-                    </div>
-                    <div v-if="game.platforms.includes('SWITCH')">
-                        <img src="../assets/images/logoSWITCH.png" alt="" class="w-8">
-                    </div>
-                </div>
-            </div>
-          </div>
-
-          <div class="p-8">
-            <img src="../assets/images/Everyone_SP.svg" alt="" v-if="game.rating == 'E'" class="w-20">
-            <img src="../assets/images/Mature_SP.svg" alt="" v-if="game.rating == 'M'" class="w-20">
-            <img src="../assets/images/Adult_SP.svg" alt="" v-if="game.rating == 'AO'" class="w-20">
-            <img src="../assets/images/Everyone10_SP.svg" alt="" v-if="game.rating == 'E10PLUS'" class="w-20">
-            <img src="../assets/images/RatingPending_Spanish-1.svg" alt="" v-if="game.rating == 'RP'" class="w-20">
-            <img src="../assets/images/Teen_SP.svg" alt="" v-if="game.rating == 'T'" class="w-20">
-            <img src="../assets/images/RP-LM17-Spanish.svg" alt="" v-if="game.rating == 'RP17'" class="w-20">
-
-          </div>
+        <div class="p-8">
+          <img src="../assets/images/Everyone_SP.svg" alt="" v-if="game.rating == 'E'" class="w-20">
+          <img src="../assets/images/Mature_SP.svg" alt="" v-if="game.rating == 'M'" class="w-20">
+          <img src="../assets/images/Adult_SP.svg" alt="" v-if="game.rating == 'AO'" class="w-20">
+          <img src="../assets/images/Everyone10_SP.svg" alt="" v-if="game.rating == 'E10PLUS'" class="w-20">
+          <img src="../assets/images/RatingPending_Spanish-1.svg" alt="" v-if="game.rating == 'RP'" class="w-20">
+          <img src="../assets/images/Teen_SP.svg" alt="" v-if="game.rating == 'T'" class="w-20">
+          <img src="../assets/images/RP-LM17-Spanish.svg" alt="" v-if="game.rating == 'RP17'" class="w-20">
 
         </div>
 
-       
-      </main>
+      </div>
 
-    
 
-      <footer class="bg-gris h-[5rem]"></footer>
+    </main>
 
-      <template class="absolute inset-0 bg-black/80 w-full h-full z-40" v-if="logIn">
-        <form
-          action=""
-          class="form gradient flex flex-col bg-amarillo border-md p-12 gap-4 w-[25rem] h-[30rem] z-50"
-          @submit.prevent="login()" 
-        >
-          <img
-            src="../assets/images/closeMenu.png"
-            alt=""
-            class="w-4 absolute right-6 top-4"
-            @click.prevent="formLogIn()"
-          />
 
-          <div class="formNav mb-8 text-white">
-            <button class="w-1/2 border-b-[0.2rem] border-amarillo pb-2">
-              LOG IN
-            </button>
-            <button class="w-1/2" @click.prevent="formSignUp()">SIGN UP</button>
-          </div>
 
-          <div class="flex flex-col text-center gap-1 w-[100%]">
-            <label for="" class="ml-4 text-left text-xs text-white">
-              EMAIL
-            </label>
-            <input
-              type="text"
-              class="text-azulOscuro/90 font-semibold text-center"
-              v-model="email"
-            />
-          </div>
+    <footer class="bg-gris h-[5rem]"></footer>
 
-          <div class="flex flex-col text-center gap-1 mt-4 w-[100%]">
-            <label for="" class="ml-4 text-left text-xs text-white">
-              PASSWORD</label
-            >
-            <input
-              type="password"
-              name=""
-              class="text-azulOscuro text-center"
-              v-model="password"
-            />
-          </div>
+    <template class="absolute inset-0 bg-black/80 w-full h-full z-40" v-if="logIn">
+      <form action="" class="form gradient flex flex-col bg-amarillo border-md p-12 gap-4 w-[25rem] h-[30rem] z-50"
+        @submit.prevent="login()">
+        <img src="../assets/images/closeMenu.png" alt="" class="w-4 absolute right-6 top-4"
+          @click.prevent="formLogIn()" />
 
-          <p class="text-sm text-red-400">{{error}}</p>
-
-          <a href="" class="text-xs text-white font-semibold">
-            ¿Forgot your Password?</a
-          >
-
-          <button type="submit"
-            class="bg-amarillo p-2 text-negro w-[90%] mt-2 font-semibold"
-             
-          >
+        <div class="formNav mb-8 text-white">
+          <button class="w-1/2 border-b-[0.2rem] border-amarillo pb-2">
             LOG IN
           </button>
-        </form>
-      </template>
+          <button class="w-1/2" @click.prevent="formSignUp()">SIGN UP</button>
+        </div>
 
-      <template
-        class="absolute inset-0 bg-black/80 w-full h-full"
-        v-if="signUp"
-      >
-        <form
-          action="submit"
-          class="form gradient flex flex-col bg-amarillo border-md p-12 gap-4 w-[25rem] h-[30rem] z-50"
-          @submit.prevent="register()" 
-        >
-          <img
-            src="../assets/images/closeMenu.png"
-            alt=""
-            class="w-4 absolute right-6 top-4 @"
-            @click="formSignUp()"
-          />
-          <div class="mb-8 text-white">
-            <button class="w-1/2" @click="formLogIn()">LOG IN</button>
-            <button class="border-b-[0.2rem] border-amarillo w-1/2 pb-2">
-              SIGN UP
-            </button>
-          </div>
+        <div class="flex flex-col text-center gap-1 w-[100%]">
+          <label for="" class="ml-4 text-left text-xs text-white">
+            EMAIL
+          </label>
+          <input type="text" class="text-azulOscuro/90 font-semibold text-center" v-model="email" />
+        </div>
 
-          <div class="flex flex-col gap-1 w-[100%]">
-            <label for="" class="ml-4 text-left text-xs text-white">NAME</label>
-            <input
-              type="text"
-              class="text-negro font-semibold text-center"
-              v-model="name"
-            />
-          </div>
+        <div class="flex flex-col text-center gap-1 mt-4 w-[100%]">
+          <label for="" class="ml-4 text-left text-xs text-white">
+            PASSWORD</label>
+          <input type="password" name="" class="text-azulOscuro text-center" v-model="password" />
+        </div>
 
-          <div class="flex flex-col gap-1 w-[100%]">
-            <label for="" class="ml-4 text-left text-xs text-white"
-              >LAST NAME</label
-            >
-            <input
-              type="text"
-              class="text-azulOscuro/90 font-semibold text-center"
-              v-model="lastName"
-            />
-          </div>
+        <p class="text-sm text-red-400">{{error}}</p>
 
-          <div class="flex flex-col gap-1 w-[100%]">
-            <label for="" class="ml-4 text-left text-xs text-white"
-              >EMAIL</label
-            >
-            <input
-              type="text"
-              class="text-azulOscuro/90 font-semibold text-center"
-              v-model="email"
-            />
-          </div>
+        <a href="" class="text-xs text-white font-semibold">
+          ¿Forgot your Password?</a>
 
-          <div class="flex flex-col gap-1 w-[100%]">
-            <label for="" class="ml-4 text-left text-xs text-white">
-              PASSWORD</label
-            >
-            <input
-              type="password"
-              name=""
-              class="text-azulOscuro/90 font-semibold text-center"
-              v-model="password"
-            />
-          </div>
+        <button type="submit" class="bg-amarillo p-2 text-negro w-[90%] mt-2 font-semibold">
+          LOG IN
+        </button>
+      </form>
+    </template>
 
-          <p class="text-sm text-red-400"></p>
-
-          <button type="submit"
-            class="bg-amarillo p-2 text-negro w-[90%] mt-2 font-semibold"
-            
-          >
+    <template class="absolute inset-0 bg-black/80 w-full h-full" v-if="signUp">
+      <form action="submit"
+        class="form gradient flex flex-col bg-amarillo border-md p-12 gap-4 w-[25rem] h-[30rem] z-50"
+        @submit.prevent="register()">
+        <img src="../assets/images/closeMenu.png" alt="" class="w-4 absolute right-6 top-4 @" @click="formSignUp()" />
+        <div class="mb-8 text-white">
+          <button class="w-1/2" @click="formLogIn()">LOG IN</button>
+          <button class="border-b-[0.2rem] border-amarillo w-1/2 pb-2">
             SIGN UP
           </button>
-        </form>
-      </template>
-    </div>
-  </body>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="../javaScript/gamedetails.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="../taildwind.config.js"></script>
+        </div>
+
+        <div class="flex flex-col gap-1 w-[100%]">
+          <label for="" class="ml-4 text-left text-xs text-white">NAME</label>
+          <input type="text" class="text-negro font-semibold text-center" v-model="name" />
+        </div>
+
+        <div class="flex flex-col gap-1 w-[100%]">
+          <label for="" class="ml-4 text-left text-xs text-white">LAST NAME</label>
+          <input type="text" class="text-azulOscuro/90 font-semibold text-center" v-model="lastName" />
+        </div>
+
+        <div class="flex flex-col gap-1 w-[100%]">
+          <label for="" class="ml-4 text-left text-xs text-white">EMAIL</label>
+          <input type="text" class="text-azulOscuro/90 font-semibold text-center" v-model="email" />
+        </div>
+
+        <div class="flex flex-col gap-1 w-[100%]">
+          <label for="" class="ml-4 text-left text-xs text-white">
+            PASSWORD</label>
+          <input type="password" name="" class="text-azulOscuro/90 font-semibold text-center" v-model="password" />
+        </div>
+
+        <p class="text-sm text-red-400"></p>
+
+        <button type="submit" class="bg-amarillo p-2 text-negro w-[90%] mt-2 font-semibold">
+          SIGN UP
+        </button>
+      </form>
+    </template>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="../javaScript/gamedetails.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../taildwind.config.js"></script>
+
 </html>

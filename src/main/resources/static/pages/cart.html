@@ -13,83 +13,60 @@
 
 <body>
     <div id="app">
-        <header
-        class="gradient bg-gris h-[6rem] w-full gap-4 relative flex items-center"
-      >
-        <!--LOGO -->
-        <div class="w-24 ml-4">
-          <img src="../assets/images/SXESlogo.png" alt="" />
-        </div>
-
-        <!--MENU HAMBURGUESA -->
-        <div
-          class="hamburg flex justify-right w-8 absolute right-10 top-8 md:hidden lg:hidden"
-          v-if="navMenu == false"
-          @click.prevent="showMenu()"
-        >
-          <img class="" src="../assets/images/menuHamb.png" alt="" />
-        </div>
-
-        <!--OPCION LOGIN -->
-        <div  v-if="customer == null"
-          class="login text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center"
-        >
-          <p
-            class="cursor-pointer bg-gris py-[0.2rem] px-2 rounded-md"
-            @click.prevent="formLogIn()"
-          >
-            Log In
-          </p>
-          <p class="cursor-pointer" @click.prevent="formSignUp()">Sign Up</p>
-
-         
-        </div>
-
-        <div v-if="customer != null" class="login flex text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
-          <p class="text-white">{{customer.name}} </p>
-          <p class="cursor-pointer text-white" @click.prevent="logout()">|| Log out</p>
-        </div>
-
-        
-
-        <!--NAVBAR ESCRITORIO -->
-        <div class="navBar">
-          <nav
-            class="flex justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0"
-          >
-            <a href="#">Store</a>
-            <a href="#">My account</a>
-            <a href="#">Cart</a>
-            <a href="#" class="">About Us</a>
-          </nav>
-        </div>
-
-        <!--NAVBAR HAMBURGUESA -->
-        <div v-if="navMenu == true">
-          <nav
-            class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[24rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center"
-          >
-            <a href="#" class="pl-6">Store</a>
-            <a href="#" class="pl-6">My account</a>
-            <a href="#" class="pl-6">Cart</a>
-            <a href="#" class="pl-6">About Us</a>
-
-            <div
-              class="flex flex-col border-t-[0.1px] border-white/50 pt-4 gap-4"
-            >
-              <a href="#" class="pl-6" @click.prevent="formLogIn()">Log In</a>
-              <a href="#" class="pl-6" @click.prevent="formSignUp()">Sign up</a>
+        <header class="gradient bg-gris h-[6rem] w-full gap-4 relative flex items-center">
+            <div class="w-24 ml-4">
+                <img src="../assets/images/SXESlogo.png" alt="">
             </div>
 
-            <img
-              src="../assets/images/closeMenu.png"
-              alt=""
-              class="w-6 absolute right-6 top-6"
-              @click.prevent="showMenu()"
-            />
-          </nav>
-        </div>
-      </header>
+
+            <div class="hamburg flex justify-right w-8 absolute right-10 top-8 md:hidden lg:hidden"
+                v-if="navMenu == false" @click.prevent="showMenu()">
+                <img class="" src="../assets/images/menuHamb.png" alt="menuHamb">
+            </div>
+
+            <div class="login text-white text-sm absolute top-[0.56em] right-8  gap-2 items-center">
+                <a href="#" class="bg-gris py-[0.2rem] px-2 rounded-md">Log In</a>
+                <a href="#">Sign Up</a>
+
+            </div>
+
+            <div class="navBar  ">
+                <nav
+                    class="flex items-center text-center  justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0  ">
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+                        href="../index.html">Home</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+                        href="./store.html">Store</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="./profile.html">My account</a>
+                    <a class="bg-amarillo text-negro  w-[10rem] h-[2rem] rounded-md" href="./cart.html">Cart</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="./aboutUs.html">About
+                        Us</a>
+                </nav>
+            </div>
+
+            <div v-if="navMenu == true">
+                <nav
+                    class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[24rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center ">
+                    <a href="../index.html" class="pl-6">Home</a>
+                    <a href="./store.html" class="pl-6">Store</a>
+                    <a href="./profile.html" class="pl-6">My Account</a>
+                    <a href="./cart.html" class="pl-6">Cart</a>
+                    <a href="./aboutUs.html" class="pl-6">About Us</a>
+
+                    <div class="flex flex-col border-t-[0.1px] border-white/50 pt-4  gap-4">
+                        <a href="#" class="pl-6">Log In</a>
+                        <a href="#" class="pl-6">Sign up</a>
+
+                    </div>
+
+                    <img src="../assets/images/closeMenu.png" alt="" class="w-6 absolute right-6 top-6"
+                        @click.prevent="showMenu()">
+                </nav>
+
+
+            </div>
+
+        </header>
 
 
         <main class="flex flex-col items-center h-full mb-16 gap-12">
@@ -99,62 +76,12 @@
             h-64 w-full object-cover object-top">
 
             <a href="">
-                <img src="../assets/images/StoreIndex.png" alt="" id="storeButton" class="object-cover">
+                <img src="../assets/images/StoreIndex.png" alt="" class="object-cover">
             </a>
-            <button @click="patchData()" class="bg-amarillo">KFKFKFKFKFKF</button>
-
-
-            <section class="flex w-[90%] ">
-                <article class="w-3/5">
-                    <h1>CART PRODUCTS</h1>
-                    <div class="flex" v-for="games of juego">
-                        <h1> {{game.title}} </h1>
-                        <h1> {{game.price}} </h1>
-                        <h1> {{game.quantity}} </h1>
-                       
-                       
-                        
-
-                        </div>
-                        
-
-                    </div>
-
-                    
-
-                </article>
-                <article class="w-2/5 bg-gris">
-                    <H1>PAYMENT DETAILS</H1>
-                </article>
-
-            </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             <!-- TARJETAS DE JUEGOS -->
-            <!-- <div class="flex w-[90%]  justify-center text-center  items-center  flex-wrap items-center justify-center">
+            <div class="flex w-[90%]  justify-center text-center  items-center  flex-wrap items-center justify-center">
                 <template v-if="filteredGames.length > 0 " v-for="game of filteredGames">
                     <div class="flex flex-wrap gap-10 p-2  justify-be  items-center">
                         <div class="card h-[20rem] w-[20rem] gradient text-white rounded-md relative">
@@ -189,7 +116,7 @@
                 <h2
                     class="flex justify-center font-bold  bg-amarillo text-black items-center border solid border-white justify-items-center h-[15rem] w-[15rem] border-solid-5 p-5 rounded-lg">
                     No found Games</h2>
-            </template> -->
+            </template>
 
         </main>
 
@@ -200,11 +127,9 @@
 
     </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="../javaScript/cart.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="../taildwind.config.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="../javaScript/store.js"></script>
+<script src="../taildwind.config.js"></script>
 
 </html>

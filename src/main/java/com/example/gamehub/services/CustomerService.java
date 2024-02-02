@@ -20,4 +20,5 @@ public interface CustomerService {
     ResponseEntity<String> updateCustomer(CustomerRecord customerRecord, String email) throws IOException;
 
     ResponseEntity <?> addToCart (String cart, String email);
+
 }
