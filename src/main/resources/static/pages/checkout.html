@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Purchase Confirmation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@2.6.14"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="shortcut icon" href="Paomedia-Small-N-Flat-Shop.512.png" type="image/x-icon">
+</head>
+
+<body>
+    <h1>Purchase Confirmation</h1>
+    <div id="app" class="w-1/2 mx-auto mt-5">
+        <form @submit.prevent="submitForm">
+            <div>
+                <label for="cardNumber" class="block mb-2">Card Number:</label>
+                <input type="text" id="cardNumber" name="cardNumber" required v-model="cardNumber"
+                    class="border border-gray-300 p-2 rounded-md w-full">
+            </div>
+            <div>
+                <label for="cardCVV" class="block mb-2">Card CVV:</label>
+                <input type="text" id="cardCVV" name="cardCVV" required v-model="cardCVV"
+                    class="border border-gray-300 p-2 rounded-md w-full">
+            </div>
+            <div>
+                <label for="amount" class="block mb-2">Amount:</label>
+                <input type="number" id="amount" name="amount" required v-model="amount"
+                    class="border border-gray-300 p-2 rounded-md w-full">
+            </div>
+            <div>
+                <label for="description" class="block mb-2">Description:</label>
+                <textarea id="description" name="description" rows="4" cols="50" required v-model="description"
+                    class="border border-gray-300 p-2 rounded-md w-full"></textarea>
+            </div>
+            <div>
+                <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Confirm
+                    Purchase</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    cardNumber: '',
+                    cardCVV: '',
+                    amount: '',
+                    description: ''
+                }
+            }, methods: {
+                submitForm() {
+                    axios.post('http://localhost:8080/api/cards/payments', {
+                        number: this.cardNumber,
+                        cvv: this.cardCVV,
+                        amount: this.amount,
+                        description: this.description
+                    }).then(response => {
+                        console.log(response.data);
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
