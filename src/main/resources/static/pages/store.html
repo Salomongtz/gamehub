@@ -69,157 +69,172 @@
 
         </header>
 
-     
+
 
         <main class="flex  flex-col  h-full mb-16 ">
             <img src="https://assets.xboxservices.com/assets/58/81/58819069-871d-4aea-baee-52bfd15d1977.jpg?n=Fortnite_Sneaky-Slider-1084_876951_1600x675.jpg"
-            alt="" class="
+                alt="" class="
         h-64 w-full object-cover object-top">
-    
-        <h1 class="gamer text-5xl font-semibold text-amarillo text-center p-12">STORE</h1>
 
-        <div
-                        class="flex flex-wrap  justify-center text-center  items-center  gap-5 p-3">
-                        <!-- <label
-                            class=" h-10 p-2  bg-amarillo text-black  justify-center align-center text-center  items-center rounded-md select-none "
-                            for="generoInput">Search</label> -->
-                        <input class="text-white h-10 rounded-md bg-gris w-[50%] placeholder:pl-8" type="text" placeholder="Name Title"
-                            name="generoInput" id="generoInput" v-on:input="filterTitle">
-                    </div>
-            
+            <h1 class="gamer text-5xl font-semibold text-amarillo text-center p-12">STORE</h1>
 
-    <div class="flex p-12   h-full mb-16 gap-12">
-        <section class="w-1/5 bg-gris" >
+            <div  class="flex w-full gap-4 justify-center px-6">
+                    <input class="text-white h-10 rounded-md bg-gris w-[30rem] flex placeholder:pl-8" type="text"
+                        placeholder="Name Title" name="generoInput" id="generoInput" v-on:input="filterTitle">
 
-            <h1 class="text-xl font-semibold text-center text-amarillo p-4">FILTER BY:</h1>
-            <div class="flex  flex-wrap  w-[90%] ">
-
+                        <div id="filter" class="bg-gris p-2 flex gap-4 w-20 justify-center items-center rounded-sm"
+                        @click.prevent="filterMenu()" >
+                            <img src="../assets/images/filter.png" alt="" class=" w-4 h-4 object-cover">
+                            <img src="../assets/images/order.png" alt="" class=" w-4 h-4 object-cover">
+                        </div>
                 
-
-                    <div
-                        class="flex flex-col   gap-2 p-3">
-                        <label
-                            class="    text-white select-none "
-                            for="generosSelect">Genre:</label>
-                        <select class="text-white rounded-sm w-full h-10 bg-negro  " name="generosSelect" id="generosSelect"
-                            v-on:input="filterGenre">
-                            <option class=" rounded-lg" value="all">All Genres</option>
-                            <template v-if="genres.length > 0" v-for="genre of genres">
-                                <option v-bind:value="genre">{{genre}}</option>
-                            </template>
-                        </select>
-                    </div>
-
-                    <div
-                        class="flex flex-col  gap-2 p-3">
-                        <label
-                            class="    text-white rounded-md select-none "
-                            for="platformsSelect">Platforms </label>
-                        <select class="text-white bg-negro rounded-sm  h-10  " name="platformsSelect" id="platformsSelect"
-                            v-on:input="filterPlatforms">
-                            <option class=" rounded-lg" value="all">All Platforms</option>
-                            <template v-if="platforms.length > 0" v-for="platform of platforms">
-                                <option v-bind:value="platform">{{platform}}</option>
-                            </template>
-                        </select>                  
-
-                </div>
-
-                <h1 class="text-xl font-semibold text-center text-amarillo p-4">ORDER BY:</h1>
-                <div class="flex  flex-wrap  w-[90%] ">
-
-                <div class="flex flex-wrap object-right-top gap-10 w-[90%] justify-center items-center p-2">
-
-                    <div
-                        class="flex  flex-wrap   gap-5 ">
-                        <label
-                            class="h-10   select-none text-white"
-                            for="generoInput">Price: $ {{ selectedPriceRange }}</label>
-                        <input class="text-black h-10 rounded-lg" type="range" placeholder="range" name="generoInput"
-                            id="generoInput" v-on:input="filterPrice" v-model="selectedPriceRange">
-                        <div class="flex  gap-2 text-white justify-center">
-                            <button
-                                class="h-10 flex-wrap  select-none"
-                                @click="sortGamesByPriceAsc">Low to High
-                            </button>
-                            <button
-                                class="h-10 flex-wrap   select-none"
-                                @click="sortGamesByPriceDesc">High to Low
-                            </button>
-                        </div>
-                    </div>
-
-
-                    <div
-                        class="flex flex-column flex-wrap border-4 border-solid border-amarillo rounded-md justify-center text-center  items-center  gap-5 p-3">
-                        <label
-                            class=" h-10 p-2  bg-amarillo text-black  justify-center align-center text-center  items-center rounded-md select-none "
-                            for="generoInput">Date Game:</label>
-                        <input class="text-black h-10 rounded-lg " type="number" placeholder="Date Game"
-                            name="generoInput" id="generoInput" v-on:input="filterDate">
-                        <div class="flex flex-wrap justify-center text-center items-center gap-5">
-                            <button
-                                class="h-10 flex-wrap  p-2 bg-amarillo text-black justify-center align-center text-center items-center rounded-md select-none"
-                                @click="sortGamesByDateAsc">Date Menor a Mayor
-                            </button>
-                            <button
-                                class="h-10 flex-wrap  flex-wrap  p-2 bg-amarillo text-black justify-center align-center text-center items-center rounded-md select-none"
-                                @click="sortGamesByDateDesc">Date Mayor a Menor
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
             </div>
 
 
-          </section>
+            <div class="flex p-12   h-full mb-16 gap-12" >
 
 
-          <section class="w-4/5">
-            <div class="flex w-[100%]  justify-center text-center  items-center  flex-wrap items-center justify-center">
-                <template v-if="filteredGames.length > 0 " v-for="game of filteredGames">
-                    <div class="flex flex-wrap gap-10 p-2  justify-be  items-center">
-                        <div class="card h-[20rem] w-[20rem] gradient text-white rounded-md relative">
-                            <a v-bind:href="'/pages/gamedetails.html?id='+game.id">
-                                <img v-bind:src="game.image" alt="game image" />
-                                <div class="p-2 text-wrap">
-                                    <div class="flex justify-between items-center">
-                                        <h1 class="text-lg font-semibold">{{game.title}}</h1>
-                                        <h1 class="bg-morado p-2 font-semibold">
-                                            {{Intl.NumberFormat('en-US', {style: 'currency',
-                                            currency: 'USD'}). format(game.price)}}
-                                        </h1>
-                                    </div>
-
-                                    <h1 class="text-sm line-clamp-3 pt-2">
-                                        {{game.description}}
-                                    </h1>
-                                </div>
-                                <div class="absolute bottom-2 left-2">
-                                    <div v-for="genre of game.genre.slice(0, 4)" class="inline-block wrap-none">
-                                        <p class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm">
-                                            {{genre}}
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                <section class="w-[16rem] bg-gris p-2 mx-auto h-[33rem]" id="filterMenu">
+                    <div class="flex gap-2 items-center m-4">
+                        <img src="../assets/images/filter.png" alt="" class="w-5 h-5 object-cover">
+                        <h1 class=" font-semibold text-center text-white ">FILTER BY:</h1>
                     </div>
+
+
+                    <div class="flex  flex-wrap gap-2 w-[90%] ">
+
+
+
+                        <div class="flex flex-wrap items-center   gap-2 ">
+                            <label class="    text-white/50 select-none " for="generosSelect">Genre:</label>
+                            <select class="text-white rounded-sm w-full h-8 bg-negro text-sm px-4 "
+                                name="generosSelect" id="generosSelect" v-on:input="filterGenre" v-model="selectGenre">
+                                <option class=" rounded-lg text-xs" value="all">All Genres</option>
+                                <template v-if="genres.length > 0" v-for="genre of genres">
+                                    <option v-bind:value="genre" class="text-xs">{{genre}}</option>
+                                </template>
+                            </select>
+                        </div>
+
+                        <div class="flex  flex-wrap   gap-2 ">
+                            <label class="    text-white/50 rounded-md select-none " for="platformsSelect">Platforms
+                            </label>
+                            <select class="text-white w-full bg-negro rounded-sm px-4 h-8 text-sm "
+                                name="platformsSelect" id="platformsSelect" v-on:input="filterPlatforms">
+                                <option class=" rounded-lg" value="all">All Platforms</option>
+                                <template v-if="platforms.length > 0" v-for="platform of platforms">
+                                    <option v-bind:value="platform">{{platform}}</option>
+                                </template>
+                            </select>
+
+                        </div>
+
+
+                        <div class="flex items-center gap-2 mt-6 mb-4 ml-4">
+                            <img src="../assets/images/order.png" alt="" class="w-5 h-5 object-cover">
+                            <h1 class=" font-semibold  text-white">ORDER BY:</h1>
+
+                        </div>
+
+
+                        <div class="flex  flex-wrap  w-full ">
+
+                            <div class="flex flex-wrap  justify-center items-center ">
+
+                                <div class="flex  flex-wrap   gap-5 ">
+                                    <div class="flex  w-full gap-2">
+                                        <label class="w-24 select-none text-white/50 " for="generoInput">Price: $ {{
+                                            selectedPriceRange }}</label>
+                                        <input class="text-black  rounded-lg w-24" type="range" placeholder="range"
+                                            name="generoInput" id="generoInput" v-on:input="filterPrice"
+                                            v-model="selectedPriceRange">
+
+                                    </div>
+                                    
+                                    <div class="flex  gap-2 text-white justify-center">
+                                        <button class=" flex-wrap  select-none bg-negro px-2 text-sm"
+                                            @click="sortGamesByPriceAsc">Low to High
+                                        </button>
+                                        <button class="bg-negro px-2 flex-wrap   select-none text-sm"
+                                            @click="sortGamesByPriceDesc">High to Low
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                                <div class="flex flex-column flex-wrap  pt-4 gap-2 ">
+                                    <label
+                                        class="  text-white/50  justify-center align-center text-center  items-center rounded-md select-none "
+                                        for="generoInput">Date:</label>
+
+                                    <div class="flex justify-center text-center items-center gap-4">
+                                        <button
+                                            class="px-2 flex-wrap  px-2 bg-negro text-white justify-center align-center text-center items-center  select-none text-sm"
+                                            @click="sortGamesByDateAsc">Oldest First
+                                        </button>
+                                        <button
+                                            class="px-2 flex-wrap  px-2 bg-negro text-white justify-center align-center text-center items-center  select-none text-sm"
+                                            @click="sortGamesByDateDesc">Newest First
+                                        </button>
+                                    </div>
+                                    <input class="text-white h-8  bg-negro mt-2 placeholder:pl-4 " type="number"
+                                        placeholder="Select a Date" name="generoInput" id="generoInput"
+                                        v-on:input="filterDate">
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                </section>
+
+
+                <section class="w-4/5 flex m-auto">
+                    <div
+                        class="flex w-[100%]  justify-center text-center  items-center  flex-wrap items-center justify-center">
+                        <template v-if="filteredGames.length > 0 " v-for="game of filteredGames">
+                            <div class="flex flex-wrap gap-6  py-2  items-center">
+                                <div class="card h-[20rem] w-[20rem] gradient text-white rounded-md relative">
+                                    <a v-bind:href="'/pages/gamedetails.html?id='+game.id">
+                                        <img v-bind:src="game.image" alt="game image" />
+                                        <div class="p-2 text-wrap">
+                                            <div class="flex justify-between items-center">
+                                                <h1 class="text-lg font-semibold">{{game.title}}</h1>
+                                                <h1 class="bg-morado p-2 font-semibold">
+                                                    {{Intl.NumberFormat('en-US', {style: 'currency',
+                                                    currency: 'USD'}). format(game.price)}}
+                                                </h1>
+                                            </div>
+
+                                            <h1 class="text-sm line-clamp-3 pt-2">
+                                                {{game.description}}
+                                            </h1>
+                                        </div>
+                                        <div class="absolute bottom-2 left-2">
+                                            <div v-for="genre of game.genre.slice(0, 4)" class="inline-block wrap-none">
+                                                <p
+                                                    class="mr-2 p-[0.3rem] inline-block text-[0.7rem] bg-gris rounded-sm">
+                                                    {{genre}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                    </div>
+
+
+
+                </section>
+
             </div>
 
 
-
-          </section>
-
-    </div>       
-
-         
             <!-- FILTRO DE JUEGOS -->
-           
+
 
             <!-- TARJETAS DE JUEGOS -->
-           
+
             </template>
             <template v-else>
                 <h2
@@ -232,6 +247,99 @@
         <footer class="text-amarillo body-font bg-gris h-[5rem] text-center">
             <p class="py-8">Cohort52 Grupo-3 MindHub © 2023 Inc.</p>
         </footer>
+
+        <div class="bg-gris w-[15rem] h-[34rem] p-4 gap-2 flex flex-col items-center justify-center absolute inset-0 m-auto" v-if="modalFilter">
+            <img
+            src="../assets/images/closeMenu.png"
+            alt=""
+            class="w-4 absolute right-6 top-4 @"
+            @click="filterMenu()"
+          />
+            <div class="flex gap-2 items-center ">
+                <img src="../assets/images/filter.png" alt="" class="w-3 h-3 object-cover">
+                <h1 class=" font-semibold text-sm text-center text-white ">FILTER BY:</h1>
+            </div>
+
+
+            <div class="flex  flex-wrap  w-[90%] text-sm ">
+                <div class="flex flex-wrap items-center   gap-2 ">
+                    <label class="    text-white/50 select-none " for="generosSelect">Genre:</label>
+                    <select class="text-white rounded-sm w-full h-8 bg-negro text-sm px-4 "
+                        name="generosSelect" id="generosSelect" v-on:input="filterGenre">
+                        <option class=" rounded-lg text-xs" value="all">All Genres</option>
+                        <template v-if="genres.length > 0" v-for="genre of genres">
+                            <option v-bind:value="genre" class="text-xs">{{genre}}</option>
+                        </template>
+                    </select>
+                </div>
+
+                <div class="flex  flex-wrap mt-4  gap-2">
+                    <label class="    text-white/50 rounded-md select-none " for="platformsSelect">Platforms
+                    </label>
+                    <select class="text-white w-full bg-negro rounded-sm px-4 h-8 text-sm "
+                        name="platformsSelect" id="platformsSelect" v-on:input="filterPlatforms">
+                        <option class=" rounded-lg" value="all">All Platforms</option>
+                        <template v-if="platforms.length > 0" v-for="platform of platforms">
+                            <option v-bind:value="platform">{{platform}}</option>
+                        </template>
+                    </select>
+
+                </div>
+
+
+                <div class="flex items-center justify-center gap-2 mt-6 mb-4 m-auto">
+                    <img src="../assets/images/order.png" alt="" class="w-3 h-3 object-cover">
+                    <h1 class="flex font-semibold text-center text-sm text-white">ORDER BY:</h1>
+
+                </div>
+
+
+                <div class="flex  flex-wrap  " >
+
+                    <div class="flex flex-wrap  justify-center items-center ">
+
+                        <div class="flex  flex-wrap w-[100%]  gap-2 ">
+                            <label class=" select-none text-white/50" for="generoInput">Price: $ {{
+                                selectedPriceRange }}</label>
+                            <input class="text-black  rounded-lg w-28" type="range" placeholder="range"
+                                name="generoInput" id="generoInput" v-on:input="filterPrice"
+                                v-model="selectedPriceRange">
+                            <div class="flex  gap-2 text-white justify-between">
+                                <button class=" flex-wrap w-2/5 select-none bg-negro px-2 text-sm"
+                                    @click="sortGamesByPriceAsc">Low to High
+                                </button>
+                                <button class="bg-negro px-2 flex-wrap w-2/5  select-none text-sm"
+                                    @click="sortGamesByPriceDesc">High to Low
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <div class="flex flex-column flex-wrap  mt-4  gap-2 ">
+                            <label
+                                class="  text-white/50  justify-center align-center text-center  items-center rounded-md select-none "
+                                for="generoInput">Date:</label>
+
+                            <div class="flex gap-4 text-center items-center ">
+                                <button
+                                    class="p-2 flex-wrap   bg-negro text-white justify-center align-center text-center items-center  select-none text-sm"
+                                    @click="sortGamesByDateAsc">Oldest First
+                                </button>
+                                <button
+                                    class="p-2 flex-wrap  bg-negro text-white justify-center align-center text-center items-center  select-none text-sm"
+                                    @click="sortGamesByDateDesc">Newest First
+                                </button>
+                            </div>
+                            <input class="text-white h-8 rounded-sm w-full bg-negro mt-2 placeholder:pl-4 " type="number"
+                                placeholder="Select a Date" name="generoInput" id="generoInput"
+                                v-on:input="filterDate">
+                        </div>
+
+                    </div>
+                </div>
+                <button class="bg-amarillo text-negro font-semibold p-2 my-2 mx-auto" @click.prevent="filterMenu()" > APPLY</button>
+            
+        </div>
 
 
     </div>

@@ -3,6 +3,8 @@ const { createApp } = Vue;
 let app = createApp({
     data() {
         return {
+            modalFilter:false,
+
             navMenu: false,
             games: [],
             filteredGames: [],
@@ -38,7 +40,9 @@ let app = createApp({
                     this.price = [...new Set(response.data.flatMap(data => data.platforms))].sort();
                     console.log("Precios", this.price)
                     this.cart = JSON.parse(localStorage.getItem("cart")) || []
-
+                    this.selectGenre = new URLSearchParams(window.location.search).get("genre").replace(/"/g, '')
+                    console.log(this.selectGenre)
+                    this.filterCrossSearch()
                 })
                 .catch(error => {
                     if (error.response) {
@@ -170,6 +174,10 @@ let app = createApp({
                 this.navMenu = false
             }
         },
+
+        filterMenu(){
+            this.modalFilter = !this.modalFilter
+        }
     }
 
 

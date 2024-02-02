@@ -18,6 +18,8 @@ let app = createApp({
       newest: {},
       offerGames: [],
 
+      platform:[],
+
       quantity: "1",
       cart: [],
 
@@ -34,11 +36,15 @@ let app = createApp({
 
       error: "",
 
+     
+
     };
   },
 
   created() {
     this.loadData();
+    
+    
   },
 
   methods: {
@@ -49,13 +55,16 @@ let app = createApp({
         .then(response => {
           this.games = response.data
           console.log("Games", this.games)
+          console.log(this.customer)
           this.gameName = this.games.map(game => game.title)
           this.cart = JSON.parse(localStorage.getItem("cart")) || []
           this.nombre = this.cart.map(game => game.title)
           this.juego = this.games.filter(game => this.nombre.includes(game.title))
+          // this.platform = this.juego.map(game => game.platforms)
           console.log(this.cart)
           console.log(localStorage.getItem("cart").toString())
           console.log(this.juego)
+          console.log(this.platform)
         })
         .catch(error => {
           console.log(error)
@@ -74,6 +83,13 @@ let app = createApp({
         })
 
     },
+    add() {
+      this.quantity++
+    },
+
+    remove() {
+      this.quantity--
+    },
     showMenu() {
       if (this.navMenu == false) {
         this.navMenu = true
@@ -84,6 +100,10 @@ let app = createApp({
       }
 
     },
+
+    
+      
+    
 
     login() {
       axios.post("/api/login?email=" + this.email + "&password=" + this.password)
@@ -142,9 +162,7 @@ let app = createApp({
         .catch(error => console.log("Error", error))
     },
 
-    hola() {
-      console.log("hola")
-    },
+    
 
     patchData() {
 

@@ -15,7 +15,7 @@ let app = createApp({
       newest: {},
       offerGames: [],
 
-      quantity: 0,
+      quantity: 1,
       cart: [],
 
       customer: null,
