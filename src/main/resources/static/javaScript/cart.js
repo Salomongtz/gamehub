@@ -36,9 +36,18 @@ let app = createApp({
 
       error: "",
 
-      showPaymentForm: true,
+      showPaymentForm: false,
       cardNumber: '',
       cardCVV: '',
+      holder: '',
+      selectedMonth: '',
+      months: [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ],
+      year: '',
+      selectedYear: '',
+      availableYears: [],
       total: '',
       description: '',
 
@@ -46,6 +55,10 @@ let app = createApp({
   },
 
   created() {
+    const currentYear = new Date().getFullYear();
+    for (let i = currentYear; i <= currentYear + 10; i++) {
+      this.availableYears.push(i);
+    }
     this.loadData();
 
 

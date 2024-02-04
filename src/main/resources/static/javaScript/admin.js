@@ -120,8 +120,8 @@ let app = createApp({
                 icon: "warning",
                 showCancelButton: true,
                 color: "white",
-                confirmButtonColor: "#FFD02B",
-                confirmButtonTextColor: "#000000",
+                confirmButtonColor: "#452C6D",
+                confirmButtonTextColor:"black",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Confirm"
             }).then((result) => {
@@ -133,7 +133,7 @@ let app = createApp({
                             Swal.fire({
                                 title: "Changed",
                                 color: "white",
-                                buttonNameColor: "black",
+                                confirmButtonColor: "#452C6D",
                                 text: state? "Activated" + " " + this.inactiveGames.find(game => game.id == id).title: "Deactivated" + " " + this.activeGames.find(game => game.id == id).title,
                                 icon: "success"
                             });
