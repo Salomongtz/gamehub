@@ -48,13 +48,13 @@
             <div class="navBar">
                 <nav
                     class="flex items-center text-center  justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0  ">
-                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"  href="../index.html">Home</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+                        href="../index.html">Home</a>
                     <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
                         href="store.html">Store</a>
-                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
-                        href="profile.html">My account</a>
-                    <a class="bg-amarillo text-negro  w-[10rem] h-[2rem] rounded-md"
-                        href="cart.html">Cart</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="profile.html">My
+                        account</a>
+                    <a class="bg-amarillo text-negro  w-[10rem] h-[2rem] rounded-md" href="cart.html">Cart</a>
                     <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
                         href="aboutUs.html">About Us</a>
                 </nav>
@@ -88,59 +88,51 @@
             h-64 w-full object-cover object-top">
 
             <h1 class="gamer text-5xl text-amarillo">YOUR CART</h1>
-
-
-
-
-
             <!-- TARJETAS DE JUEGOS -->
             <div class="flex flex-col  justify-center text-center m-auto gap-4">
-                <template v-if="juego.length > 0 " v-for="juegos of juego" class="flex">
+                <template v-if="juego.length > 0 " v-for="juegos of juego" :key="juego" class="flex">
                     <div class="flex flex-col m-auto">
                         <div
                             class="flex flex-row h-[7rem] w-[45rem] items-center gradient text-white rounded-md p-2 gap-4">
-
                             <img v-bind:src="juegos.image" alt="game image"
                                 class="h-[6rem] w-2/6 object-contain rounded-md" />
                             <h1 class="w-1/6 ">{{juegos.title}}</h1>
-                            <select class="text-white w-1/6  bg-negro rounded-sm px-4 h-8 text-sm " name="platformsSelect"
-                                id="platformsSelect" v-on:input="platform">
+                            <select class="text-white w-1/6  bg-negro rounded-sm px-4 h-8 text-sm "
+                                name="platformsSelect" id="platformsSelect" v-on:input="platform">
                                 <option class=" rounded-lg" value="all">Platform</option>
                                 <template v-for="platform of juegos.platforms">
-                                    <option v-bind:value="platform">{{platform}}</option>                                  
-                                
+                                    <option v-bind:value="platform">{{platform}}</option>
                                 </template>
                             </select>
                             <div class="flex w-1/6 items-center ml-4 gap-2">
-                                <button><img src="../assets/images/less.png" alt="" class="w-5 h-5 object-cover" @click.prevent="remove()"></button>
-                                <input type="number" class="bg-gris w-10 h-6 text-sm text-white font-semibold text-center pl-2" v-model="quantity">
-                                <button><img src="../assets/images/more.png" alt="" class="w-5 h-5 object-cover"@click.prevent="add()"></button>
-                              </div>
-
-                              <div class="p-2 w-1/6 bg-morado"> {{Intl.NumberFormat('en-US',
+                                <button><img src="../assets/images/less.png" alt="" class="w-5 h-5 object-cover"
+                                        @click.prevent="substract(juegos)"></button>
+                                <input type="number"
+                                    class="bg-gris w-10 h-6 text-sm text-white font-semibold text-center pl-2"
+                                    :value="juegos.quantity">
+                                <button><img src="../assets/images/more.png" alt="" class="w-5 h-5 object-cover"
+                                        @click.prevent="add(juegos)"></button>
+                            </div>
+                            <div class="p-2 w-1/6 bg-morado rounded"> {{Intl.NumberFormat('en-US',
                                 {style: 'currency',
                                 currency: 'USD'}).
-                                format(juegos.price)}} </div>
-
-
-
+                                format((juegos.price*(1-juegos.discount)))}}
+                            </div>
+                            <button class="w-1/6 bg-red-500 rounded" @click.prevent="removeFromCart(juegos)">Remove</button>
                         </div>
                     </div>
             </div>
-
-
-
             </template>
             <template v-else>
                 <h2
-                    class="flex justify-center font-bold  bg-amarillo text-black items-center border solid border-white justify-items-center h-[15rem] w-[15rem] border-solid-5 p-5 rounded-lg">
+                    class="flex self-center font-bold bg-amarillo text-black border solid border-white justify-items-center h-[15rem] w-[15rem] border-solid-5 p-5 rounded-lg">
                     No found Games</h2>
             </template>
 
 
-            <div class="py-12">
+            <div class="py-12 flex flex-col gap-8 self-center rounded bg-gris w-[70%] py-4">
                 <h1 class="text-white text-xl font-semibold">Cart Details</h1>
-                <table class="table-fixed w-[70%] bg-gris text-white m-auto p-2">
+                <table class="rounded table-fixed w-full  bg-gris text-white m-auto">
                     <thead>
                         <tr>
                             <th>Quantity</th>
@@ -152,13 +144,13 @@
                     <tbody>
                         <template v-for="juegos of juego">
                             <tr>
-                                <td class="py-2 border-b-[0.3px] border-white/20"> {{quantity}}</td>
+                                <td class="py-2 border-b-[0.3px] border-white/20"> {{juegos.quantity}}</td>
                                 <td class="py-2 border-b-[0.3px] border-white/20"> {{juegos.title}} </td>
                                 <td class="py-2 border-b-[0.3px] border-white/20"> {{plataform}} </td>
                                 <td class="py-2 border-b-[0.3px] border-white/20"> {{Intl.NumberFormat('en-US',
                                     {style: 'currency',
                                     currency: 'USD'}).
-                                    format(juegos.price)}} </td>
+                                    format((juegos.price*(1-juegos.discount)*juegos.quantity))}}</td>
                         </template>
                         </tr>
                         <tr class="mt-8">
@@ -167,17 +159,42 @@
                             <td class="pt-10 pb-2 border-b-[0.3px] border-white/20"></td>
                             <td class="pt-10 pb-2 border-b-[0.3px] border-white/20">{{Intl.NumberFormat('en-US',
                                 {style: 'currency',
-                                currency: 'USD'}).
-                                format(225)}}</td>
+                                currency: 'USD'})
+                                .format(total)}}</td>
                         </tr>
-
                     </tbody>
                 </table>
 
-                <button class="bg-morado text-white font-semibold text-lg py-2 px-4 m-4">PAY</button>
+                <div>
+                    <button @click="showPaymentForm=true"
+                        class="bg-morado text-white rounded font-semibold text-lg py-2 px-4 m-4">PAY</button>
+                    <button @click="clearCart"
+                        class="bg-red-500 text-white rounded font-semibold text-lg py-2 px-4 m-4">CLEAR</button>
+                </div>
             </div>
 
-
+            <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80" v-if="showPaymentForm"
+                id="paymentContainer">
+                <form class="text-white w-2/3 m-auto" id="paymentForm" @submit.prevent="checkout">
+                    <div>
+                        <label for="cardNumber" class="block mb-2">Card Number:</label>
+                        <input type="text" id="cardNumber" name="cardNumber" required v-model="cardNumber"
+                            class="bg-gris p-2 rounded w-full">
+                    </div>
+                    <div class="mt-4">
+                        <label for="cardCVV" class="block mb-2">Card CVV:</label>
+                        <input type="text" id="cardCVV" name="cardCVV" required v-model="cardCVV"
+                            class="bg-gris p-2 rounded-md w-full">
+                    </div>
+                    <div class="mt-4 flex justify-evenly">
+                        <button type="submit"
+                            class="bg-morado hover:bg-purple-950 text-white font-bold py-2 px-4 rounded">Confirm
+                            Purchase</button>
+                        <button @click="showPaymentForm = false" type="button"
+                            class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
+                    </div>
+                </form>
+            </div>
         </main>
 
 
@@ -264,6 +281,7 @@
                 </button>
             </form>
         </template>
+
 
     </div>
 </body>

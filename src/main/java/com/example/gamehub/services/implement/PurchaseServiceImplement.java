@@ -79,14 +79,14 @@ public class PurchaseServiceImplement implements PurchaseService {
             Games game = gamesRepository.findByTitle(purchaseRecord.title());
             ResponseEntity<String> checkGame = checkGame(game);
             if (checkGame != null) return checkGame;
-            totalAmount += (game.getPrice() - (game.getPrice() * game.getDiscount())) * purchaseRecord.amount();
-            Purchase_Game purchaseGame = new Purchase_Game(purchaseRecord.amount());
-            game.setSales(game.getSales() + purchaseRecord.amount());
-            game.setStock(game.getStock() - purchaseRecord.amount());
+            totalAmount += (game.getPrice() - (game.getPrice() * game.getDiscount())) * purchaseRecord.quantity();
+            Purchase_Game purchaseGame = new Purchase_Game(purchaseRecord.quantity());
+            game.setSales(game.getSales() + purchaseRecord.quantity());
+            game.setStock(game.getStock() - purchaseRecord.quantity());
             game.addPurchaseGame(purchaseGame);
             purchaseGames.add(purchaseGame);
             purchaseGameRepository.save(purchaseGame);
-            game.setOwned(game.getOwned() + (long) purchaseRecord.amount());
+            game.setOwned(game.getOwned() + (long) purchaseRecord.quantity());
             customer.addGame(game);
             gamesRepository.save(game);
         }
@@ -177,7 +177,7 @@ public class PurchaseServiceImplement implements PurchaseService {
         //Create table cells
         PdfPCell imageCell = new PdfPCell(), dateCell = new PdfPCell();
         //Set table cells content (image and date)
-        Image logo = Image.getInstance("https://i.imgur.com/NIVgJTD.png");
+        Image logo = Image.getInstance("https://i.imgur.com/juxkRlj.png");
         logo.scaleToFit(PageSize.A4.getWidth() - 350, PageSize.A4.getHeight() - 300);
         imageCell.addElement(logo);
         imageCell.setBorder(Rectangle.NO_BORDER);
@@ -205,7 +205,7 @@ public class PurchaseServiceImplement implements PurchaseService {
         document.add(paragraph);
         //Add space
         document.add(new Paragraph("\n"));
-        //Add total amount
+        //Add total quantity
         paragraph = new Paragraph("Total Amount: " + localeFormattedTotal, tableFont);
         paragraph.setAlignment(Element.ALIGN_LEFT);
         document.add(paragraph);
@@ -267,7 +267,7 @@ public class PurchaseServiceImplement implements PurchaseService {
             PdfPCell amountCell = new PdfPCell(new Phrase(amount, tableFont));
             amountCell.setBorder(Rectangle.BOTTOM);  //Add bottom border
             amountCell.setPaddingBottom(5F);  //Add bottom padding
-            gamesTable.addCell(amountCell);  //Add amount cell to table
+            gamesTable.addCell(amountCell);  //Add quantity cell to table
 
             PdfPCell discountCell = new PdfPCell(new Phrase(discount, tableFont));
             discountCell.setBorder(Rectangle.BOTTOM);  //Add bottom border
@@ -282,7 +282,7 @@ public class PurchaseServiceImplement implements PurchaseService {
         }
         //Add table to document
         document.add(gamesTable);
-        //Add total amount paragraph
+        //Add total quantity paragraph
         paragraph = new Paragraph("Total Amount: " + localeFormattedTotal, bold);
         paragraph.setAlignment(Element.ALIGN_RIGHT);
         document.add(paragraph);
