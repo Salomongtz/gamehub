@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
     <link rel="shortcut icon" href="../assets/images/SXESlogo.png" type="image/x-icon">
-    <title>Store</title>
+    <title>Admin - GameHub</title>
 </head>
 
 <body>
@@ -57,17 +57,38 @@
                 </div>
 
                 <div class="flex gap-10">
-                    <form @submit.prevent="deleteGame(selectedGame)" id="deleteGame" v-if="currentForm === 'deleteGame'"
+                    <form @submit.prevent="changeState(selectedGame, false)" id="gameState" v-if="currentForm === 'deleteGame'"
                         class="h-full max-w-md mx-auto bg-gris p-6 rounded-md shadow-lg sm:w-[600px] block text-sm font-medium text-gray-600 mt-6">
 
-                        <h2 class="text-2xl font-bold mb-4 text-center text-amarillo">Delete Games:</h2>
+                        <h2 class="text-2xl font-bold mb-4 text-center text-amarillo">Deactivate Game:</h2>
 
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-amarillo">Select Title:</label>
                             <select v-model="selectedGame"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                                 <option value="" disabled>Select a game</option>
-                                <option v-for="game in games" :key="game.id" :value="game.id">{{ game.title }}</option>
+                                <option v-for="game in activeGames" :key="game.id" :value="game.id">{{ game.title }}</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <button type="submit"
+                                class="w-full p-2 bg-amarillo hover:text-amarillo hover:bg-gris text-black rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                                Delete Game
+                            </button>
+                        </div>
+                    </form>
+                    <form @submit.prevent="changeState(selectedGame, true)" id="gameState" v-if="currentForm === 'deleteGame'"
+                        class="h-full max-w-md mx-auto bg-gris p-6 rounded-md shadow-lg sm:w-[600px] block text-sm font-medium text-gray-600 mt-6">
+
+                        <h2 class="text-2xl font-bold mb-4 text-center text-amarillo">Reactivate Game:</h2>
+
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-amarillo">Select Title:</label>
+                            <select v-model="selectedGame"
+                                class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                                <option value="" disabled>Select a game</option>
+                                <option v-for="game in inactiveGames" :key="game.id" :value="game.id">{{ game.title }}</option>
                             </select>
                         </div>
 
@@ -144,7 +165,7 @@
 
                         <div class="mb-4">
                             <label for="discount" class="block text-sm font-medium text-amarillo">Discount:</label>
-                            <input v-model="discount" type="number" id="discount"
+                            <input v-model="discount" type="number" id="discount" step="0.01" min="0" max="1"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
 
@@ -248,7 +269,7 @@
 
                         <div class="mb-4">
                             <label for="editDiscount" class="block text-sm font-medium text-amarillo">Discount:</label>
-                            <input v-model="editDiscount" type="number" id="editDiscount" :value="editDiscount"
+                            <input v-model="editDiscount" type="number" id="editDiscount" :value="editDiscount" step="0.01" min="0" max="1"
                                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                         </div>
 

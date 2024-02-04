@@ -4,15 +4,17 @@ let app = createApp({
     data() {
         return {
             games: [],
+            activeGames: [],
+            inactiveGames: [],
             selectedGame: null,
             title: "",
             description: "",
             developer: "",
             imageURL: "",
-            stock:"",
+            stock: "",
             sales: 0,
             price: 0,
-            pulbisher:"",
+            pulbisher: "",
             releaseDate: "",
             discount: 0,
             ratingOptions: ["E", "E10PLUS", "T", "M", "AO", "RP", "RP17", "NOTRATED"],
@@ -23,19 +25,19 @@ let app = createApp({
             selectedPlatforms: [],
             currentForm: 'deleteGame',
             selectedGameId: null,
-            editTitle:"",
-            editDescription:"",
-            editImageURL:"",
-            editPrice:"",
-            editSelectedGenres:[],
-            editSelectedPlatforms:[],
-            editReleaseDate:"",
-            editSales:"",
-            editRating:"",
-            editDeveloper:"",
-            editDiscount:"",
-            editStock:"",
-            editPublisher:""
+            editTitle: "",
+            editDescription: "",
+            editImageURL: "",
+            editPrice: "",
+            editSelectedGenres: [],
+            editSelectedPlatforms: [],
+            editReleaseDate: "",
+            editSales: "",
+            editRating: "",
+            editDeveloper: "",
+            editDiscount: "",
+            editStock: "",
+            editPublisher: ""
         };
     },
 
@@ -45,10 +47,14 @@ let app = createApp({
 
     methods: {
         loadData() {
-            axios.get("/api/games")
+            axios.get("/api/games/all")
                 .then((response) => {
                     this.games = response.data;
+                    this.activeGames = this.games.filter(game => game.stateGame == true)
+                    this.inactiveGames = this.games.filter(game => game.stateGame == false)
                     console.log(this.games);
+                    console.log(this.activeGames)
+                    console.log(this.inactiveGames)
                 })
                 .catch((error) => console.error(error));
         },
@@ -84,7 +90,7 @@ let app = createApp({
                 genres: this.selectedGenres,
                 platforms: this.selectedPlatforms
             };
-        
+
             axios.post("/api/games", gameData)
                 .then(() => {
                     this.loadData();
@@ -107,39 +113,39 @@ let app = createApp({
                 });
         },
 
-        deleteGame(id) {
+        changeState(id, state) {
             Swal.fire({
                 title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                text: state? "Activate" + " " + this.inactiveGames.find(game => game.id == id).title: "Deactivate" + " " + this.activeGames.find(game => game.id == id).title,
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#FFD02B",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "Confirm"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.delete(`/api/games/${id}`)
+                    axios.patch(`/api/games/state/${id}/${state}`)
                         .then(() => {
-                            this.loadData();
-                            this.clearFields();
+                            this.loadData()
+                            this.clearFields()
                             Swal.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
+                                title: "Changed",
+                                text: state? "Activated" + " " + this.inactiveGames.find(game => game.id == id).title: "Deactivated" + " " + this.activeGames.find(game => game.id == id).title,
                                 icon: "success"
                             });
                         })
                         .catch((error) => {
-                            console.error(error);
+                            console.error(error)
                             Swal.fire({
                                 title: "Error",
-                                text: "An error occurred while deleting the game.",
+                                text: "An error occurred while changing the game's state.",
                                 icon: "error"
-                            });
-                        });
+                            })
+                        })
                 }
             });
         },
-        
+
 
         dataGame() {
             console.log(this.selectedGame);
@@ -149,8 +155,8 @@ let app = createApp({
             this.editImageURL = this.selectedGame.image;
             this.editSales = this.selectedGame.sales;
             this.editPrice = this.selectedGame.price;
-            this.editPublisher = this.selectedGame.publisher; 
-            this.editStock = this.selectedGame.stock; 
+            this.editPublisher = this.selectedGame.publisher;
+            this.editStock = this.selectedGame.stock;
             this.editReleaseDate = this.selectedGame.date;
             this.editDiscount = this.selectedGame.discount;
             this.editRating = this.selectedGame.rating;
@@ -177,7 +183,7 @@ let app = createApp({
                 genres: this.editSelectedGenres,
                 platforms: this.editSelectedPlatforms
             };
-        
+
             Swal.fire({
                 title: "Do you want to save the changes?",
                 showDenyButton: true,
@@ -235,8 +241,8 @@ let app = createApp({
             this.editStock = "";
             this.editPublisher = "";
         }
-        
-        
+
+
 
     }
 });
