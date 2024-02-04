@@ -189,64 +189,54 @@ let app = createApp({
       }
     },
     checkout() {
+      Swal.fire({
+        background: '#151515',
+        color: 'white',
+        title: "Processing...",
+        html: "Your payment is being processed, please don't close this window.",
+        timer: 0,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+        }
+      })
       let purchaseDescription = this.nombre.map(title => `- ${title}`).join('\n')
       axios.post('https://vertex-5ys8.onrender.com/api/cards/payments', {
         number: this.cardNumber,
         cvv: this.cardCVV,
         amount: this.total,
         description: "GameHub purchase:" + purchaseDescription
-      }).then((response) => {
-        console.log(response.data);
-        let timerInterval
-        Swal.fire({
-          background: '#151515',
-          color: 'white',
-          title: "Processing...",
-          html: "Your payment is being processed, please wait",
-          timer: 2000,
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading()
-          },
-          willClose: () => {
-            clearInterval(timerInterval)
-          }
-        }).then((result) => {
-          /* Read more about handling dismissals below */
-          if (result.dismiss === Swal.DismissReason.timer) {
-
-          }
-        }
-        )
-      }
-      ).then(() => {
-        let cart = JSON.parse(localStorage.getItem("cart")) || []
-        console.log(cart);
-        axios.post('/api/purchase', cart)
-          .then(response => {
-            console.log(response.data);
-            Swal.fire({
-              background: '#151515',
-              color: 'white',
-              confirmButtonColor: '#452C6D',
-              title: "Sweet!",
-              text: "Your purchase was successful! A receipt has been sent to your email",
-              imageUrl: "../assets/images/konata.png",
-              imageWidth: 400,
-              imageHeight: 250,
-              imageAlt: "Custom image"
-            })
-          }).then(() => {
-            this.showPaymentForm = false
-          }).catch(error => {
-            console.error(error)
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: error.data,
-            })
-          })
       })
+        .then((response) => {
+          Swal.close()
+          console.log(response.data);
+          let cart = JSON.parse(localStorage.getItem("cart")) || []
+          console.log(cart);
+          axios.post('/api/purchase', cart)
+            .then(response => {
+              console.log(response.data);
+              Swal.fire({
+                background: '#151515',
+                color: 'white',
+                confirmButtonColor: '#452C6D',
+                title: "Sweet!",
+                text: "Your purchase was successful! A receipt has been sent to your email",
+                imageUrl: "../assets/images/konata.png",
+                imageWidth: 400,
+                imageHeight: 250,
+                imageAlt: "Custom image"
+              })
+            }).then(() => {
+              this.showPaymentForm = false
+            }).catch(error => {
+              console.error(error)
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.data,
+              })
+            })
+        })
     },
 
     showMenu() {
