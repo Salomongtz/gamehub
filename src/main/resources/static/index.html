@@ -29,14 +29,15 @@
           Log In
         </p>
         <p class="cursor-pointer" @click.prevent="formSignUp()">Sign Up</p>
-
-
       </div>
 
-      <div v-if="customer != null"
-        class="login flex text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
-        <p class="text-white">{{customer.name}} </p>
-        <p class="hidden lg:flex cursor-pointer text-white" @click.prevent="logout()">|| Log out</p>
+      <div id="logInName" v-if="customer != null"
+        class="login flex text-white  absolute top-[0.56em] right-8 gap-2 items-center">
+        <a href="./pages/profile.html" class="flex gap-2">
+          <img src="assets/images/user.png" alt="" class="w-[15px] object-contain">
+          <p class="text-white">{{customer.name}} </p>
+        </a>
+        <p class="cursor-pointer text-white" @click.prevent="logout()">|| Log out</p>
       </div>
 
 
@@ -59,18 +60,30 @@
       <!--NAVBAR HAMBURGUESA -->
       <div v-if="navMenu == true">
         <nav
-          class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[24rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center">
+        class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[28rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center">
           <a href="../index.html" class="pl-6">Home</a>
           <a href="./store.html" class="pl-6">Store</a>
           <a href="./profile.html" class="pl-6">My Account</a>
           <a href="./cart.html" class="pl-6">Cart</a>
           <a href="./aboutUs.html" class="pl-6">About Us</a>
 
-          <div class="flex flex-col border-t-[0.1px] border-white/50 pt-4 gap-4">
+          <div v-if="customer == null" class="flex flex-col border-t-[0.1px] border-white/50 pt-4 gap-4">
             <a href="#" class="pl-6" @click.prevent="formLogIn()">Log In</a>
             <a href="#" class="pl-6" @click.prevent="formSignUp()">Sign up</a>
-            <a href="" class="pl-6" @click.prevent="logout()">Logout</a>
+
           </div>
+
+
+          <div v-if="customer != null"
+            class="login flex flex-col text-white  gap-4 pl-6 border-t-[0.1px] border-white/50 pt-4 ">
+
+            <a href="/pages/profile.html" class="flex gap-2">
+              <img src="../assets/images/user.png" alt="" class="w-[15px] object-contain">
+              <p class="text-white">{{customer.name}} </p>
+            </a>
+            <p class="cursor-pointer text-white" @click.prevent="logout()"> Log out</p>
+          </div>
+
 
           <img src="assets/images/closeMenu.png" alt="" class="w-6 absolute right-6 top-6"
             @click.prevent="showMenu()" />
@@ -199,30 +212,72 @@
               BROWSE BY CATEGORY
             </h1>
             <div class="cardContainer pr-4 w-[70%] m-auto pb-8">
-              <div class="card gradient rounded-md h-[15rem] w-[15rem]">
-                <img src="assets/images/category/action.png" alt="">
+              <div class="card  rounded-md h-[15rem] w-[15rem]">
+                <a href='./pages/store.html?genre="ACTION"'>
+                  <img src="assets/images/category/action.png" alt="">
+                </a>
               </div>
-              <div class="card gradient rounded-md h-[15rem] w-[15rem]">
-                <img src="assets/images/category/fantasy.png" alt="">
+              <div class="card  rounded-md h-[15rem] w-[15rem]">
+                <a href='./pages/store.html?genre="FANTASY"'>
+                  <img src="assets/images/category/fantasy.png" alt="">
+                </a>
               </div>
-              <div class="card gradient rounded-md h-[15rem] w-[15rem]">
-                <img src="assets/images/category/shooter.png" alt="">
+              <div class="card  rounded-md h-[15rem] w-[15rem]">
+                <a href='./pages/store.html?genre="SHOOTER"'>
+                  <img src="assets/images/category/shooter.png" alt="">
+                </a>
               </div>
-              <div class="card gradient rounded-md h-[15rem] w-[15rem]">
-                <img src="assets/images/category/rolePlaying.png" alt="">
+              <div class="card  rounded-md h-[15rem] w-[15rem]">
+                <a href='./pages/store.html?genre="ROLE_PLAYING"'>
+                  <img src="assets/images/category/rolePlaying.png" alt="">
+                </a>
               </div>
-              <div class="card gradient rounded-md h-[15rem] w-[15rem]">
-                <img src="assets/images/category/fighting.png" alt="">
+              <div class="card  rounded-md h-[15rem] w-[15rem]">
+                <a href='./pages/store.html?genre="FIGHTING"'>
+                  <img src="assets/images/category/fighting.png" alt="">
+                </a>
               </div>
-              <div class="card gradient rounded-md h-[15rem] w-[15rem]">
-                <img src="assets/images/category/puzzle.png" alt="">
+              <div class="card  rounded-md h-[15rem] w-[15rem]">
+                <a href='./pages/store.html?genre="PUZZLE"'>
+                  <img src="assets/images/category/puzzle.png" alt="">
+                </a>
               </div>
-              <div class="card gradient rounded-md h-[15rem] w-[15rem]">
-                <img src="assets/images/category/racing.png" alt="">
+              <div class="card  rounded-md h-[15rem] w-[15rem]">
+                <a href='./pages/store.html?genre="RACING"'>
+                  <img src="assets/images/category/racing.png" alt="">
+                </a>
               </div>
-              <div class="card gradient rounded-md h-[15rem] w-[15rem]">
-                <img src="assets/images/category/simulation.png" alt="">
+              <div class="card  rounded-md h-[15rem] w-[15rem]">
+                <a href='./pages/store.html?genre="SIMULATION"'>
+                  <img src="assets/images/category/simulation.png" alt="">
+                </a>
               </div>
+              <div class="card  rounded-md h-[15rem] w-[15rem]">
+                <a href='./pages/store.html?genre="HORROR"'>
+                  <img src="assets/images/category/horror.png" alt="">
+                </a>
+              </div>
+              <div class="card rounded-md h-[15rem] w-[15rem]">
+                <a href='./pages/store.html?genre="ADVENTURE"'>
+                  <img src="assets/images/category/adventure.png" alt="">
+                </a>
+              </div>
+              <div class="card  rounded-md h-[15rem] w-[15rem]">
+                <a href='./pages/store.html?genre="SPORT"'>
+                  <img src="assets/images/category/sport.png" alt="">
+                </a>
+              </div>
+              <div class="card  rounded-md h-[15rem] w-[15rem]">
+                <a href='./pages/store.html?genre="STRATEGY"'>
+                  <img src="assets/images/category/strategy.png" alt="">
+                </a>
+              </div>
+              <div class="card  rounded-md h-[15rem] w-[15rem]">
+                <a href='./pages/store.html?genre="SURVIVAL"'>
+                  <img src="assets/images/category/survival.png" alt="">
+                </a>
+              </div>
+
 
             </div>
           </div>
@@ -300,13 +355,74 @@
         </section>
         <section id="nuevos" class="cardContainer flex flex-col font-semibold text-amarillo items-center gap-4">
           <h1 class="gamer text-xl">BROWSE BY CATEGORY</h1>
-          <div class="cardContainer pr-4 w-[60rem]">
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
-            <div class="card bg-gris rounded-md h-[15rem] w-[15rem]"></div>
+          <div class="cardContainer pr-4 w-[70%] m-auto pb-8">
+            <div class="card  rounded-md h-[15rem] w-[15rem]">
+              <a href='./pages/store.html?genre="ACTION"'>
+                <img src="assets/images/category/action.png" alt="">
+              </a>
+            </div>
+            <div class="card  rounded-md h-[15rem] w-[15rem]">
+              <a href='./pages/store.html?genre="FANTASY"'>
+                <img src="assets/images/category/fantasy.png" alt="">
+              </a>
+            </div>
+            <div class="card  rounded-md h-[15rem] w-[15rem]">
+              <a href='./pages/store.html?genre="SHOOTER"'>
+                <img src="assets/images/category/shooter.png" alt="">
+              </a>
+            </div>
+            <div class="card  rounded-md h-[15rem] w-[15rem]">
+              <a href='./pages/store.html?genre="ROLE_PLAYING"'>
+                <img src="assets/images/category/rolePlaying.png" alt="">
+              </a>
+            </div>
+            <div class="card  rounded-md h-[15rem] w-[15rem]">
+              <a href='./pages/store.html?genre="FIGHTING"'>
+                <img src="assets/images/category/fighting.png" alt="">
+              </a>
+            </div>
+            <div class="card  rounded-md h-[15rem] w-[15rem]">
+              <a href='./pages/store.html?genre="PUZZLE"'>
+                <img src="assets/images/category/puzzle.png" alt="">
+              </a>
+            </div>
+            <div class="card  rounded-md h-[15rem] w-[15rem]">
+              <a href='./pages/store.html?genre="RACING"'>
+                <img src="assets/images/category/racing.png" alt="">
+              </a>
+            </div>
+            <div class="card  rounded-md h-[15rem] w-[15rem]">
+              <a href='./pages/store.html?genre="SIMULATION"'>
+                <img src="assets/images/category/simulation.png" alt="">
+              </a>
+            </div>
+            <div class="card  rounded-md h-[15rem] w-[15rem]">
+              <a href='./pages/store.html?genre="HORROR"'>
+                <img src="assets/images/category/horror.png" alt="">
+              </a>
+            </div>
+            <div class="card rounded-md h-[15rem] w-[15rem]">
+              <a href='./pages/store.html?genre="ADVENTURE"'>
+                <img src="assets/images/category/adventure.png" alt="">
+              </a>
+            </div>
+            <div class="card  rounded-md h-[15rem] w-[15rem]">
+              <a href='./pages/store.html?genre="SPORT"'>
+                <img src="assets/images/category/sport.png" alt="">
+              </a>
+            </div>
+            <div class="card  rounded-md h-[15rem] w-[15rem]">
+              <a href='./pages/store.html?genre="STRATEGY"'>
+                <img src="assets/images/category/strategy.png" alt="">
+              </a>
+            </div>
+            <div class="card  rounded-md h-[15rem] w-[15rem]">
+              <a href='./pages/store.html?genre="SURVIVAL"'>
+                <img src="assets/images/category/survival.png" alt="">
+              </a>
+            </div>
+
+
           </div>
         </section>
       </div>
