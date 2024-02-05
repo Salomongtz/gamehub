@@ -75,7 +75,7 @@ let app = createApp({
           this.customer = response.data
           this.cart = this.customer.cart
           console.log(response)
-          this.modalLogeado()
+          
 
         })
         .catch(error => {

@@ -37,8 +37,11 @@
             </div>
 
             <div id="logInName" v-if="customer != null"
-                class="login flex text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
+                class="login flex text-white  absolute top-[0.56em] right-8 gap-2 items-center">
+               <a href="profile.html" class="flex gap-2">
+                <img src="../assets/images/user.png" alt="" class="w-[15px] object-contain">
                 <p class="text-white">{{customer.name}} </p>
+               </a>
                 <p class="cursor-pointer text-white" @click.prevent="logout()">|| Log out</p>
             </div>
 
@@ -63,17 +66,31 @@
             <!--NAVBAR HAMBURGUESA -->
             <div v-if="navMenu == true">
                 <nav
-                    class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[24rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center">
+                    class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[28rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center">
                     <a href="../index.html" class="pl-6">Home</a>
                     <a href="store.html" class="pl-6">Store</a>
                     <a href="profile.html" class="pl-6">My Account</a>
                     <a href="cart.html" class="pl-6">Cart</a>
                     <a href="aboutUs.html" class="pl-6">About Us</a>
 
-                    <div class="flex flex-col border-t-[0.1px] border-white/50 pt-4 gap-4">
+                    <div class="flex flex-col border-t-[0.1px] border-white/50 pt-4 gap-4" v-if="customer == null">
                         <a href="#" class="pl-6" @click.prevent="formLogIn()">Log In</a>
                         <a href="#" class="pl-6" @click.prevent="formSignUp()">Sign up</a>
                     </div>
+
+                    <div  v-if="customer != null"
+                    class="login flex flex-col text-white  gap-4 pl-6 border-t-[0.1px] border-white/50 pt-4 ">
+                    
+                        <a href="profile.html" class="flex gap-2">
+                            <img src="../assets/images/user.png" alt="" class="w-[15px] object-contain">
+                            <p class="text-white">{{customer.name}} </p>
+                        </a>
+                       
+                    
+                    
+                    <p class="cursor-pointer text-white" @click.prevent="logout()"> Log out</p>
+                </div>
+
 
                     <img src="../assets/images/closeMenu.png" alt="" class="w-6 absolute right-6 top-6"
                         @click.prevent="showMenu()" />
