@@ -10,14 +10,15 @@ import java.util.List;
 public interface GamesService {
 
     List<Games> getAllGames();
+    List<GamesDTO> getActiveGamesDTO();
+
     List<GamesDTO> getAllGamesDTO();
+
     ResponseEntity<String> createGame(GameRecord gameRecord);
     Games findById(Long id);
     Games findByTitle(String title);
-
     GamesDTO findGameDTOById(Long id);
-
     ResponseEntity<String> updateGame(Long id, GameRecord gameRecord);
-    ResponseEntity<String> deleteById(Long id);
+    ResponseEntity<String> changeGameState(Long id, boolean state);
 
 }

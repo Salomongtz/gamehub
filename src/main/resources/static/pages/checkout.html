@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Purchase Confirmation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="../assets/images/SXESlogo.png" type="image/x-icon">
+</head>
+
+<body>
+    <h1>Purchase Confirmation</h1>
+    <div id="app" class="w-1/2 mx-auto mt-5">
+        <div v-if="cartTitles.length > 0" class="flex">
+          <div v-for="game of cartTitles" class="flex flex-col m-auto" :key="game.id">
+            <div class="flex flex-row h-[7rem] w-[45rem] items-center gradient text-white rounded-md p-2 gap-4">
+              <img :src="game.image" alt="game image" class="h-[6rem] w-2/6 object-contain rounded-md" />
+              <h1 class="w-1/6">{{game.title}}</h1>
+              <div class="flex w-1/6 items-center ml-4 gap-2">
+                <!-- Add content for the third section if needed -->
+              </div>
+              <div class="p-2 w-1/6 bg-morado">
+                {{ Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(game.price) }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <form @submit.prevent="submitForm">
+            <div>
+                <label for="cardNumber" class="block mb-2">Card Number:</label>
+                <input type="text" id="cardNumber" name="cardNumber" required v-model="cardNumber"
+                    class="border border-gray-300 p-2 rounded-md w-full">
+            </div>
+            <div>
+                <label for="cardCVV" class="block mb-2">Card CVV:</label>
+                <input type="text" id="cardCVV" name="cardCVV" required v-model="cardCVV"
+                    class="border border-gray-300 p-2 rounded-md w-full">
+            </div>
+            <div>
+                <label for="amount" class="block mb-2">Amount:</label>
+                <input type="number" id="amount" name="amount" required v-model="amount"
+                    class="border border-gray-300 p-2 rounded-md w-full">
+            </div>
+            <div>
+                <label for="description" class="block mb-2">Description:</label>
+                <textarea id="description" name="description" rows="4" cols="50" required v-model="description"
+                    class="border border-gray-300 p-2 rounded-md w-full"></textarea>
+            </div>
+            <div>
+                <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Confirm
+                    Purchase</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../javaScript/checkout.js"></script>
+</body>
+
+</html>

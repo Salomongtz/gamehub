@@ -20,6 +20,7 @@ public class GamesDTO {
     private final List<GameGenre> genre;
     private final List<GamePlatform> platforms;
     private final Rating rating;
+    private final boolean stateGame;
 
 
     public GamesDTO(Games games) {
@@ -40,6 +41,7 @@ public class GamesDTO {
         screenshots = games.getScreenshots();
         this.owned = games.getOwned() == null ? 0L : games.getOwned();
         this.rating = games.getRating() == null ? Rating.RP : games.getRating();
+        stateGame = games.isStateGame();
     }
 
     public Long getId() {
@@ -92,6 +94,10 @@ public class GamesDTO {
 
     public Rating getRating() {
         return rating;
+    }
+
+    public boolean isStateGame() {
+        return stateGame;
     }
 
     public String getDeveloper() {

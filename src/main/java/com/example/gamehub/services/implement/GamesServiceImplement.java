@@ -53,6 +53,10 @@ public class GamesServiceImplement implements GamesService {
     }
 
     @Override
+    public List<GamesDTO> getActiveGamesDTO() {
+        return getAllGames().stream().filter(Games::isStateGame).map(GamesDTO::new).collect(Collectors.toList());
+    }
+    @Override
     public List<GamesDTO> getAllGamesDTO() {
         return getAllGames().stream().map(GamesDTO::new).collect(Collectors.toList());
     }
@@ -88,10 +92,12 @@ public class GamesServiceImplement implements GamesService {
         return new GamesDTO(findById(id));
     }
 
-    public ResponseEntity<String> deleteById(Long id) {
-        gamesRepository.findById(id);
-        gamesRepository.deleteById(id);
-        return new ResponseEntity<>("Game Delete", HttpStatus.OK);
+    public ResponseEntity<String> changeGameState(Long id, boolean state) {
+        Games game = gamesRepository.findById(id).orElse(null);
+        assert game != null;
+        game.setStateGame(state);
+        gamesRepository.save(game);
+        return state? new ResponseEntity<>("Game Activated", HttpStatus.OK): new ResponseEntity<>("Game Deactivated", HttpStatus.OK);
     }
 
     @Override
