@@ -58,7 +58,6 @@ let app = createApp({
                     } else if (option == "edit") {
                         this.editImageURL = result.info.url
                     }
-                    console.log(this.imageURL)
                 }
             }
             )

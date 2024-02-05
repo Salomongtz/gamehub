@@ -69,9 +69,7 @@ let app = createApp({
     showPaymentForm() {
       this.showPaymentForm = true
     },
-    checkout() {
-      this.showPaymentForm = false
-    },
+    
     loadData() {
       axios.get("/api/games")
         .then(response => {
