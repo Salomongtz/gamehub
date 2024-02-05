@@ -199,11 +199,13 @@ let app = createApp({
     },
 
     addToCart(gameName, quantity) {
+      this.cartAdded()
       let cart = JSON.parse(localStorage.getItem("cart")) || []
       let aux = cart.find(game => game.title == gameName)
 
       if (aux) {
         aux.quantity += quantity
+        console.log("Quantity +1!");
       }
 
       else {
@@ -228,6 +230,7 @@ let app = createApp({
 
 
     agregarAlCarro(articulo) {
+      
       let storageCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
       const index = storageCarrito.findIndex(item => item.id === articulo._id);
 
@@ -246,6 +249,8 @@ let app = createApp({
       }
       localStorage.setItem('carrito', JSON.stringify(storageCarrito))
       this.localStorage = storageCarrito
+
+      
     }, // finaliza AgregarAlCarro
 
     cartAdded() {
@@ -264,7 +269,7 @@ let app = createApp({
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          Swal.fire("Saved!", "", "success");
+          window.location.href = "cart.html"
         } else if (result.isDenied) {
           Swal.close()
         }

@@ -163,9 +163,19 @@ body {
 
   }
 
+  #logInName{
+    display: none;
+  }
+
+  #filterMenu{
+    display: none;
+  }
+
 }
 
 @media screen and (min-width: 768px) {
+
+
   .login {
     display: flex;
   }
@@ -204,6 +214,10 @@ body {
     flex-direction: column;
   }
 
+  #filter{
+    display: none;
+  }
+
 
 }
 
@@ -236,4 +250,14 @@ body {
 
 .imagePerson{
   object-fit: cover;
+}
+
+.textAboutUs{
+  color: white;
+  margin: 10px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, .05);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 5px solid rgba(255, 255, 255, .06);
 }
