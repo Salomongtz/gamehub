@@ -23,6 +23,10 @@ public class GamesController {
     }
 
     @GetMapping
+    public List<GamesDTO> getActiveGamesDTO() {
+        return gamesService.getActiveGamesDTO();
+    }
+    @GetMapping("/all")
     public List<GamesDTO> getAllGames() {
         return gamesService.getAllGamesDTO();
     }
@@ -38,8 +42,8 @@ public class GamesController {
         return gamesService.updateGame(id, gameRecord);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String>deleteGameById(@PathVariable Long id){
-        return gamesService.deleteById(id);
+    @PatchMapping("/state/{id}/{state}")
+    public ResponseEntity<String>deleteGameById(@PathVariable Long id, @PathVariable boolean state) {
+        return gamesService.changeGameState(id, state);
     }
 }

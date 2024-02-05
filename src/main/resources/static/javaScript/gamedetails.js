@@ -205,6 +205,7 @@ let app = createApp({
 
       if (aux) {
         aux.quantity += quantity
+        console.log("Quantity +1!");
       }
 
       else {

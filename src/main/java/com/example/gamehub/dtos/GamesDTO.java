@@ -20,7 +20,7 @@ public class GamesDTO {
     private final List<GameGenre> genre;
     private final List<GamePlatform> platforms;
     private final Rating rating;
-    private boolean stateGame;
+    private final boolean stateGame;
 
 
     public GamesDTO(Games games) {
