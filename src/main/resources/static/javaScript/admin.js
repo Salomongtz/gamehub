@@ -14,7 +14,7 @@ let app = createApp({
             stock: "",
             sales: 0,
             price: 0,
-            pulbisher: "",
+            publisher: "",
             releaseDate: "",
             discount: 0,
             ratingOptions: ["E", "E10PLUS", "T", "M", "AO", "RP", "RP17", "NOTRATED"],
@@ -46,6 +46,24 @@ let app = createApp({
     },
 
     methods: {
+        uploadImage(option) {
+            var myWidget = cloudinary.createUploadWidget({
+                cloudName: 'dsar397fc',
+                uploadPreset: 'gamehubgamecover'
+            }, (error, result) => {
+                if (!error && result && result.event === "success") {
+                    console.log('Done! Here is the image info: ', result.info)
+                    if (option == "create") {
+                        this.imageURL = result.info.url
+                    } else if (option == "edit") {
+                        this.editImageURL = result.info.url
+                    }
+                    console.log(this.imageURL)
+                }
+            }
+            )
+            myWidget.open()
+        },
         loadData() {
             axios.get("/api/games/all")
                 .then((response) => {
@@ -116,12 +134,12 @@ let app = createApp({
         changeState(id, state) {
             Swal.fire({
                 title: "Are you sure?",
-                text: state? "Activate" + " " + this.inactiveGames.find(game => game.id == id).title: "Deactivate" + " " + this.activeGames.find(game => game.id == id).title,
+                text: state ? "Activate" + " " + this.inactiveGames.find(game => game.id == id).title : "Deactivate" + " " + this.activeGames.find(game => game.id == id).title,
                 icon: "warning",
                 showCancelButton: true,
                 color: "white",
                 confirmButtonColor: "#452C6D",
-                confirmButtonTextColor:"black",
+                confirmButtonTextColor: "black",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Confirm"
             }).then((result) => {
@@ -134,7 +152,7 @@ let app = createApp({
                                 title: "Changed",
                                 color: "white",
                                 confirmButtonColor: "#452C6D",
-                                text: state? "Activated" + " " + this.inactiveGames.find(game => game.id == id).title: "Deactivated" + " " + this.activeGames.find(game => game.id == id).title,
+                                text: state ? "Activated" + " " + this.inactiveGames.find(game => game.id == id).title : "Deactivated" + " " + this.activeGames.find(game => game.id == id).title,
                                 icon: "success"
                             });
                         })
