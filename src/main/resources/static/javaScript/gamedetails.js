@@ -190,45 +190,47 @@ let app = createApp({
       })
     },
 
-    calculateTotal() {
-      let total = 0;
-      let price = this.game.price;
-      total = price * this.quantity;
-      return total;
-    },
-    
-
     add() {
-      this.quantity++;
-      this.calculateTotal();
-    },
-    remove() {
-      if (this.quantity > 1) {
-        this.quantity--;
-      }
-      this.calculateTotal();
+      this.quantity++
     },
 
-    addToCart(gameName, quantity, gamePrice) {
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      let aux = cart.find(game => game.title == gameName && game.platform == this.platform);
-    
+    remove() {
+      this.quantity--
+    },
+
+    addToCart(gameName, quantity) {
+      this.cartAdded()
+      let cart = JSON.parse(localStorage.getItem("cart")) || []
+      let aux = cart.find(game => game.title == gameName)
+
       if (aux) {
-        aux.quantity += quantity;
-      } else {
+        aux.quantity += quantity
+        console.log("Quantity +1!");
+      }
+
+      else {
         let item = {
           title: gameName,
-          quantity: quantity,
-          price: gamePrice,
-          platform: this.platform,
-        };
-        cart.push(item);
+          quantity: quantity
+        }
+        cart.push(item)
       }
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem("cart", JSON.stringify(cart))
+
+      //para sacar de favo
+
+      // else {
+      //   cart.push(gameName,quantity)   
+      //   this.cartAdded()           
+
+      // }
+      // localStorage.setItem('cart', JSON.stringify(cart))
+
     },
 
 
     agregarAlCarro(articulo) {
+      
       let storageCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
       const index = storageCarrito.findIndex(item => item.id === articulo._id);
 
@@ -247,6 +249,8 @@ let app = createApp({
       }
       localStorage.setItem('carrito', JSON.stringify(storageCarrito))
       this.localStorage = storageCarrito
+
+      
     }, // finaliza AgregarAlCarro
 
     cartAdded() {
@@ -265,7 +269,7 @@ let app = createApp({
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          Swal.fire("Saved!", "", "success");
+          window.location.href = "cart.html"
         } else if (result.isDenied) {
           Swal.close()
         }

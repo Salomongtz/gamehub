@@ -3,15 +3,29 @@ const { createApp } = Vue;
 let app = createApp({
   data() {
     return {
+
+
+
       navMenu: false,
 
       logIn: false,
       signUp: false,
 
+
+      games: [],
+      game: {},
+      newGames: "",
+      newest: {},
+      offerGames: [],
+
+      platform: [],
+
+      quantity: "1",
       cart: [],
 
       customer: null,
 
+      juego: [],
       nombre: "",
       gameName: [],
 
@@ -19,11 +33,32 @@ let app = createApp({
       lastName: "",
       email: "",
       password: "",
+
       error: "",
+
+      showPaymentForm: false,
+      cardNumber: '',
+      cardCVV: '',
+      holder: '',
+      selectedMonth: '',
+      months: [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ],
+      year: '',
+      selectedYear: '',
+      availableYears: [],
+      total: '',
+      description: '',
+
     };
   },
 
   created() {
+    const currentYear = new Date().getFullYear();
+    for (let i = currentYear; i <= currentYear + 10; i++) {
+      this.availableYears.push(i);
+    }
     this.loadData();
 
 
@@ -31,73 +66,192 @@ let app = createApp({
 
   methods: {
 
-
+    showPaymentForm() {
+      this.showPaymentForm = true
+    },
+    checkout() {
+      this.showPaymentForm = false
+    },
     loadData() {
-      // Hacer ambas solicitudes simultáneamente
-      Promise.all([
-        axios.get("/api/games"),
-        axios.get("/api/customers")
-      ])
-        .then(responses => {
-          // Desempaquetar las respuestas
-          const [gamesResponse, customersResponse] = responses;
+      axios.get("/api/games")
+        .then(response => {
+          this.games = response.data
+          console.log("Games", this.games)
+          console.log(this.customer)
+          this.gameName = this.games.map(game => game.title)
+          this.cart = JSON.parse(localStorage.getItem("cart")) || []
+          this.nombre = this.cart.map(game => game.title)
+          this.juego = this.games.filter(game => this.nombre.includes(game.title))
 
-          // Procesar la respuesta de juegos
-          this.games = gamesResponse.data;
-          console.log("Games", this.games);
+          for (game of this.juego) {
+            for (cartGame of this.cart) {
+              console.log("Cart Game: " + cartGame.title);
+              if (cartGame.title == game.title) {
+                console.log(cartGame.title + " == " + game.title)
+                console.log(game.quantity + " ==> " + cartGame.quantity)
+                game.quantity = cartGame.quantity
+              }
+            }
+            console.log(game.quantity);
+          }
+          this.total = this.juego.reduce((subtotal, game) => subtotal + ((game.price * (1 - game.discount)) * game.quantity), 0)
 
-          this.cart = JSON.parse(localStorage.getItem("cart")) || [];
-          this.cart.forEach(game => {
-            game.quantity = 1;
-          });
-          this.nombre = this.cart.map(game => game.title);
-          console.log("Carrito Vue", this.cart);
-          console.log("Carrito LocalStore", localStorage.getItem("cart").toString());
-          console.log("Juegos nombres Filtrados", this.nombre);
-          console.log("Plataforma", this.platform);
-
-          // Procesar la respuesta de clientes
-          this.customer = customersResponse.data;
-
-          console.log("Customer", customer);
-          this.modalLogeado();
+          console.log(this.total);
+          // this.platform = this.juego.map(game => game.platforms)
+          console.log(this.cart)
+          console.log(localStorage.getItem("cart").toString())
+          console.log(this.juego)
+          console.log(this.platform)
+          console.log(this.nombre.map(title => `- ${title}`).join('\n'));
         })
         .catch(error => {
-          console.log(error);
+          console.log(error)
+
         });
+      axios.get("/api/customers")
+        .then(response => {
+          this.customer = response.data
+          this.cart = this.customer.cart
+          console.log(response)
+
+        })
+        .catch(error => {
+          console.log("Error", error)
+        })
+
+    },
+    add(game) {
+      if (game.stock > game.quantity) {
+        console.log(this.cart);
+        console.log(game.price);
+        game.quantity++
+        this.total += game.price * (1 - game.discount)
+        console.log(this.cart);
+        this.updateCart(game.title, game.quantity)
+        console.log(this.cart);
+      }
     },
 
-    calculateTotal() {
-      let total = 0;
-      for (let Cart of this.cart) {
-        total += Cart.price * this.quantity;
+    substract(game) {
+      if (game.quantity > 1) {
+        game.quantity--
+        this.total -= game.price * (1 - game.discount)
+        console.log(this.cart);
+        this.updateCart(game.title, game.quantity)
+        console.log(this.cart);
+      } else if (game.quantity == 1) {
+        this.removeFromCart(game)
       }
-      return total;
     },
-    getQuantity(Cart) {
-      const cartItem = this.cart.find(item => item.title === Cart.title);
-      return cartItem ? cartItem.quantity : 0;
-  },
-  
-  add(Cart) {
-    const cartItem = this.cart.find(item => item.title === Cart.title);
-    if (cartItem) {
-      cartItem.quantity++;
-    } else {
-      this.cart.push({ title: Cart.title, quantity: 2 }); // Ajusta como desees
-    }
-    // ... Actualiza el localStorage y realiza otras operaciones necesarias
-  },
-  
-  remove(Cart) {
-    const cartItem = this.cart.find(item => item.title === Cart.title);
-    if (cartItem && cartItem.quantity > 1) {
-      cartItem.quantity--;
-    } else {
-      this.cart = this.cart.filter(item => item.title !== Cart.title);
-    }
-    // ... Actualiza el localStorage y realiza otras operaciones necesarias
-  },
+    updateCart(title, quantity) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || []
+      let aux = cart.find(game => game.title == title)
+
+      if (aux) {
+        aux.quantity = quantity
+        console.log("Quantity +1!");
+      }
+      else {
+        let item = {
+          title: title,
+          quantity: quantity
+        }
+        cart.push(item)
+      }
+      localStorage.setItem("cart", JSON.stringify(cart))
+
+    },
+    clearCart() {
+      Swal.fire({
+        background: '#151515',
+        color: 'white',
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#452C6D",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            background: '#151515',
+            color: 'white',
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+          }).then(() => {
+            localStorage.removeItem("cart")
+            axios.patch("/api/customers/cart", { cart: localStorage.getItem("cart") })
+            this.loadData()
+          })
+
+        }
+      })
+
+    },
+    removeFromCart(game) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || []
+      let aux = cart.find(item => item.title == game.title)
+
+      if (aux) {
+        cart = cart.filter(item => item.title != game.title)
+        localStorage.setItem("cart", JSON.stringify(cart))
+        console.log(aux.title + " removed from cart")
+        this.loadData();
+      }
+    },
+    checkout() {
+      Swal.fire({
+        background: '#151515',
+        color: 'white',
+        title: "Processing...",
+        html: "Your payment is being processed, please don't close this window.",
+        timer: 0,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+        }
+      })
+      let purchaseDescription = this.nombre.map(title => `- ${title}`).join('\n')
+      axios.post('https://vertex-5ys8.onrender.com/api/cards/payments', {
+        number: this.cardNumber,
+        cvv: this.cardCVV,
+        amount: this.total,
+        description: "GameHub purchase:" + purchaseDescription
+      })
+        .then((response) => {
+          Swal.close()
+          console.log(response.data);
+          let cart = JSON.parse(localStorage.getItem("cart")) || []
+          console.log(cart);
+          axios.post('/api/purchase', cart)
+            .then(response => {
+              console.log(response.data);
+              Swal.fire({
+                background: '#151515',
+                color: 'white',
+                confirmButtonColor: '#452C6D',
+                title: "Sweet!",
+                text: "Your purchase was successful! A receipt has been sent to your email",
+                imageUrl: "../assets/images/konata.png",
+                imageWidth: 400,
+                imageHeight: 250,
+                imageAlt: "Custom image"
+              })
+            }).then(() => {
+              this.showPaymentForm = false
+            }).catch(error => {
+              console.error(error)
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.data,
+              })
+            })
+        })
+    },
+
     showMenu() {
       if (this.navMenu == false) {
         this.navMenu = true
@@ -159,19 +313,17 @@ let app = createApp({
       axios.post("/api/logout")
         .then(response => {
           console.log(response)
+          this.patchData()
           this.customer = null
-          location.reload();
-          localStorage.clear();
+          location.reload()
+          localStorage.clear()
         })
         .catch(error => console.log("Error", error))
     },
 
-
-
     patchData() {
       axios.patch("/api/customers/cart", { cart: localStorage.getItem("cart").toString() })
         .then(response => {
-
           console.log(response)
         })
         .catch(error => console.log("Error", error))
@@ -194,31 +346,28 @@ let app = createApp({
     modalLogeado() {
       let timerInterval;
       Swal.fire({
-        title: "Welcome back, " + this.customer.name,
+        title: "Welcome back," + this.customer.name,
         background: '#151515',
         color: 'white',
+        // html: "Welcome back, " ,
         timer: 1700,
         timerProgressBar: false,
         didOpen: () => {
           Swal.showLoading();
-          const timer = Swal.getPopup().querySelector(".swal2-timer-progress-bar");
-          timerInterval = setInterval(() => {
-            if (timer) {
-              timer.textContent = `${Swal.getTimerLeft()}`;
-            }
+          const timer = Swal.getPopup().querySelector("b"); timerInterval = setInterval(() => {
+            timer.textContent = `${Swal.getTimerLeft()}`;
           }, 100);
         },
         willClose: () => {
           clearInterval(timerInterval);
         }
       }).then((result) => {
+        /* Read more about handling dismissals below */
         if (result.dismiss === Swal.DismissReason.timer) {
           console.log("I was closed by the timer");
         }
-      });
+      })
     },
-
   }
-
 
 }).mount("#app");
