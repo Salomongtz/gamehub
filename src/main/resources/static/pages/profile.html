@@ -19,12 +19,47 @@
 
             <!--MENU HAMBURGUESA -->
             <div class="hamburg flex justify-right w-8 absolute right-10 top-8 md:hidden lg:hidden"
-                v-if="navMenu == false" @click="navMenu=!navMenu">
+                v-if="navMenu == false" @click.prevent="showMenu()">
                 <img class="" src="../assets/images/menuHamb.png" alt="" />
             </div>
 
+            <!--OPCION LOGIN -->
+            <div v-if="customer == null"
+                class="login text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
+                <p class="cursor-pointer bg-gris py-[0.2rem] px-2 rounded-md" @click.prevent="formLogIn()">
+                    Log In
+                </p>
+                <p class="cursor-pointer" @click.prevent="formSignUp()">Sign Up</p>
+
+
+            </div>
+
+            <div id="logInName" v-if="customer != null"
+                class="login flex text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
+                <p class="text-white">{{customer.name}} </p>
+                <p class="cursor-pointer text-white" @click.prevent="logout()">|| Log out</p>
+            </div>
+
+
+
+            <!--NAVBAR ESCRITORIO -->
+            <div class="navBar">
+                <nav
+                    class="flex items-center text-center  justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0  ">
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"  href="../index.html">Home</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+                        href="store.html">Store</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+                        href="profile.html">My account</a>
+                    <a class="bg-amarillo text-negro  w-[10rem] h-[2rem] rounded-md"
+                        href="cart.html">Cart</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
+                        href="aboutUs.html">About Us</a>
+                </nav>
+            </div>
+
             <!--NAVBAR HAMBURGUESA -->
-            <div v-else>
+            <div v-if="navMenu == true">
                 <nav
                     class="pt-10 gradient text-white w-[15rem] md:w-[30%] h-[24rem] flex flex-col text-left absolute right-0 top-0 bg-gris gap-8 justify-center">
                     <a href="../index.html" class="pl-6">Home</a>
@@ -42,31 +77,6 @@
                         @click.prevent="showMenu()" />
                 </nav>
             </div>
-
-            <!-- LOGOUT -->
-            <div class="login flex text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
-                <p class="text-white">{{customer.name}} </p>
-                <p class="cursor-pointer text-white" @click.prevent="logout()">|| Log out</p>
-            </div>
-
-
-
-            <!--NAVBAR ESCRITORIO -->
-            <div class="navBar">
-                <nav
-                    class="flex items-center text-center  justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0  ">
-                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
-                        href="../index.html">Home</a>
-                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
-                        href="store.html">Store</a>
-                    <a class="bg-amarillo text-negro  w-[10rem] h-[2rem] rounded-md" href="profile.html">My account</a>
-                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="cart.html">Cart</a>
-                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="#" class="">About
-                        Us</a>
-                </nav>
-            </div>
-
-
         </header>
 
         <main class="flex flex-col items-center h-full mb-16 gap-12 px-2">

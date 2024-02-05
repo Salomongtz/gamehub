@@ -36,7 +36,7 @@
 
             </div>
 
-            <div v-if="customer != null"
+            <div id="logInName" v-if="customer != null"
                 class="login flex text-white text-sm absolute top-[0.56em] right-8 gap-2 items-center">
                 <p class="text-white">{{customer.name}} </p>
                 <p class="cursor-pointer text-white" @click.prevent="logout()">|| Log out</p>
