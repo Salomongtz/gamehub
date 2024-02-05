@@ -163,9 +163,19 @@ body {
 
   }
 
+  #logInName{
+    display: none;
+  }
+
+  #filterMenu{
+    display: none;
+  }
+
 }
 
 @media screen and (min-width: 768px) {
+
+
   .login {
     display: flex;
   }
@@ -202,6 +212,10 @@ body {
     width: 100vw;
     display: flex;
     flex-direction: column;
+  }
+
+  #filter{
+    display: none;
   }
 
 
