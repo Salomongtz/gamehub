@@ -15,6 +15,8 @@ let app = createApp({
       newest: {},
       offerGames: [],
 
+      gameName: "",
+
       quantity: 1,
       cart: [],
 
@@ -26,6 +28,21 @@ let app = createApp({
       password: "",
 
       error: "",
+
+      showPaymentForm: false,
+      cardNumber: '',
+      cardCVV: '',
+      holder: '',
+      selectedMonth: '',
+      months: [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ],
+      year: '',
+      selectedYear: '',
+      availableYears: [],
+      total: '',
+      description: '',
 
     };
   },
@@ -46,6 +63,9 @@ let app = createApp({
         console.log(this.game)
         
         this.offerGamesFunction()
+        this.gameName= this.game.title;
+
+        
       })
       .catch(error => {
         console.log("Error", error)
@@ -65,7 +85,16 @@ let app = createApp({
             console.log("Error", error)
         })
 
+        
 
+
+  },
+
+  created(){
+    const currentYear = new Date().getFullYear();
+    for (let i = currentYear; i <= currentYear + 10; i++) {
+      this.availableYears.push(i);
+    }
   },
 
 
@@ -82,6 +111,56 @@ let app = createApp({
       )
       this.offerGames = juegosPorOferta.slice(0, 6)
       console.log(this.offerGames)
+    },
+
+    checkout() {
+      Swal.fire({
+        background: '#151515',
+        color: 'white',
+        title: "Processing...",
+        html: "Your payment is being processed, please don't close this window.",
+        timer: 0,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+        }
+      })
+      let product = [{title: this.gameName, quantity: this.quantity}]
+      let purchaseDescription = this.gameName
+      axios.post('https://vertex-5ys8.onrender.com/api/cards/payments', {
+        number: this.cardNumber,
+        cvv: this.cardCVV,
+        amount: this.total,
+        description: "GameHub purchase:" + purchaseDescription
+      })
+        .then((response) => {
+          Swal.close()
+          console.log(response.data);
+          axios.post('/api/purchase', product)
+            .then(response => {
+              console.log(response.data);
+              Swal.fire({
+                background: '#151515',
+                color: 'white',
+                confirmButtonColor: '#452C6D',
+                title: "Sweet!",
+                text: "Your purchase was successful! A receipt has been sent to your email",
+                imageUrl: "../assets/images/konata.png",
+                imageWidth: 400,
+                imageHeight: 250,
+                imageAlt: "Custom image"
+              })
+            }).then(() => {
+              this.showPaymentForm = false
+            }).catch(error => {
+              console.error(error)
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.data,
+              })
+            })
+        })
     },
 
 
@@ -167,7 +246,7 @@ let app = createApp({
     modalLogeado() {
       let timerInterval;
       Swal.fire({
-        title: "Welcome back," + this.customer.name,
+        title: "Welcome back, " + this.customer.name,
         background: '#151515',
         color: 'white',
         // html: "Welcome back, " ,

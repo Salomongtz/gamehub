@@ -272,7 +272,7 @@ let app = createApp({
       modalLogeado() {
         let timerInterval;
         Swal.fire({
-          title: "Welcome back," + this.customer.name,
+          title: "Welcome back, " + this.customer.name,
           background: '#151515',
           color: 'white',
           // html: "Welcome back, " ,
