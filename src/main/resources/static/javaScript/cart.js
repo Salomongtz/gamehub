@@ -3,29 +3,15 @@ const { createApp } = Vue;
 let app = createApp({
   data() {
     return {
-
-
-
       navMenu: false,
 
       logIn: false,
       signUp: false,
 
-
-      games: [],
-      game: {},
-      newGames: "",
-      newest: {},
-      offerGames: [],
-
-      platform:[],
-
-      quantity: "1",
       cart: [],
 
       customer: null,
 
-      juego: [],
       nombre: "",
       gameName: [],
 
@@ -33,63 +19,85 @@ let app = createApp({
       lastName: "",
       email: "",
       password: "",
-
       error: "",
-
-     
-
     };
   },
 
   created() {
     this.loadData();
-    
-    
+
+
   },
 
   methods: {
 
 
     loadData() {
-      axios.get("/api/games")
-        .then(response => {
-          this.games = response.data
-          console.log("Games", this.games)
-          console.log(this.customer)
-          this.gameName = this.games.map(game => game.title)
-          this.cart = JSON.parse(localStorage.getItem("cart")) || []
-          this.nombre = this.cart.map(game => game.title)
-          this.juego = this.games.filter(game => this.nombre.includes(game.title))
-          // this.platform = this.juego.map(game => game.platforms)
-          console.log(this.cart)
-          console.log(localStorage.getItem("cart").toString())
-          console.log(this.juego)
-          console.log(this.platform)
+      // Hacer ambas solicitudes simultáneamente
+      Promise.all([
+        axios.get("/api/games"),
+        axios.get("/api/customers")
+      ])
+        .then(responses => {
+          // Desempaquetar las respuestas
+          const [gamesResponse, customersResponse] = responses;
+
+          // Procesar la respuesta de juegos
+          this.games = gamesResponse.data;
+          console.log("Games", this.games);
+
+          this.cart = JSON.parse(localStorage.getItem("cart")) || [];
+          this.cart.forEach(game => {
+            game.quantity = 1;
+          });
+          this.nombre = this.cart.map(game => game.title);
+          console.log("Carrito Vue", this.cart);
+          console.log("Carrito LocalStore", localStorage.getItem("cart").toString());
+          console.log("Juegos nombres Filtrados", this.nombre);
+          console.log("Plataforma", this.platform);
+
+          // Procesar la respuesta de clientes
+          this.customer = customersResponse.data;
+
+          console.log("Customer", customer);
+          this.modalLogeado();
         })
         .catch(error => {
-          console.log(error)
-
+          console.log(error);
         });
-      axios.get("/api/customers")
-        .then(response => {
-          this.customer = response.data
-          this.cart = this.customer.cart
-          console.log(response)
-          this.modalLogeado()
-
-        })
-        .catch(error => {
-          console.log("Error", error)
-        })
-
-    },
-    add() {
-      this.quantity++
     },
 
-    remove() {
-      this.quantity--
+    calculateTotal() {
+      let total = 0;
+      for (let Cart of this.cart) {
+        total += Cart.price * this.quantity;
+      }
+      return total;
     },
+    getQuantity(Cart) {
+      const cartItem = this.cart.find(item => item.title === Cart.title);
+      return cartItem ? cartItem.quantity : 0;
+  },
+  
+  add(Cart) {
+    const cartItem = this.cart.find(item => item.title === Cart.title);
+    if (cartItem) {
+      cartItem.quantity++;
+    } else {
+      this.cart.push({ title: Cart.title, quantity: 2 }); // Ajusta como desees
+    }
+    // ... Actualiza el localStorage y realiza otras operaciones necesarias
+  },
+  
+  remove(Cart) {
+    const cartItem = this.cart.find(item => item.title === Cart.title);
+    if (cartItem && cartItem.quantity > 1) {
+      cartItem.quantity--;
+    } else {
+      this.cart = this.cart.filter(item => item.title !== Cart.title);
+    }
+    // ... Actualiza el localStorage y realiza otras operaciones necesarias
+  },
     showMenu() {
       if (this.navMenu == false) {
         this.navMenu = true
@@ -100,10 +108,6 @@ let app = createApp({
       }
 
     },
-
-    
-      
-    
 
     login() {
       axios.post("/api/login?email=" + this.email + "&password=" + this.password)
@@ -162,11 +166,9 @@ let app = createApp({
         .catch(error => console.log("Error", error))
     },
 
-    
+
 
     patchData() {
-
-
       axios.patch("/api/customers/cart", { cart: localStorage.getItem("cart").toString() })
         .then(response => {
 
@@ -192,28 +194,30 @@ let app = createApp({
     modalLogeado() {
       let timerInterval;
       Swal.fire({
-        title: "Welcome back," + this.customer.name,
+        title: "Welcome back, " + this.customer.name,
         background: '#151515',
         color: 'white',
-        // html: "Welcome back, " ,
         timer: 1700,
         timerProgressBar: false,
         didOpen: () => {
           Swal.showLoading();
-          const timer = Swal.getPopup().querySelector("b"); timerInterval = setInterval(() => {
-            timer.textContent = `${Swal.getTimerLeft()}`;
+          const timer = Swal.getPopup().querySelector(".swal2-timer-progress-bar");
+          timerInterval = setInterval(() => {
+            if (timer) {
+              timer.textContent = `${Swal.getTimerLeft()}`;
+            }
           }, 100);
         },
         willClose: () => {
           clearInterval(timerInterval);
         }
       }).then((result) => {
-        /* Read more about handling dismissals below */
         if (result.dismiss === Swal.DismissReason.timer) {
           console.log("I was closed by the timer");
         }
-      })
+      });
     },
+
   }
 
 

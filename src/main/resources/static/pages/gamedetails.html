@@ -44,16 +44,15 @@
       <!--NAVBAR ESCRITORIO -->
       <div class="navBar">
         <nav
-        class="flex items-center text-center  justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0  ">
-        <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
-            href="../index.html">Home</a>
-        <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
-            href="./store.html">Store</a>
-        <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="./profile.html">My account</a>
-        <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="./cart.html">Cart</a>
-        <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="#" class="">About
+          class="flex items-center text-center  justify-around pb-2 text-white font-semibold text-lg w-[80%] absolute bottom-0  ">
+          <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="../index.html">Home</a>
+          <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="./store.html">Store</a>
+          <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="./profile.html">My
+            account</a>
+          <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="./cart.html">Cart</a>
+          <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="#" class="">About
             Us</a>
-    </nav>
+        </nav>
       </div>
 
       <!--NAVBAR HAMBURGUESA -->
@@ -91,30 +90,39 @@
         </div>
 
         <div>
+
           <p class="text-white text-lg p-4 w-[100%]">{{game.description}}</p>
-          <div id="gamePrice" class="flex flex-col items-center py-6 text-lg gap-10">
+
+          <div id="gamePrice" class="flex flex-col w-full items-center py-6 text-lg gap-10">
             <div class="flex items-center gap-8">
               <p v-if="offerGames.includes(game)" class="text-white b-[0.1px]  line-through">${{(game.price *
                 1.1).toLocaleString().slice(0,5)}} </p>
-              <h1 class="p-[0.7rem] bg-morado text-white">${{game.price.toLocaleString()}}</h1>
+              <h1 class="p-[0.7rem] bg-morado text-white"> {{Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(calculateTotal())}}</h1>
             </div>
             <div class="flex gap-8" v-if="customer != null">
-              <button class="p-2 border-2 border-white text-white " @click="addToCart(game.title, quantity)">Add to cart</button>
+              <button class="p-2 border-2 border-white text-white " @click="addToCart(game.title, quantity, game.price, game.platform)">Add to cart</button>
               <button class="p-[0.7rem] bg-gris text-amarillo font-semibold">Buy now</button>
               <div class="flex items-center gap-2">
-                <button><img src="../assets/images/less.png" alt="" class="w-5 h-5 object-cover" @click.prevent="remove()"></button>
-                <input type="number" class="bg-gris w-10 h-6 text-sm text-white font-semibold text-center pl-2" v-model="quantity">
-                <button><img src="../assets/images/more.png" alt="" class="w-5 h-5 object-cover"@click.prevent="add()"></button>
+                <select class="text-white w-full bg-negro rounded-sm px-4 h-8 text-sm ">
+                  <option class=" rounded-lg text-white" value="all"> Select Platforms</option>
+                  <template v-if="game.platforms.length > 0" v-for="platform of game.platforms">
+                    <option v-bind:value="platform">{{platform}}</option>
+                  </template>
+                </select>
+              </div>
+              <div class="flex items-center gap-2">
+                <button><img src="../assets/images/less.png" alt="" class="w-5 h-5 object-cover"
+                    @click.prevent="remove()"></button>
+                <input type="number" class="bg-gris w-10 h-6 text-sm text-white font-semibold text-center pl-2"
+                  v-model="quantity">
+                <button><img src="../assets/images/more.png" alt="" class="w-5 h-5 object-cover"
+                    @click.prevent="add()"></button>
               </div>
             </div>
             <div class="flex gap-8" v-if="customer == null">
               <button class="p-2 border-2 border-white/20 text-white/20 ">Add to cart</button>
               <button class="p-[0.7rem] bg-gris/20 text-amarillo/20 font-semibold">Buy now</button>
             </div>
-
-
-
-
 
           </div>
 

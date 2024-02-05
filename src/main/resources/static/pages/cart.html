@@ -51,8 +51,8 @@
                     <a class="bg-amarillo text-negro  w-[10rem] h-[2rem] rounded-md" href="../index.html">Home</a>
                     <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
                         href="./store.html">Store</a>
-                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
-                        href="./profile.html">My account</a>
+                    <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md" href="./profile.html">My
+                        account</a>
                     <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
                         href="./cart.html">Cart</a>
                     <a class="hover:bg-amarillo hover:text-negro w-[10rem] h-[2rem] rounded-md"
@@ -95,40 +95,34 @@
 
             <!-- TARJETAS DE JUEGOS -->
             <div class="flex flex-col  justify-center text-center m-auto gap-4">
-                <template v-if="juego.length > 0 " v-for="juegos of juego" class="flex">
+                <template v-if="cart.length > 0 " v-for="Cart of cart" class="flex">
                     <div class="flex flex-col m-auto">
                         <div
                             class="flex flex-row h-[7rem] w-[45rem] items-center gradient text-white rounded-md p-2 gap-4">
 
-                            <img v-bind:src="juegos.image" alt="game image"
+                            <img v-bind:src="cart.image" alt="game image"
                                 class="h-[6rem] w-2/6 object-contain rounded-md" />
-                            <h1 class="w-1/6 ">{{juegos.title}}</h1>
-                            <select class="text-white w-1/6  bg-negro rounded-sm px-4 h-8 text-sm " name="platformsSelect"
-                                id="platformsSelect" v-on:input="platform">
-                                <option class=" rounded-lg" value="all">Platform</option>
-                                <template v-for="platform of juegos.platforms">
-                                    <option v-bind:value="platform">{{platform}}</option>                                  
-                                
-                                </template>
-                            </select>
-                            <div class="flex w-1/6 items-center ml-4 gap-2">
-                                <button><img src="../assets/images/less.png" alt="" class="w-5 h-5 object-cover" @click.prevent="remove()"></button>
-                                <input type="number" class="bg-gris w-10 h-6 text-sm text-white font-semibold text-center pl-2" v-model="quantity">
-                                <button><img src="../assets/images/more.png" alt="" class="w-5 h-5 object-cover"@click.prevent="add()"></button>
-                              </div>
+                            <h1 class="w-1/6 ">{{Cart.title}}</h1>
+                            
+                            <div class="flex w-1/6 items-center ml-4 gap-2" v-if="quantity">
+                                <button @click.prevent="remove()">
+                                    <img src="../assets/images/less.png" alt="" class="w-5 h-5 object-cover">
+                                </button>
+                                <input type="number" class="bg-gris w-10 h-6 text-sm text-white font-semibold text-center pl-2" v-model="getQuantity(Cart)">
 
-                              <div class="p-2 w-1/6 bg-morado"> {{Intl.NumberFormat('en-US',
+                                <button @click.prevent="add()">
+                                    <img src="../assets/images/more.png" alt="" class="w-5 h-5 object-cover">
+                                </button>
+                            </div>
+
+                            <div class="p-2 w-1/6 bg-morado"> {{Intl.NumberFormat('en-US',
                                 {style: 'currency',
                                 currency: 'USD'}).
-                                format(juegos.price)}} </div>
-
-
+                                format(Cart.price)}} </div>
 
                         </div>
                     </div>
             </div>
-
-
 
             </template>
             <template v-else>
@@ -136,7 +130,6 @@
                     class="flex justify-center font-bold  bg-amarillo text-black items-center border solid border-white justify-items-center h-[15rem] w-[15rem] border-solid-5 p-5 rounded-lg">
                     No found Games</h2>
             </template>
-
 
             <div class="py-12">
                 <h1 class="text-white text-xl font-semibold">Cart Details</h1>
@@ -150,25 +143,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <template v-for="juegos of juego">
+                        <template v-for="Cart of cart">
                             <tr>
-                                <td class="py-2 border-b-[0.3px] border-white/20"> {{quantity}}</td>
-                                <td class="py-2 border-b-[0.3px] border-white/20"> {{juegos.title}} </td>
-                                <td class="py-2 border-b-[0.3px] border-white/20"> {{plataform}} </td>
+                                <td class="py-2 border-b-[0.3px] border-white/20"> {{Cart.quantity}}</td>
+                                <td class="py-2 border-b-[0.3px] border-white/20"> {{Cart.title}} </td>
+                                <td class="py-2 border-b-[0.3px] border-white/20"> {{Card.plataform}} </td>
                                 <td class="py-2 border-b-[0.3px] border-white/20"> {{Intl.NumberFormat('en-US',
                                     {style: 'currency',
                                     currency: 'USD'}).
-                                    format(juegos.price)}} </td>
+                                    format(Cart.price)}} </td>
                         </template>
                         </tr>
                         <tr class="mt-8">
                             <td class="pt-10 pb-2 border-b-[0.3px] border-white/20">TOTAL AMOUNT</td>
                             <td class="pt-10 pb-2 border-b-[0.3px] border-white/20"></td>
                             <td class="pt-10 pb-2 border-b-[0.3px] border-white/20"></td>
-                            <td class="pt-10 pb-2 border-b-[0.3px] border-white/20">{{Intl.NumberFormat('en-US',
-                                {style: 'currency',
-                                currency: 'USD'}).
-                                format(225)}}</td>
+                            <td class="pt-10 pb-2 border-b-[0.3px] border-white/20">  {{Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(calculateTotal())}} </td>
                         </tr>
 
                     </tbody>

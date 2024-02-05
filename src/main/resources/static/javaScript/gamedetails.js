@@ -190,40 +190,41 @@ let app = createApp({
       })
     },
 
+    calculateTotal() {
+      let total = 0;
+      let price = this.game.price;
+      total = price * this.quantity;
+      return total;
+    },
+    
+
     add() {
-      this.quantity++
+      this.quantity++;
+      this.calculateTotal();
     },
-
     remove() {
-      this.quantity--
+      if (this.quantity > 1) {
+        this.quantity--;
+      }
+      this.calculateTotal();
     },
 
-    addToCart(gameName, quantity) {
-      let cart = JSON.parse(localStorage.getItem("cart")) || []
-      let aux = cart.find(game => game.title == gameName)
-
+    addToCart(gameName, quantity, gamePrice) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let aux = cart.find(game => game.title == gameName && game.platform == this.platform);
+    
       if (aux) {
-        aux.quantity += quantity
-      }
-
-      else {
+        aux.quantity += quantity;
+      } else {
         let item = {
           title: gameName,
-          quantity: quantity
-        }
-        cart.push(item)
+          quantity: quantity,
+          price: gamePrice,
+          platform: this.platform,
+        };
+        cart.push(item);
       }
-      localStorage.setItem("cart", JSON.stringify(cart))
-
-      //para sacar de favo
-
-      // else {
-      //   cart.push(gameName,quantity)   
-      //   this.cartAdded()           
-
-      // }
-      // localStorage.setItem('cart', JSON.stringify(cart))
-
+      localStorage.setItem("cart", JSON.stringify(cart));
     },
 
 
