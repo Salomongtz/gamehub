@@ -107,19 +107,11 @@
                 <template v-if="juego.length > 0 " v-for="juegos of juego" :key="juego" class="flex">
                     <div class="flex flex-col m-auto">
                         <div
-                            class="flex flex-row h-[7rem] w-[45rem] items-center gradient text-white rounded-md p-2 gap-4">
+                            class="flex flex-row h-[7rem] w-[45rem] items-center gradient text-white rounded-md p-4 gap-4">
                             <img v-bind:src="juegos.image" alt="game image"
                                 class="h-[6rem] w-2/6 object-contain rounded-md" />
                             <h1 class="w-1/6 ">{{juegos.title}}</h1>
-                            <select class="text-white w-1/6  bg-negro rounded-sm px-4 h-8 text-sm "
-                                name="platformsSelect" id="platformsSelect" v-on:input="platform">
-                            <select class="text-white w-1/6  bg-negro rounded-sm px-4 h-8 text-sm "
-                                name="platformsSelect" id="platformsSelect" v-on:input="platform">
-                                <option class=" rounded-lg" value="all">Platform</option>
-                                <template v-for="platform of juegos.platforms">
-                                    <option v-bind:value="platform">{{platform}}</option>
-
-                                </template>
+                           
                             </select>
                             <div class="flex w-1/6 items-center ml-4 gap-2">
                                 <button><img src="../assets/images/less.png" alt="" class="w-5 h-5 object-cover"
@@ -154,8 +146,7 @@
                     <thead>
                         <tr>
                             <th>Quantity</th>
-                            <th>Name</th>
-                            <th>Platform</th>
+                            <th>Name</th>                            
                             <th>Price</th>
                         </tr>
                     </thead>
@@ -163,8 +154,7 @@
                         <template v-for="juegos of juego">
                             <tr>
                                 <td class="py-2 border-b-[0.3px] border-white/20"> {{juegos.quantity}}</td>
-                                <td class="py-2 border-b-[0.3px] border-white/20"> {{juegos.title}} </td>
-                                <td class="py-2 border-b-[0.3px] border-white/20"> {{plataform}} </td>
+                                <td class="py-2 border-b-[0.3px] border-white/20"> {{juegos.title}} </td>                                
                                 <td class="py-2 border-b-[0.3px] border-white/20"> {{Intl.NumberFormat('en-US',
                                     {style: 'currency',
                                     currency: 'USD'}).
@@ -172,10 +162,10 @@
                         </template>
                         </tr>
                         <tr class="mt-8">
-                            <td class="pt-10 pb-2 border-b-[0.3px] border-white/20">TOTAL AMOUNT</td>
                             <td class="pt-10 pb-2 border-b-[0.3px] border-white/20"></td>
-                            <td class="pt-10 pb-2 border-b-[0.3px] border-white/20"></td>
-                            <td class="pt-10 pb-2 border-b-[0.3px] border-white/20">{{Intl.NumberFormat('en-US',
+                            <td class="pt-10 pb-2 border-b-[0.3px] border-white/20 font-bold text-lg">TOTAL AMOUNT</td>
+                            
+                            <td class="pt-10 pb-2 border-b-[0.3px] border-white/20 font-bold text-lg">{{Intl.NumberFormat('en-US',
                                 {style: 'currency',
                                 currency: 'USD'})
                                 .format(total)}}</td>

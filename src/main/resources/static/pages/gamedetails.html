@@ -119,7 +119,7 @@
             </div>
             <div class="flex gap-8" v-if="customer != null">
               <button class="p-2 border-2 border-white text-white " @click="addToCart(game.title, quantity)">Add to cart</button>
-              <button class="p-[0.7rem] bg-gris text-amarillo font-semibold">Buy now</button>
+              <button class="p-[0.7rem] bg-gris text-amarillo font-semibold" @click.prevent="showPaymentForm=true">Buy now</button>
               <div class="flex items-center gap-2">
                 <button><img src="../assets/images/less.png" alt="" class="w-5 h-5 object-cover" @click.prevent="remove()"></button>
                 <input type="number" class="bg-gris w-10 h-6 text-sm text-white font-semibold text-center pl-2" v-model="quantity">
@@ -193,6 +193,51 @@
         </div>
 
       </div>
+      <div class="fixed inset-0 flex items-center justify-center w-full h-full bg-black bg-opacity-80"
+                v-if="showPaymentForm" id="paymentContainer">
+                <form class="text-white w-2/3 m-auto gap-4 flex flex-col bg-negro p-4" id="paymentForm"
+                    @submit.prevent="checkout">
+
+
+                    <fieldset>
+                        <label for="holder" class="block mb-2">Card Holder</label>
+                        <input class="bg-gris p-2 rounded-md w-full" type="text" id="holder" name="holder" required
+                            v-model="holder">
+                    </fieldset>
+                    <fieldset class="flex flex-col md:flex-row gap-4">
+                        <div class="md:w-2/3 w-full">
+                            <label for="cardNumber" class="block mb-2">Card Number</label>
+                            <input type="text" id="cardNumber" name="cardNumber" required v-model="cardNumber"
+                                class="bg-gris p-2 rounded w-full">
+                        </div>
+                        <div class="md:w-1/3 w-full">
+                            <label for="cardCVV" class="block mb-2">Card CVV</label>
+                            <input type="text" id="cardCVV" name="cardCVV" required v-model="cardCVV"
+                                class="bg-gris p-2 rounded-md w-full">
+                        </div>
+                    </fieldset>
+                    <h3>Expiration</h3>
+                    <fieldset class="flex flex-col md:flex-row gap-4 ">
+                        <label for="month">Month</label>
+                        <select class="bg-gris p-2 rounded-md w-full" name="month" id="month" required
+                            v-model="selectedMonth">
+                            <option v-for="(month, index) in months" :key="index" :value="index + 1">{{ month }}
+                            </option>
+                        </select>
+                        <label for="year">Year</label>
+                        <select class="bg-gris p-2 rounded-md w-full" name="year" id="year" required v-model="year">
+                            <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
+                        </select>
+                    </fieldset>
+                    <fieldset class="mt-4 flex gap-1 justify-evenly">
+                        <button type="submit"
+                            class="bg-morado hover:bg-purple-950 text-white font-bold py-2 px-4 rounded">Confirm
+                            Purchase</button>
+                        <button @click="showPaymentForm = false" type="button"
+                            class="bg-gris hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">Cancel</button>
+                        <fieldset>
+                </form>
+            </div>
 
 
     </main>
