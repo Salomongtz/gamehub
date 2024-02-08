@@ -79,6 +79,7 @@ let app = createApp({
           this.gameName = this.games.map(game => game.title)
           this.cart = JSON.parse(localStorage.getItem("cart")) || []
           this.nombre = this.cart.map(game => game.title)
+          console.log(this.cart)
           this.juego = this.games.filter(game => this.nombre.includes(game.title))
 
           for (game of this.juego) {
@@ -344,7 +345,7 @@ let app = createApp({
     modalLogeado() {
       let timerInterval;
       Swal.fire({
-        title: "Welcome back," + this.customer.name,
+        title: "Welcome back, " + this.customer.name,
         background: '#151515',
         color: 'white',
         // html: "Welcome back, " ,
