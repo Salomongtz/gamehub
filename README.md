@@ -16,14 +16,15 @@ This platform is designed to provide gamers with an immersive and convenient sho
 
 ## Technologies Used
 
-- Frontend: Vue.js
-- Backend: Java, Spring Boot
-- Database: PostgreSQL
-- Authentication: Password Encoder
-- Styling: CSS, Tailwind
-- Dependencies: Gradle
-- Email: SendGrid
-- Pdf: OpenPDF
+- **Frontend:** Vue.js
+- **Backend:** Java, Spring Boot
+- **Database:** PostgreSQL
+- **Authentication:** Password Encoder
+- **Styling:** CSS, Tailwind
+- **Testing:** Postman
+- **Dependencies:** Gradle
+- **Email:** SendGrid
+- **PDF:** OpenPDF
   
 ## Future Features (TODO)
 
