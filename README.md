@@ -21,10 +21,12 @@ This platform is designed to provide gamers with an immersive and convenient sho
 - **Database:** PostgreSQL
 - **Authentication:** Password Encoder
 - **Styling:** CSS, Tailwind
+- **Fetch:** AXIOS
 - **Testing:** Postman
 - **Dependencies:** Gradle
 - **Email:** SendGrid
 - **PDF:** OpenPDF
+- **Image Upload (Admin Page):** Cloudinary
   
 ## Future Features (TODO)
 
