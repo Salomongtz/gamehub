@@ -7,6 +7,8 @@ This platform is designed to provide gamers with an immersive and convenient sho
 ## Features
 
 - **Extensive Game Library:** Explore a vast selection of games spanning various genres and platforms.
+- **Registration:** Create your user with a secure password and get an email with your user data.
+- **Payment Receipt:** Get a .pdf receipt sent to your email.
 - **Relevant Results:** Immersive experience right from the main page thoughtfully organized into enticing sections: Discover the latest releases, explore tempting discounts, and fine-tune your search by genre.
 - **Filters:** Find your next favorite game thanks to the different filtering and sorting options the shop offers.
 - **Shopping Cart:** Easily add or remove games from the shopping cart or game detail view.
@@ -19,6 +21,9 @@ This platform is designed to provide gamers with an immersive and convenient sho
 - Database: PostgreSQL
 - Authentication: Password Encoder
 - Styling: CSS, Tailwind
+- Dependencies: Gradle
+- Email: SendGrid
+- Pdf: OpenPDF
   
 ## Future Features (TODO)
 
