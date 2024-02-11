@@ -19,7 +19,7 @@ This platform is designed to provide gamers with an immersive and convenient sho
 - **Frontend:** Vue.js
 - **Backend:** Java, Spring Boot
 - **Database:** PostgreSQL
-- **Authentication:** Password Encoder
+- **Authentication:** JSessionID, Password Encoder
 - **Styling:** CSS, Tailwind
 - **Fetch:** AXIOS
 - **Testing:** Postman
